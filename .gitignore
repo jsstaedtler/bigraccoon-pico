@@ -1,0 +1,22 @@
+### Linux
+*~
+*.swp
+
+### Windows
+Thumbs.db
+desktop.ini
+
+### Mac OS X
+.DS_Store
+._*
+
+### Composer
+/composer.phar
+/vendor
+
+
+### Media in the Assets folder (which eats a tonne of space)
+/assets/*
+
+### Old Piwigo gallery (not part of this project)
+/gallery/
