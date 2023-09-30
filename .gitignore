@@ -10,10 +10,6 @@ desktop.ini
 .DS_Store
 ._*
 
-### Composer
-/composer.phar
-/vendor
-
 
 ### Media in the Assets folder (which eats a tonne of space)
 /assets/*
