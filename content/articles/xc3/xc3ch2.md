@@ -1,10 +1,12 @@
 ---
 title: I Played Xenoblade Chronicles 3 - Chapter 2
 date: 2022-08-03
-byline: This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
+byline: Our protagonists uncover the true face of their enemy, who is now manipulating former allies into hunting them down
 image: bg/articles/xc3/xc3ch2.jpg
 template: xc3-page
 ---
+
+This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
 
 <div class="box" markdown=1>
 
@@ -37,7 +39,7 @@ So there's a whole bunch of these Moebius muppets.  We've seen one of them earli
 
 </div>
 
-> The monster from the end of Chapter 1 walked in here, then reverted to Consul form, obviously to make it clear that they have this transformational ability.  But after reverting, J is seen right behind D.  Playing through for the first time, I didn't even realize J was there because all of this is new and confusing, and it's so subtle that it doesn't spoil the big surprise in Chapter 4.  But after coming back from a full playthrough, you can't say the devs didn't put the hints out there.
+> The monster from the end of Chapter 1 walked in here, then reverted to Consul form, obviously to demonstrate to the player that they have this transformational ability.  But after reverting, J is seen right behind D.  Playing through for the first time, I didn't even realize J was there because all of this is new and confusing, and it's so subtle that it doesn't spoil the big surprise in Chapter 4.  But after coming back from a full playthrough, you can't say the devs didn't put the hints out there.
 
 ----
 
@@ -237,6 +239,8 @@ You'll never convince me that queen is Melia (or that Agnus' queen is Nia).  Tha
 
 </div>
 
+> Hahahaha, I was right!!
+
 ----
 
 LOL, they keep slamming up against the fourth wall
@@ -373,7 +377,7 @@ Well this is concerning, apparently there are random energy events that just ann
 
 </div>
 
-> It seems the reason the remaining geography doesn't collapse is because the world is frozen in time by Z.  It's also possible that much of the world is illusory (as opposed to being the literal matter from either of the original two worlds).
+> It can be assumed the reason the remaining geography doesn't collapse is because the world is frozen in time by Z.  However, it's also possible that much of the world is illusory (as opposed to being the literal matter from either of the original two worlds).  It kinda depends on how exactly Origin was supposed to reproduce the original worlds.
 
 > But there's an apparent inconsistency, because anyone can move rocks around or dig out massive mines.  So it's really hard to understand what kinds of forces actually act on the constituent mass of Aionios.  If matter that can't move through time is not affected by gravity, why can it be moved by any other kind of force?
 
@@ -410,6 +414,8 @@ Manana's cooking replaces the pouch items from __XC2__ (which I always found ove
 ![](%assets_url%/xc3/1555022165036122117-FZSMaxCXgAED3_k.jpg)
 
 </div>
+
+> A patch was later released for the game that addressed an unfortunate bug, which was: Manana's cooking *didn't actually give you the bonuses it said it would*.  The meals literally had no effect.  They were delivered into our mouth-holes for nothing!
 
 ----
 
@@ -475,7 +481,7 @@ Mio's finally doing us a favour and trying to extract info on Noah's Pyronado, b
 
 > WHY DOES IT GLOW, *INDEED*
 
-> It's amazing how much incidental stuff gets totally flipped on its head after experiencing __Future Redeemed__.  Noah's Blade normally has a blue glow, but in various circumstances it will change to green.  I've seen others' analysis of how the glow changes during various cutscenes, which all boils down to what sets off the Pneuma core.  It's clear now that the true power behind Ouroboros was known by the developers while they produced the base game (as opposed to something tacked on after the fact).
+> It's amazing how much incidental stuff gets totally flipped on its head after experiencing __Future Redeemed__.  Noah's Blade normally has a blue glow, but in various circumstances it will change to green.  I've seen others' analysis of how the glow changes during various cutscenes, which all boils down to what sets off the Pneuma core.  It's clear now that the true power behind Ouroboros was developed and understood by the developers while they produced the base game (as opposed to having to come up with something and tacking it on later).
 
 ----
 
@@ -511,7 +517,13 @@ There are a few possible answers... for one, people may be born with this knowle
 
 But there's the possibility that Nopon don't have the same lifespan issue that the humanoid folk have.  There are Nopon aligned with both Keves and Agnus, and also some who live independently.  Perhaps they're not produced like the soldiers are.
 
-> Well, much of this is made clearer by the end of the game, and even more is answered quite blatantly in __Future Redeemed__.  But even just as the story progresses, you start getting evidence (especially in the Affinity Chart) that Nopon can live *very* long lives.
+> Well, much of this is made clearer by the end of the game, and even more is answered quite blatantly in __Future Redeemed__.  But even just as the story progresses, you start getting evidence (especially in the Affinity Chart) that Nopon can live *very* long lives.  Riku in particular could, *somehow*, be over 1000 years old.
+
+> And in Chapter 7, we have enough evidence to believe Riku was literally telling Noah the truth about Lucky Seven.  It was forged from 7 different types of Origin metal, by 7 Nopon (Riku included) wielding Ultimate Hammers.  And it was done at the behest of Queen Melia, or at least she had ordered it back before she was imprisoned by Moebius.
+
+> It's not clear, though, how often Lucky Seven has been given to an Aionian soldier (if not to just Noah).  Noah had a sword very *similar* to it by his 10th term immediately before becoming N, and N *still* has that one.  It's likely that Lucky Seven is actually the *second* Sword of Origin, explaining its different appearance and how Riku can have it in his possession.  Maybe Riku offers it to every incarnation of Noah, and has to go to pick it back up every time Noah dies...
+
+> *And furthermore*, Riku had Lucky Seven with him when the party climbed to Prison Island in __Future Redeemed__.  But no one actually used it there; instead, N provided *his* own sword for Matthew to unlock the full Ouroboros power.  
 
 ----
 
@@ -669,6 +681,10 @@ These guys talk and act so differently from other Aionians, it's like they're fr
 
 </div>
 
+> I'm pretty sure this is the first time a "real" swear word was spoken in-game.  I loved how Aionians had their own unique expletives, and this moment really solidified just how different Moebius is.
+
+> Sadly, Aionians would go on to occasionally say "shit" during the game, which is far less charming than "sparkin' Queen's earlobes, *snuff you*"
+
 ----
 
 Yay more interlinks!
@@ -697,9 +713,15 @@ So yeah, if the flame clock keeps healing Moebius dude, destroy the flame clock.
 
 > Heck, is that actually the Pneuma core *visible* inside the gauntlet??
 
-> Something weird about Blades is that they are pre-existing physical objects which anyone can summon out of who-the-heck-knows-where.  Their nature is vague enough to just fit the needs of the game's whole Class system, but it's pointed out in __Future Redeemed__ that this gauntlet was handed down by Ghondor (son of N) to Matthew, and so it would later somehow come into Noah's possession.  If anything, it's kinda weird that Noah only has the one instead of a pair, but there *is* just one Pneuma core, so it's more efficient this way, I dunno
+> Something weird about __XC3__ Blades is that they are pre-existing physical objects which anyone can summon out of who-the-heck-knows-where.  Their nature is vague enough to just fit the needs of the game's whole Class system, but in __Future Redeemed__ we see that a very similar pair of gauntlets was handed down by Ghondor (son of N) to Matthew; and so Noah's Blade could actually be made from one or both of those.  The style and colouring are suspiciously similar, and indeed there exists only one Pneuma core.
 
-> I certainly don't understand how this ties in to the Sword of the End business, or why N has a purple version of Noah's Blade with his own Lucky 7 inside.  There's some major timeline weirdness that I really can't grasp.
+> Meanwhile, N was already kicking around with his own purple version of Noah's sword-sheath Blade, which notably did *not* transform into a purple gauntlet whenever he drew out his "real" sword (despite the Logos core likely being within it).
+
+> There's a period between Noah becoming N, and Matthew possessing his Pneuma gauntlets—but it might not have been a long period: as a condition for becoming Moebius, Z ordered N to destroy the City.  So when N did so, it could have been mere days or weeks since Noah was no more.  But we don't know *exactly* when "New Noah" came into existence: was it as soon as N chose his new path, or was it sometime later?
+
+> If New Noah existed while Matthew was using the gauntlets, then what did he use as his Blade?  Can we assume it was simply a red copy of what N always had, and which didn't transform?  And if so, then how did he come to possess the same Blade but now transforming and containing Pneuma?
+
+> On the other hand, if New Noah didn't exist until after Matthew gave up the gauntlets, we're still left wondering how the gauntlet(s) specifically ended up with *him*.  (Maybe if Riku had to hunt down Noah anyway while dragging around Lucky Seven, he could have also brought the gauntlets with him—and maybe there's a funny story in there where one of them went missing)
 
 ----
 
@@ -745,9 +767,9 @@ I get the same vibes from his suit as I do from Noah's Pyronado arm.
 
 </div>
 
-> Virtually all the people outside of the system of resurrecting teenagers, whose face we can see, is a plain Homs-looking human.  This includes every single Citizen of the City.  The absence of other racial features is awfully conspicuous.
+> Virtually all the people outside of the system of resurrecting teenagers, whose face we can see, is a plain-looking human (like a Homs, Ardanian, or Leftherian).  This includes *every single Citizen* of the City.  The absence of other racial features is awfully conspicuous.
 
-> There are exceptions within Moebius: X, Y, and Z are something else entirely, and M is kind of a unique case.  And to be fair, the only other faces of Moebius we get to see are C, D, J, K, N, and S (A doesn't count); that leaves 15 masked Consuls who could be anything (given sufficient helmet size... like, maybe U could be High Entia).
+> There are exceptions within Moebius: X, Y, and Z are something else entirely, and M is kind of a unique case.  But we've seen a lot of Consuls unmasked, and they all lack any special features: C, D, I, J, K, N, S, and T (and no idea whether A counts); that leaves just 13 masked Consuls who *might* have blue or grey skin or cat ears or feathers or are glowy (and barely any have helmets large enough to fit a High Entia).
 
 > There is a single other exception to all of this, which is Na'el.  She is very Gormotti, to the point that it's hard to believe she's 3 generations descended from Noah and Mio (assuming the inter-breeding of Citizens causes special traits to recede).  I'd easily believe she was adopted by Ghondor or Matthew's parents, except that she has a bloodied core crystal—in fact, that alone may cause the Gormotti traits to remain dominant (*because Nia, that's why*)
 
@@ -781,9 +803,9 @@ I don't know if this is a stretch, but... this is the closest thing we've seen t
 
 > And purple is simply the thematic colour for Moebius, like blue is for Keves, and yellow for Agnus (and in rare cases like Consul H's colony, green symbolizes Keves and Agnus combined).
 
-> Incidentally, purple is the colour of the Aegis core for Ontos (Malos), and green for Pneuma (Pyra/Mythra).  __Future Redeemed__ makes it clear that the green energy glow of Matthew's and Noah's blades is caused by Pneuma, and the purple of N's is by Ontos.
+> Incidentally, purple is the colour of the Aegis core for Logos (Malos), and green for Pneuma (Pyra/Mythra).  __Future Redeemed__ makes it clear that the green energy glow of Matthew's and Noah's blades is caused by Pneuma, and the purple of N's is by Logos.
 
-> These common colour themes could be evidence of some connections, except that the original Noah (before N) possessed the purple blade, implying that Moebius did not have a specific connection to Ontos.
+> Those matching colour themes *could* be evidence of some deeper connections, except that Logos presumably was within Noah's Blade *before* he became Moebius, so Moebius had no specific relation to the purple Aegis core.  And if green is meant to symbolize Ouroboros being the power of Keves and Agnus combined, then it's odd that the first Sword of Origin glowed purple instead of green.
 
 ----
 
@@ -816,6 +838,10 @@ Noah's gotta Noah
 ![](%assets_url%/xc3/1556472234331541504-FZmzP2XWYAUnenq.jpg)
 
 </div>
+
+> Like Guernica, K here does not leave a husk; he's naturally disappearing into white motes.  Off-seeing will turn red ("consumable") motes into white ones, and it will even make white motes emerge from inanimate objects.  But Aionian soldiers who are sent off will still be reborn, and these old folks will not.
+
+> I guess this just goes to show that "normal" adults don't *need* to be sent off; but for Noah in particular, that doesn't matter.
 
 ----
 
@@ -899,7 +925,7 @@ Keves' Castle strongly resembles the High Entia capital, Alcamoth, and the queen
 
 > I think Melia explained toward the end of the game that Keves Castle literally *is* Alcamoth?  If I'm remembering that right, it's evidence that (at least some of) Aionios is made of the *actual parts* of the two game worlds.
 
-> I had always assumed that was the case, that Z stopped time just as everything started to collide, resulting in a random jumble of geography.  But the timeline gets *extremely* tight if that's the case: Z had to have acted before everything completely annihilated, but did the two halves of Origin need to combine first?  How the heck did *that* work
+> I had always assumed that was the case: that Z stopped time just as everything started to collide, resulting in a random jumble of geography.  But the timeline of that would be *extremely* tight.  Z had to have acted before everything completely annihilated, but did the two halves of Origin need to combine before he could do so?  The order of events at the moment of Intersection needs an entirely separate analysis of its own.
 
 ----
 
@@ -934,6 +960,8 @@ But one more thing, which I didn't pick up on earlier: the Dannagh Desert area h
 ----
 
 Torna's dead titan sank below the Cloud Sea, laying to rest among the ruins of Earth's 21st century civilization (referred to as the Land of Morytha).  It's hard to imagine how this new Dannagh Desert can be at all related to that old one.
+
+> But the dilapidated buildings from deep down in the Land of Morytha are now present up in the Maktha Forest, so this could really be a chunk of Torna.  Someone would have to compare the geography of this desert to the one in __The Golden Country__.
 
 ----
 

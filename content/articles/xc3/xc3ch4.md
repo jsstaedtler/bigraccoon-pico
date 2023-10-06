@@ -1,10 +1,13 @@
 ---
 title: I Played Xenoblade Chronicles 3 - Chapter 4
 date: 2022-08-20
-byline: This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
+byline: The party grapples with the meaning of their artificially short lives in a world with no freedom, but they gain new hope and motivation to carry on
 image: bg/articles/xc3/xc3ch4.jpg
 template: xc3-page
+hidden: true
 ---
+
+This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
 
 <div class="box" markdown=1>
 
@@ -823,7 +826,7 @@ First off, this just vaporizes things, which doesn't allow for collection of lef
 
 So what is it *really* meant for?
 
-> It's an effective weapon against the City, as we find out later.  I expect that ever since Matthew unlocked the true Ouroboros power, Moebius has had to focus on serious new methods of fighting back (compared to the peaceful stalemate that existed previously).
+> It's an effective weapon against the City, as we will witness later.  I expect that ever since Matthew unlocked the true Ouroboros power, Moebius has had to focus on serious new methods of fighting back (compared to the peaceful stalemate that existed previously).
 
 ----
 

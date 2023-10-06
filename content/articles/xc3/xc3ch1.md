@@ -1,10 +1,12 @@
 ---
 date: 2022-07-31
 title: I Played Xenoblade Chronicles 3 - Chapter 1
-byline: This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
+byline: Young soldiers locked into a lifetime of war reveal a secret about their world that somehow makes it all even worse
 image: bg/articles/xc3/xc3ch1.jpg
 template: xc3-page
 ---
+
+This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
 
 <div class="box" markdown=1>
 
@@ -22,8 +24,6 @@ It also makes the occasional reference back to the first __Xenoblade Chronicles_
 <label id="spoilerswitchlabel" for="spoilerswitchbox"><h4>Reveal full-game spoilers</h4></label>
 
 </div>
-
-----
 
 I'm 5.5 hours into __Xenoblade Chronicles 3__ and I have to talk about it at length.  I'm going into it having played __XC (DE)__ and __XC2__—though not __XCX__—and there is a lot to compare.
 
@@ -179,9 +179,7 @@ Noah and Eunie are also awfully shulky and melly.  Just interesting, is all.
 
 > So I was definitely down the wrong track here: Noah, Lanz, and Eunie are not reincarnations of Shulk, Reyn, and Melia.
 
-> It's heavily hinted that Eunie is daughter to Melia—not hard to see where her personality may come from.  Shulk had a son, Nikol (presumably with Fiora), but Noah is definitely not related.  Noah eventually had a son of his own, Ghondor, who somehow ended up with the family name of Vandham... which I think is pure coincidence.  Or else it's the universe just ensuring there's always a Vandham.
-
-> As for Lanz... jeez who the heck knows ¯\\\_(ツ)\_/¯
+> It's heavily hinted that Eunie is daughter to Melia—not hard to see where her personality may come from.  Shulk had a son, Nikol (presumably with Fiora), but Noah is definitely not related.  Noah and Lanz were children living on the Bionis as well, and I don't think we have any clues to their parentage, except that Noah may have had the family name of Vandham?
 
 ----
 
@@ -439,7 +437,7 @@ Mio! ❤️
 
 </div>
 
-> So I'm a bit of a Nia fan 😳 and when __XC3__ was announced, I immediately assumed I was going to fall for Mio.  So I was all excited for this part.
+> I'm a bit of a Nia fan 😳 and when __XC3__ was announced, I immediately assumed I was going to fall for Mio.  So I was all excited for this part.
 
 > But then along came Eunie and, well, sorry Mio.  It wasn't meant to be after all.
 
@@ -475,9 +473,9 @@ Noah pointed out that both armies had disappeared and that his and Mio's crews w
 
 </div>
 
-> Okay!  So, there's a lot happening here that goes entirely unnoticed, unless you've played further and then come back to this.
+> Okay!  So, there's a lot happening here that can go entirely unnoticed, unless you've played further and then come back to this.
 
-> First off, Noah had a curious internal monologue, during which he wasn't sure where his thoughts were coming from.  It was confusing, and could be chalked up to him growing anxious, alongside the general mysterious supernatural stuff going on.  But it was very likely *the consciousness of all his past lives*.  At the start of Chapter 6, we see that his life often ended while on the run, so he has developed an instinct to want to escape danger.  And boy is he ever in danger now.
+> First off, Noah had a curious internal monologue, during which he wasn't sure where his thoughts were coming from.  It was confusing, and could be chalked up to him growing anxious, alongside the general mysterious supernatural stuff going on.  But it was very likely *the experience of all his past lives*.  For one thing, he died at the hands of Moebius so many times (as revealed at the start of Chapter 6), that he could be subconsciously predicting his own demise here.  And for another thing, that desire to escape and save himself is arguably something that distinguishes N from Noah, whereas Noah instead chose to stand his ground here.
 
 > The unusual sound he mentioned is quite possibly related to the interlink of D and J, who just came onto the scene.  It's impossible to know it at this point, but this monster is an interlinked pair of Moebius: notice there are two cores.
 
@@ -616,6 +614,8 @@ I believe people who died in the previous game worlds are being reincarnated her
 ----
 
 In this case, Vandham grew up to be much like his former self back in Alrest, although they could have been hundreds or thousands of years apart—and maybe many more Vandhams were born and had died in-between.
+
+> It turned out to be less simple than that: Guernica Vandham is technically a descendant of Noah and Mio 😬
 
 ----
 

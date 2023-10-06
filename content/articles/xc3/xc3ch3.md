@@ -1,10 +1,13 @@
 ---
 title: I Played Xenoblade Chronicles 3 - Chapter 3
 date: 2022-08-09
-byline: This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
+byline: Things really start to go nuts as our heroes continue on their mission, and their foes target them with regrets from their past
 image: bg/articles/xc3/xc3ch3.jpg
 template: xc3-page
+hidden: true
 ---
+
+This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
 
 <div class="box" markdown=1>
 
@@ -33,10 +36,9 @@ I'm actually surprised by how few quests have been available so far.  Instead of
 
 I suppose the collectopaedia cards make up for a lot of it, but Chapter 3 is where a lot of nitty-gritty features seem to be introduced, so the possible application of those ought to increase.  And we'll find ourselves backtracking to some earlier areas.
 
-
 ----
 
-The chapter opens up with a Taion flashback, where we find him lobbying for a strategic attack plan, but his superior insists their lowly Keves opponent can be crushed by a simple, full frontal assault. 
+The chapter opens up with a Taion flashback, where we find him lobbying for a strategic attack plan, but his superior insists their lowly Keves opponent can be crushed by a simple, full frontal assault.
 
 <div class="imgblock" markdown="1">
 
@@ -83,6 +85,10 @@ One other thing was that Keves used a purple smokescreen in their attack—relat
 ![](%assets_url%/xc3/1557097092329390080-FZvrZS_WYAMmlES.jpg)
 
 </div>
+
+> I don't remember the gizmo ever actually being needed in-game for time-keeping.  Instead, it served as a physical memento of a deceased person, a concept which the protagonists needed to learn about.
+
+> Though at the very end, Taion casually used it to tell how long they had before Origin would reset their worlds.  At that point, it's likely that the Irises no longer functioned, and the gizmo finally proved its technical worth.
 
 ----
 
@@ -131,7 +137,6 @@ So now this little one wants to give it a go.  But how is Isurd involved?  Is he
 </div>
 
 ----
-
 
 Back at Colony 4, we learn how Ethel ended up commander of a dirt-rank colony: she defeated her equal from Agnus, but let him live.  The Keves Castle didn't like that.  (Also, here are some fighters in giant mecha in case you weren't sure this was a Xeno title)
 
@@ -259,7 +264,7 @@ Sometimes there isn't even a quest involved, but it leads the group to discuss a
 
 </div>
 
-> I... never did try that.  Defender Taion and 5 Sena's...
+> I... never did try that.  Defender Taion and 5 Senas...
 
 ----
 
@@ -427,7 +432,7 @@ We follow them back to Valdi's Colony 30, and get to see the ultimate Levnis for
 
 </div>
 
-> Okay, so it wasn't entirely clear, but Q is actually *piloting* the Levnis from on-board.  Later in this chapter there's a big deal made out of how Agnus had only just developed autonomous, pilotless Levnises, which makes it clear that every one we've seen until now (or at least, every one of Keves) had a pilot aboard it.
+> Okay, so it wasn't entirely clear, but Q is actually *piloting* the Levnis from on-board.  Later in this chapter there's a big deal made out of how Agnus had only recently developed autonomous, pilotless Levnises, which implies that every one we've seen until now (or at least, every one of Keves) had a pilot aboard it.
 
 ----
 
@@ -722,7 +727,7 @@ I don't know if he means the regular people of Aionios are fated for doom and de
 
 > B is referring to the fate of the young soldiers, and how they suffer explicitly for the benefit of the Consuls and Moebius.
 
-> ...And why *did* K leave a body behind, but other Consuls don't?  Well... the real-world reason is that they had to unmask K, but unmasking every other Consul would get repetitive and require many unique faces to be modeled.  In-game though, a notable difference is that K's Flame Clock was destroyed *before* he died; for pretty much every Flame Clock destroyed after that, the Consul is defeated beforehand.
+> It *is* a bit curious that B disappeared very quickly, while K's corpse stuck around long enough to debate over.  But it can basically be chalked up to what best served the storytelling: they had to unmask K, but unmasking every other Consul would get repetitive (and require many unique faces to be modeled by the developers).
 
 ----
 
@@ -1096,11 +1101,11 @@ But this map shows the Nopon Caravan up toward the north.  So we possess secret 
 
 </div>
 
-> Ha, some Nopon literally have "???" for their age.  But Aionios has been around for over 1000 years, and Nopon aren't *that* long-lived, so there are definitely many generations of them going back to the Intersection of two worlds.
+> Ha, some Nopon literally have "???" for their age.  But Aionios has been around for over 1000 years, and not all Nopon are *that* long-lived (presumably not many more than seven of them), so there are definitely many generations of them going back to the Intersection of two worlds.
 
-> When the people of those worlds were preserved within Origin, it's possible that Nopon were included.  However, it seems that those people are only restored by the will of Z, and even then it's only the ten-year olds who will ultimately enter the cycle of death and rebirth.
+> When the people of those worlds were preserved within Origin, it's possible that Nopon were included.  However, it seems that those people are only restored by the will of Z, and even then it's only the ten-year olds who will ultimately enter the cycle of death and rebirth (or whoever were the first Consuls).
 
-> So it's likely that Nopon came to Aionios some other way.  Though it's funny to think they "fell into" Aionios during the Intersection, there's virtually no evidence that anyone survived that ordeal outside of Origin.  So it's more likely that living Nopon were onboard Origin (as it seems Shulk, Rex, and the Queens were).  They could very well have served as Origin's maintainers right up to the Intersection.
+> So it's likely that Nopon came to Aionios some other way.  Though it's funny to think they "fell into" Aionios during the Intersection, there's virtually no evidence that anyone survived that ordeal outside of Origin.  So it's more likely that living Nopon were onboard Origin (as it seems Shulk, Rex, and *maybe* the Queens were?).  They could very well have served as Origin's maintainers right up to the Intersection.
 
 ----
 
@@ -1204,7 +1209,7 @@ I can't spend more time talking about every little thing, but I did encounter th
 
 ----
 
-The class is called Full Metal Jaguar, and apparently it's pulled straight from Xenoblade Chronicles X.
+The class is called Full Metal Jaguar, and apparently it's pulled straight from __Xenoblade Chronicles X__.
 
 Sound on to hear Eunie's advanced offensive tactic. 
 
@@ -1216,7 +1221,7 @@ Sound on to hear Eunie's advanced offensive tactic.
 
 ----
 
-Speaking of heroes: they are very much like the Rare Blades in XC2.  Definitely a collectable thing for completionists.  I can already tell there are more hero quests to come for each one.  ...And these little chibis in the Class menu are adorable.
+Speaking of heroes: they are very much like the Rare Blades in __XC2__.  Definitely a collectable thing for completionists.  I can already tell there are more hero quests to come for each one.  ...And these little chibis in the Class menu are adorable.
 
 <div class="imgblock" markdown="1">
 
@@ -1330,7 +1335,7 @@ This is a very conspicuous tree, and it reminds Taion of his time with his old c
 
 THAT'S URAYA.
 
-Those trees were named in Xenoblade Chronicles 2.
+Those trees were named in __Xenoblade Chronicles 2__.
 
 <div class="imgblock" markdown="1">
 
@@ -1774,7 +1779,7 @@ Plus there are more pretty views.
 
 ----
 
-I never mentioned this before, but XC3 has a brilliant screenshot feature that hides the game UI.  Just press L+R.  The trouble is it also hides the subtitles and character dialogue, so if I'm capturing a conversation I still use the Switch's screenshot button.
+I never mentioned this before, but __XC3__ has a brilliant screenshot feature that hides the game UI.  Just press L+R.  The trouble is it also hides the subtitles and character dialogue, so if I'm capturing a conversation I still use the Switch's screenshot button.
 
 ----
 
@@ -1792,7 +1797,7 @@ omgomgomg we're going into sparkin' Uraya.
 
 We've entered the 3rd region of Aionios, and revealed another little patch of world.
 
-It seems to be an intentional design decision for XC3 to use flat, single-level maps, which is annoying when surfaces overlap.
+It seems to be an intentional design decision for __XC3__ to use flat, single-level maps, which is annoying when surfaces overlap.
 
 <div class="imgblock" markdown="1">
 
@@ -1808,15 +1813,15 @@ It seems to be an intentional design decision for XC3 to use flat, single-level 
 
 ----
 
-XC2 was already a bit frustrating with vertical maze-like areas like Gormott depicted by a single 2D map surface, but it still had separate levels for some places.  Meanwhile XC:DE had some areas with, like, 10 separate floors, and the mapping was fantastic.
+__XC2__ was already a bit frustrating with vertical maze-like areas like Gormott depicted by a single 2D map surface, but it still had separate levels for some places.  Meanwhile __XC:DE__ had some areas with, like, 10 separate floors, and the mapping was fantastic.
 
 > More map levels actually appear later on as new areas are discovered, so it wasn't entirely as bad as I'd feared.
 
 ----
 
-In XC2, Uraya was a nation inside a giant sea-dwelling titan—which is now in Aionios, quite dead, and with a giant chunk of it vaporized.
+In __XC2__, Uraya was a nation inside a giant sea-dwelling titan—which is now in Aionios, quite dead, and with a giant chunk of it vaporized.
 
-Surprisingly, the music here is a reprise of the Bionis' Interior from XC1, making a spooky and nostalgic combination.
+Surprisingly, the music here is a reprise of the Bionis' Interior from __XC1__, making a spooky and nostalgic combination.
 
 <div class="imgblock" markdown="1">
 
@@ -1860,7 +1865,7 @@ The Nopon caravans at colonies do happen to sell loot items, so maybe that's a w
 
 ----
 
-This is just like in XC1, where you would collect crystals from solid ether deposits, and then you could produce gems from them.  But so far we're not finding anything other than regular ol' mineral-type loot.
+This is just like in __XC1__, where you would collect crystals from solid ether deposits, and then you could produce gems from them.  But so far we're not finding anything other than regular ol' mineral-type loot.
 
 <div class="imgblock" markdown="1">
 
@@ -1916,9 +1921,9 @@ BLGFJNSGTHFBJF
 
 THAT'S MOTHERSNUFFING FONSA MYMA.  ...Or rather, what's left of it.
 
-Fonsa Myma was capital of Uraya in XC2, and it was a mostly vertical city with a tall palace at the top.
+Fonsa Myma was capital of Uraya in __XC2__, and it was a mostly vertical city with a tall palace at the top.
 
-I had to fire up XC2 again and compare some vantage points.
+I had to fire up __XC2__ again and compare some vantage points.
 
 <div class="imgblock" markdown="1">
 
@@ -1958,7 +1963,7 @@ It was hard to get views that lined up precisely.  It's possible the surfaces al
 
 And there were once Saffronia trees everywhere.
 
-Uraya was kind of the analogue to Satorl Marsh from XC1: dark but colourful wetlands.
+Uraya was kind of the analogue to Satorl Marsh from __XC1__: dark but colourful wetlands.
 
 <div class="imgblock" markdown="1">
 
@@ -2008,7 +2013,7 @@ In Japan, Uraya was called Invidia—Latin for "envy."  The English name is deri
 
 And furthermore!  Each nation in Alrest resided on or in a titan, but the titans themselves sometimes had their own name distinct from those living on them.  Argentum's main titan was Goldmouth; Tantal's was Genbu.  Perhaps Uraya's titan had a name like Seebu?
 
-> The selection of place names in Aionios remains a mystery.  I expect they were mostly chosen by the Consuls, who could have memories of these original locations in Zanza's world and in Alrest.  Or else they would have names entirely divorced from the past if anyone else discovered them first.
+> The selection of place names in Aionios remains a mystery.  I expect they were mostly chosen by the Consuls, who could have memories of these original locations in Zanza's world and in Alrest.  Or else they would have names entirely divorced from the past if anyone else had discovered them first.
 
 ----
 
@@ -2094,7 +2099,7 @@ Not far from the spider nest, we can see another long cable leading to a distant
 
 > I'm convinced that the black fog was originally intended to play a bigger part in general gameplay.  Whenever we encounter it, it's like a barrier we need to cross to reach our next destination (whether it's for the main story or optional).  And the characters will always comment on how dangerous the fog is when they pass through.
 
-> I would not be surprised if there was a game mechanic planned which had to be dropped during development—perhaps it didn't enhance the game at all, it proved too difficult, or it wasn't finished in time for the publication deadline.
+> I would not be surprised if there was a game mechanic planned which had to be scrapped during development—perhaps it didn't enhance the game at all, it proved too difficult, or it wasn't finished in time for the release deadline.
 
 > My favourite hypothesis is that our party could hide in the fog to avoid detection from Moebius or other colonies (which ended up being addressed in a different way in Chapter 5).  More likely, it could have served to harm the party, perhaps if you spent too long in it—you would have to take care not to be caught in combat in the fog.  But it would be pretty frustrating to die to that kind of circumstance.
 
@@ -2116,7 +2121,7 @@ Mio even has trouble walking normally—this could be a nerve agent.
 
 </div>
 
-> Orrrrrr... this is another instance of instinctual behaviour from previous lives.  Mio is known to be fast and agile, but in flashbacks of her previous lives with Noah, she's seen tripping and falling before succumbing to her death.
+> This is the first of several incidents in which Mio stumbles or is unnaturally clumsy, and later it's suggested to be related to her advanced age.  But it's hard to tell whether it's a physiological problem, or a result of anxiety.
 
 ----
 
@@ -2546,6 +2551,10 @@ I'm not sure what to make of Joran's explanation here, it sounds like he knows w
 
 </div>
 
+> The closest we ever get to seeing how a typical Consul is made is with Shania, but even with her, she awoke after it had already happened.  Notably, Shania died knowing she would return, so she was better prepared for that continuity of consciousness.  Joran died expecting *not* to be resurrected, so I'm sure the experience was a huge shock to him.
+
+> But there was also Noah's experience with Z in Origin, during which Noah actually conversed with Z about getting Moebed, and he could recall everything afterward.  It's pretty clear, though, that Noah was a special case: he uniquely possessed the Sword of Origin, and Z had faced off against him and tried to turn him many, many times before.
+
 ----
 
 His Moebius name is simply his first initial.  ...Does this mean every member's name is based on their original name?
@@ -2563,6 +2572,8 @@ And he was granted a special power, but who the heck is the one capable of doing
 ![](%assets_url%/xc3/1560683268831416324-FaipEOVaUAAq8B5.jpg)
 
 </div>
+
+> Joran's just damn lucky that Consul Jacob bit it a few days before he did
 
 ----
 
@@ -2616,9 +2627,9 @@ In fact, was Eunie given this opportunity when she died?  Is the alternative to 
 
 </div>
 
-> We can assume Eunie was never more than a standard soldier, and therefore had no value to Moebius.  Joran had a unique connection to the future Ouroboros crew... but that wasn't relevant until they got zapped by the Ouroboros Stone just a week or so prior.  And Moebius J was already there when that happened.
+> We can assume Eunie was never more than a standard soldier, and therefore had no value to Moebius.  Joran had a unique connection to the future Ouroboros crew... but that wasn't actually relevant until they got zapped by the Ouroboros Stone *6 or 7 years later*.  And Moebius J was literally already there when that took place.
 
-> If that was more than sheer coincidence, and Joran was intentionally chosen for Moebius because of his connection to Noah, that would mean Noah was already a known threat to Moebius.  Indeed, Z had always had his eye on Noah, ultimately turning him into N, but then somehow Noah lived on.  I guess it's obvious in hindsight that Z (and N) wouldn't forget about him; just really sucks that Noah of all people ended up as Ouroboros.
+> So this is yet more evidence that Noah was uniquely special, and a known threat to Moebius throughout history.  Indeed, as per the opening of Chapter 6, Noah repeatedly got taken in by the City during his previous lives, and regularly ended up working with the Ouroboros Stones.  And furthermore, here in the present, Noah had been split off from N, and the true Ouroboros power had finally been unlocked, making him even more of a ticking time bomb for Moebius.  So it's not a stretch for Z to have picked Joran out early on, as an ace to keep up his sleeve.
 
 ----
 
@@ -2712,6 +2723,8 @@ Taion is put into an interesting position of power over Isurd here, but he opts 
 
 </div>
 
+> This is such a brief but meaningful moment.  Despite now knowing exactly how Isurd truly felt about him, Taion still carries such a wellspring of respect to stay silent and maintain Isurd's dignity.
+
 ----
 
 Taion is given Nimue's gizmo to bury in a place she loved.  So the described location will definitely come up in the future.
@@ -2772,9 +2785,9 @@ Noah recalls a memory that looks like his early days as an off-seer.  Does this 
 
 </div>
 
-> That's obviously the recurring theme in this game: that despite your own short lifespan, you live on in the memories and ideals of others.  The off-seeing could be a literal interpretation of that concept.
+> That's obviously the big recurring theme in this game: that despite your own short lifespan, you live on in the memories and ideals of others.  Off-seeing is virtually a literal interpretation of that concept, in which the spirit of the deceased actually comes from the off-seer.
 
-> But to be honest, I still don't understand it entirely.  The subject was dealt with toward the end of Chapter Six at Colony Omega, but I have to revisit that to figure out what I'm still missing.
+> Noah will later, in the City, do this same thing to entirely inanimate objects.
 
 ----
 
@@ -2846,7 +2859,7 @@ This jives with the theory that the Consuls are bribed with decadent lives in ex
 
 </div>
 
-> I think N never let go of how Z antagonized him as Noah for so long.  And N only became Moebius to be with M; he could probably not care less about Z's motivations.
+> I'm sure that N never let go of how Z antagonized him as Noah for so long.  And N only became Moebius to be with M; he could probably not care less about Z's motivations.
 
 > And with that in mind, it makes even more sense how he ended up helping Matthew and unlocking the Ouroboros power: it served his own purposes at the time, and he's fine if it ends up hurting Moebius.
 
@@ -2867,6 +2880,8 @@ Z's appearance is curious: he'd be a __XC2__ Blade if anything, but my impressio
 ![](%assets_url%/xc3/1560726971650191360-FajQ6LMX0AAq_tX.jpg)
 
 </div>
+
+> So there's a neat rabbit-hole to follow!  Z is a creation of Origin, and Origin was controlled by the Trinity Processors—particularly Ontos (since Pneuma and Logos kinda... died or something but the end)
 
 ----
 
