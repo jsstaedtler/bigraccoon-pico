@@ -11,6 +11,9 @@ desktop.ini
 ._*
 
 
+### .htaccess may be differernt for each server
+.htaccess
+
 ### Media in the Assets folder (which eats a tonne of space)
 /assets/*
 
