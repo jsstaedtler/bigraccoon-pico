@@ -98,35 +98,11 @@
 			<!-- Main content -->
 			<div id="main">
 			    
-			{# Find out what our parent page is, so that we don't jump to it with a Prev/Next page button #}
-				{% set current_parent = NULL %}
-				{% set next_page = NULL %}
-				{% set previous_page = NULL %}
 				
-				{% set parents_array = pages(current_page.id, offset=-1) %}
-				{% for parent_obj in parents_array %}
-					{% set current_parent = parent_obj %}
-				{% endfor %}
+				{# include("segment-pagination-init.twig") #}	
 				
-			{# Get all child pages of that parent (the siblings of this page) #}
-				{% set siblingid_array = pages(current_parent.id)|keys %}
+				{{ include("segment-pagination.twig") }}
 				
-            {# Find the current page within that list, and when we do, save the previous and next pages #}
-                {% for siblingid in siblingid_array %}
-					{% if siblingid == current_page.id %}
-						{% set previous_page = pages[siblingid_array[loop.index0-1]] %}
-						{% set next_page = pages[siblingid_array[loop.index0+1]] %}
-					{% endif %}
-				{% endfor %}
-                
-
-				<!-- Article navigation -->
-				<div class="pagination">
-                    {# We're swapping Prev and Next here, so that Next goes to the newer article (assuming articles are sorted by descending date) #}
-					{% if next_page.id %}<a href="{{ next_page.url }}" class="previous"><span class="abbrev">Prev</span> <span class="title">{{ next_page.title }}</span></a>{% endif %}
-					<a href="{{ current_parent.url }}" class="up">Index</a>
-					{% if previous_page.id %}<a href="{{ previous_page.url }}" class="next"><span class="abbrev">Next</span> <span class="title">{{ previous_page.title }}</span></a>{% endif %}
-				</div>
 
 				<!-- Post -->
 				<section class="post">
@@ -142,13 +118,9 @@
 							
 				</section>
 				
-				<!-- Article navigation -->
-				<div class="pagination">
-                    {# We're swapping Prev and Next here, so that Next goes to the newer article (assuming articles are sorted by descending date) #}
-					{% if next_page.id %}<a href="{{ next_page.url }}" class="previous"><span class="abbrev">Prev</span> <span class="title">{{ next_page.title }}</span></a>{% endif %}
-					<a href="{{ current_parent.url }}" class="up">Index</a>
-					{% if previous_page.id %}<a href="{{ previous_page.url }}" class="next"><span class="abbrev">Next</span> <span class="title">{{ previous_page.title }}</span></a>{% endif %}
-				</div>
+				
+				{{ include("segment-pagination.twig") }}
+
 
 			</div>
 
