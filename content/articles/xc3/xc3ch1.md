@@ -1,7 +1,7 @@
 ---
 date: 2022-07-31
 title: I Played Xenoblade Chronicles 3 - Chapter 1
-byline: Young soldiers locked into a lifetime of war reveal a secret about their world that somehow makes it all even worse
+byline: Young soldiers locked into a lifetime of war unveil a secret about their world that somehow makes it all even worse
 image: bg/articles/xc3/xc3ch1.jpg
 template: xc3-page
 ---
