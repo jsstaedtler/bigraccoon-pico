@@ -1,14 +1,13 @@
-{# To determine the previous and next pages, we must find the siblings of the current page.
-   Pico natively provides previous_page and next_page variables, but those are based on *all* pages at the current level of the page hierarchy--even if they belng to different parent pages.
-   The following code will look only at children of *this page's parent*, and determine the previous and next pages based on those.
+{# To determine the previous and next pages, we must find the siblings of the current page. #}
+{# Pico natively provides previous_page and next_page variables, but those are based on *all* pages at the current level of the page hierarchy--even if they belng to different parent pages. #}
+{# The following code will look only at children of *this page's parent*, and determine the previous and next pages based on those. #}
 
-   Once we have those values, we can produce the HTML that makes "prev" and "next" buttons. #}
-   Often, the buttons would be available at both the top and bottom of the page.  Logically, we should only calculate the previous and next page values *once*, then use them to make any number of buttons.
-   In Twig, we would want to call include() once on the initial code segment, then twice or more on the HTML segment.
-   The trouble is, when we create a new variable in the include() call, that variable will not exist outside of it.
-   Variables already initialized before the include() call *will* persist, but declaring them in every single template file defeats the whole purpose of reusing repetitive code via include().
-   So we simply have to be inefficient, and run this code every time we generate the HTML buttons.
-#}
+{# Once we have those values, we can produce the HTML that makes "prev" and "next" buttons. #}
+{# Often, the buttons would be available at both the top and bottom of the page.  Logically, we should only calculate the previous and next page values *once*, then use them to make any number of buttons. #}
+{# In Twig, we would want to call include() once on the initial code segment, then twice or more on the HTML segment. #}
+{# The trouble is, when we create a new variable in the include() call, that variable will not exist outside of it. #}
+{# Variables already initialized before the include() call *will* persist, but declaring them in every single template file defeats the whole purpose of reusing repetitive code via include(). #}
+{# So we simply have to be inefficient, and run this code every time we generate the HTML buttons. #}
 
 
 	{% set current_parent = NULL %}
