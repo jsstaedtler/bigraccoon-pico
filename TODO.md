@@ -8,7 +8,6 @@
 * Page footer with CC info and attributions
 * Use white or black version of logo depending on background colour
 * Does main logo at the top of each page need a border or dropshadow?
-* Do something about large image borders, and image growing on hover
 * Piwigo
 	* Adjust page header to integrate it better with the Pico site
 	* Change to a light theme?
