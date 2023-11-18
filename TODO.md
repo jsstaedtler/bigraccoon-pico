@@ -5,6 +5,7 @@
 	* In condensed navbar, keep circle around back-to-top button?
 	* Make buttons right of section tabs look good in condensed navbar (make them vertical)
 * Split templates into reusable segments
+* Page footer with CC info and attributions
 * Use white or black version of logo depending on background colour
 * Does main logo at the top of each page need a border or dropshadow?
 * Piwigo
