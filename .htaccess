@@ -19,4 +19,4 @@
 #</IfModule>
 
 # Prevent file browsing
-Options -Indexes -MultiViews +FollowSymLinks
+Options -Indexes -MultiViews
