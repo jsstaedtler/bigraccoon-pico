@@ -5,6 +5,16 @@ image: bg/links.jpg
 template: section-index
 ---
 
+## Support J.S. Staedtler
+
+###<span class="logo_icon" markdown=1>![Ko-fi logo](%assets_url%/kofi_logo.png)</span>Ko-fi
+
+* **[jsstaedtler on Ko-fi](https://ko-fi.com/jsstaedtler)**
+
+Artistry isn't my day job, but it does involve a lot of time and labour.  If you particularly enjoy what I'm creating, I would greatly appreciate any amount of support!
+
+----
+
 ## RSS Feed
 
 <span class="logo_icon" markdown=1>![RSS logo](%assets_url%/rss_logo.png)</span>**%base_url%/rss**
@@ -32,16 +42,14 @@ Mastodon is a microblogging platform with no ads or algorithms, operated by indi
 
 ###<span class="logo_icon" markdown=1>![Tumblr logo](%assets_url%/tumblr_logo.png)</span>Tumblr
 
-* **[jsstaedtler](https://www.tumblr.com/jsstaedtler)**
+* **[jsstaedtler on Tumblr](https://www.tumblr.com/jsstaedtler)**
 
 I'm not as active there, but I follow and reblog other artists.
 
 ----
 
-## Support J.S. Staedtler
+## E-mail
 
-###<span class="logo_icon" markdown=1>![Ko-fi logo](%assets_url%/kofi_logo.png)</span>Ko-fi
+<span class="logo_icon" markdown=1>![E-mail logo](%assets_url%/email_logo.png)</span>**[jsstaedtler@bigraccoon.ca](mailto:jsstaedtler@bigraccoon.ca)**
 
-* **[jsstaedtler](https://ko-fi.com/jsstaedtler)**
-
-Artistry isn't my day job, but it does involve a lot of time and labour.  If you particularly enjoy what I'm creating, I would greatly appreciate any amount of support!
+You can use this address to contact me directly.
