@@ -50,6 +50,6 @@ I'm not as active there, but I follow and reblog other artists.
 
 ## E-mail
 
-###<span class="logo_icon" markdown=1>![E-mail logo](%assets_url%/email_logo.png)</span>**[jsstaedtler@bigraccoon.ca](mailto: jsstaedtler@bigraccoon.ca)**
+<span class="logo_icon" markdown=1>![E-mail logo](%assets_url%/email_logo.png)</span>**[jsstaedtler@bigraccoon.ca](mailto:jsstaedtler@bigraccoon.ca)**
 
 You can use this address to contact me directly.
