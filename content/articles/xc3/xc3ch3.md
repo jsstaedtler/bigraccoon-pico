@@ -1,10 +1,9 @@
 ---
 title: I Played Xenoblade Chronicles 3 - Chapter 3
 date: 2022-08-09
-byline: Things really start to go nuts as our heroes continue on their mission, and their foes target them with regrets from their past
+byline: A longer chapter, that pays off at the end when things reeeeally start to go nuts
 image: bg/articles/xc3/xc3ch3.jpg
 template: xc3-page
-hidden: true
 ---
 
 This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
@@ -611,7 +610,7 @@ So this Zeon's in charge now.  He wants proof that Noah and friends can be trust
 
 </div>
 
-> I think Zeon's little head-wings are great.  For one thing, it's part of a rare but notable kind of diversity within the different races (similarly, we sometimes see different ear types among Gormottis).
+> I think Zeon's little head-wings are great.  For one thing, it's part of a rare but notable kind of diversity within the different races (like varying wing colours among High Entia, and different ear types among Gormottis).
 
 > But secondly, it calls back to __XC1__ in which Melia was the one with unusually small wings (owing to her part-Homs lineage), for which she received some amount of ridicule and disrespect.  Zeon stands in stark contrast to that, being a respected leader, which reinforces how Aionians pay no heed to these biological differences.
 
@@ -1103,7 +1102,7 @@ But this map shows the Nopon Caravan up toward the north.  So we possess secret 
 
 > Ha, some Nopon literally have "???" for their age.  But Aionios has been around for over 1000 years, and not all Nopon are *that* long-lived (presumably not many more than seven of them), so there are definitely many generations of them going back to the Intersection of two worlds.
 
-> When the people of those worlds were preserved within Origin, it's possible that Nopon were included.  However, it seems that those people are only restored by the will of Z, and even then it's only the ten-year olds who will ultimately enter the cycle of death and rebirth (or whoever were the first Consuls).
+> When the people of those worlds were preserved within Origin, it's possible that Nopon were included.  However, it seems that those people are only restored by the will of Z, and even then it's either ten-year olds who will ultimately enter the cycle of death and rebirth, or those who became the first Consuls.
 
 > So it's likely that Nopon came to Aionios some other way.  Though it's funny to think they "fell into" Aionios during the Intersection, there's virtually no evidence that anyone survived that ordeal outside of Origin.  So it's more likely that living Nopon were onboard Origin (as it seems Shulk, Rex, and *maybe* the Queens were?).  They could very well have served as Origin's maintainers right up to the Intersection.
 
@@ -1277,7 +1276,7 @@ And we gotta keep an eye out for this Eclipse.
 
 </div>
 
-> The masked Consul is Y, who is similar in nature to Z.  These three are at the highest level of Moebius, hence all their philosophical talk.
+> The masked Consul is Y, who is similar in nature to Z (as in: somehow formed from Origin).  These three are at the highest level of Moebius, hence all their philosophical talk.
 
 ----
 
@@ -1631,7 +1630,7 @@ This monstrosity is definitely Moebius (the figure-8 symbol can be seen), and it
 
 </div>
 
-> Some more sneaky tricks from the game's developers here.  This is D.  But this is the first time we've seen D's Moebius form on his own—we've only seen him interlinked with J.
+> Some more sneaky tricks from the game's developers here.  This is D.  But this is the first time we've seen D's Moebius form on his own—until now, we've only seen him interlinked with J.
 
 > And furthermore, he lacked his "horns" back then, which are an accessory he uses to enhance his natural senses.  So the identity of this monster remains unknown until the big Chapter 4 reveal.
 
@@ -2013,7 +2012,7 @@ In Japan, Uraya was called Invidia—Latin for "envy."  The English name is deri
 
 And furthermore!  Each nation in Alrest resided on or in a titan, but the titans themselves sometimes had their own name distinct from those living on them.  Argentum's main titan was Goldmouth; Tantal's was Genbu.  Perhaps Uraya's titan had a name like Seebu?
 
-> The selection of place names in Aionios remains a mystery.  I expect they were mostly chosen by the Consuls, who could have memories of these original locations in Zanza's world and in Alrest.  Or else they would have names entirely divorced from the past if anyone else had discovered them first.
+> The selection of place names in Aionios remains a mystery.  I expect they were mostly chosen by the first Consuls, who could have memories of these original locations in Zanza's world and in Alrest.  Or else they would have newly-invented names, entirely divorced from the past, if anyone else had discovered them first.
 
 ----
 
@@ -2121,7 +2120,7 @@ Mio even has trouble walking normally—this could be a nerve agent.
 
 </div>
 
-> This is the first of several incidents in which Mio stumbles or is unnaturally clumsy, and later it's suggested to be related to her advanced age.  But it's hard to tell whether it's a physiological problem, or a result of anxiety.
+> This is the first of several incidents in which Mio stumbles or is unnaturally clumsy, and later it's implied to be related to her advanced age.  But it's hard to tell whether it's a physiological problem, or a result of anxiety.  Either way, she's known to be a superb runner, and her stumbling like this is a big red flag.
 
 ----
 
@@ -2351,7 +2350,7 @@ Isurd just opts for shooting at them all.  Oh, but while he's distracted with th
 
 ----
 
-...The real Taion has flown directly overhead, from where he drops A GIANT @#$&amp;ING BOULDER ONTO THE FERRONIS
+...The real Taion has flown directly overhead, from where he drops A GIANT @#$&ING BOULDER ONTO THE FERRONIS
 
 <div class="imgblock" markdown="1">
 
@@ -2513,8 +2512,6 @@ No.
 
 ----
 
-----
-
 WHAT THE CRAP, IT'S JORAN
 
 AND HE'S AN ANNOYING JERK NOW
@@ -2553,7 +2550,7 @@ I'm not sure what to make of Joran's explanation here, it sounds like he knows w
 
 > The closest we ever get to seeing how a typical Consul is made is with Shania, but even with her, she awoke after it had already happened.  Notably, Shania died knowing she would return, so she was better prepared for that continuity of consciousness.  Joran died expecting *not* to be resurrected, so I'm sure the experience was a huge shock to him.
 
-> But there was also Noah's experience with Z in Origin, during which Noah actually conversed with Z about getting Moebed, and he could recall everything afterward.  It's pretty clear, though, that Noah was a special case: he uniquely possessed the Sword of Origin, and Z had faced off against him and tried to turn him many, many times before.
+> But there was also Noah/N's conversion to Moebius, during which Noah actually conversed with Z about getting Moebed, and he could recall everything afterward.  It's pretty clear, though, that Noah was a special case: dude uniquely possessed the Sword of Origin, and Z had faced off against him and tried to turn him many, many times before.
 
 ----
 
@@ -2627,9 +2624,11 @@ In fact, was Eunie given this opportunity when she died?  Is the alternative to 
 
 </div>
 
-> We can assume Eunie was never more than a standard soldier, and therefore had no value to Moebius.  Joran had a unique connection to the future Ouroboros crew... but that wasn't actually relevant until they got zapped by the Ouroboros Stone *6 or 7 years later*.  And Moebius J was literally already there when that took place.
+> We can assume Eunie was never more than a standard soldier, and therefore had no value to Moebius.  Joran had a unique connection to the future Ouroboros crew... but that wasn't actually known until they got zapped by the Ouroboros Stone *6 or 7 years after Joran died*.  And Moebius J was literally present already when that took place.
 
-> So this is yet more evidence that Noah was uniquely special, and a known threat to Moebius throughout history.  Indeed, as per the opening of Chapter 6, Noah repeatedly got taken in by the City during his previous lives, and regularly ended up working with the Ouroboros Stones.  And furthermore, here in the present, Noah had been split off from N, and the true Ouroboros power had finally been unlocked, making him even more of a ticking time bomb for Moebius.  So it's not a stretch for Z to have picked Joran out early on, as an ace to keep up his sleeve.
+> So by the time of his death, Joran must have been notable merely by who he associated with.  This supports the hypothesis that Noah was a known, unique threat to Moebius throughout history.  Indeed, as per the opening of Chapter 6, Noah repeatedly got taken in by the City during his previous lives, and regularly ended up working with the Ouroboros Stones.  And furthermore, here in the present, Noah had been split off from N, and the true Ouroboros power had finally been unlocked, making him even more of a ticking time bomb for Moebius.
+
+> So it's not a stretch for Z to have picked Joran out early on, as an ace to keep up his sleeve.  Heck, he would probably have Moebed Lanz and Eunie if they ever bit it before getting this far.  And to drive the point home, we will eventually encounter Consul C, who had been very close to our current Noah.
 
 ----
 
@@ -2785,7 +2784,7 @@ Noah recalls a memory that looks like his early days as an off-seer.  Does this 
 
 </div>
 
-> That's obviously the big recurring theme in this game: that despite your own short lifespan, you live on in the memories and ideals of others.  Off-seeing is virtually a literal interpretation of that concept, in which the spirit of the deceased actually comes from the off-seer.
+> That's obviously the big recurring theme in this game: that despite your own short lifespan, you live on in the memories and ideals of others.  Off-seeing is pretty much a literal interpretation of that concept, in which the manifested spirit of the deceased actually originates from the off-seer.
 
 > Noah will later, in the City, do this same thing to entirely inanimate objects.
 
@@ -2881,7 +2880,8 @@ Z's appearance is curious: he'd be a __XC2__ Blade if anything, but my impressio
 
 </div>
 
-> So there's a neat rabbit-hole to follow!  Z is a creation of Origin, and Origin was controlled by the Trinity Processors—particularly Ontos (since Pneuma and Logos kinda... died or something but the end)
+> So there's a neat rabbit-hole to follow!  Z is a creation of Origin, and Origin was controlled by the Trinity Processors—particularly Ontos (since Pneuma and Logos kinda... died or something at the end of __XC2__, but their cores needed to be present to keep Ontos balanced).  At the beginning of __Future Redeemed__, Z even speaks directly to Alpha/Ontos, calling him "my god," implying Ontos to be his creator. 
+So the creation of Z kinda mirrors how Blades came to exist in Alrest in __XC2__ (but that happened at the direct behest of Klaus; who knows what exactly triggered Z to be born).
 
 ----
 
@@ -2933,10 +2933,9 @@ Did Joran get sent off?  Or Eunie?
 
 > At the end of Chapter 5, N famously informs Noah that a 10-termer sent off at their Homecoming *does not* return to the cycle.  And there is indeed a big difference between death and a Homecoming: the latter sees off a *living* person.
 
-
 > So it seems that dying before your full 10 terms gets you thrown back in again, regardless of how you died.  And that's independent of whether your life force was absorbed, or if you were sent off after dying.  And we later see a flashback of Mio naturally reaching her 10-term limit, so we know that results in resurrection, too.
 
-> And on top of it all, there was a time before off-seeing even existed.  Back then, Homecoming consisted of a ceremonial beheading. 😬  Ashera had made it to that Homecoming several times, to the point that she retains the subconscious sensation of her past deaths.  Off-seeing could simply have been adopted as a happier goal for soldiers to strive for, but it might also help prevent the production of soldiers who start questioning their own psychological idiosyncrasies.
+> Furthermore, there was a time before off-seeing even existed: back then, Homecoming consisted of a ceremonial beheading. 😬  Ashera had made it to that Homecoming several times, to the point that she retains the subconscious sensation of her past deaths, but proving that it did not prevent her resurrection.  Crys was the "father of off-seeing" who proposed it as a more palatable reward for 10-termers, but interestingly, it turned Homecoming into a way to keep those successful veterans from coming back and building up an unhealthy habit of questioning their entire existence.
 
 ----
 

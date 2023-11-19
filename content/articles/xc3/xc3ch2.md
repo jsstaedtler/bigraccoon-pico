@@ -1,7 +1,7 @@
 ---
 title: I Played Xenoblade Chronicles 3 - Chapter 2
 date: 2022-08-03
-byline: Our protagonists uncover the true face of their enemy, who is now manipulating former allies into hunting them down
+byline: The first chapter told us everything we knew was wrong, but now we start to learn what we're really up against
 image: bg/articles/xc3/xc3ch2.jpg
 template: xc3-page
 ---
