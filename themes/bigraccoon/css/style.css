@@ -5190,6 +5190,9 @@ span.logo_icon img {
     vertical-align: middle;
 }
 
+
+/* Change UL bullets to chevrons */
+
 .post ul {
   list-style: none;
   list-style-position: inside;
@@ -5211,6 +5214,15 @@ span.logo_icon img {
     position: relative;
     top: 0.1rem;
 }
+
+/* Pico puts <p> blocks inside its <li> blocks which messes up bullet alignment */
+
+.post ul li p {
+	display: inline;
+}
+
+
+/* Do even fancier things with article listing ULs */
 
 #main ul.pageslist {
    	list-style-type: none;
