@@ -1074,6 +1074,8 @@ Well this segues into the Affinity Chart!  As we discover new colonies, they sho
 
 </div>
 
+> Okay I only just realized that Ethel's map was being viewed in perspective.  It probably looked cool and 3-dimensional in the eyes of the characters, but it's flat and weird to us on our screens
+
 ----
 
 But this map shows the Nopon Caravan up toward the north.  So we possess secret information that others don't. 😆  But more than that...

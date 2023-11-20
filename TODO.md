@@ -4,16 +4,15 @@
 	* Blue on hover, with transition
 	* In condensed navbar, keep circle around back-to-top button?
 	* Make buttons right of section tabs look good in condensed navbar (make them vertical)
-* Split templates into reusable segments
-* Page footer with CC info and attributions
-* Use white or black version of logo depending on background colour
-* Does main logo at the top of each page need a border or dropshadow?
+* Split <HEAD> of templates into reusable segment
+* Does main logo at the top of each page, or the copyright footer, need a border or dropshadow?
 * Piwigo
 	* Adjust page header to integrate it better with the Pico site
 	* Change to a light theme?
 	
 #### After release
 * Add dark-mode toggle
+* Replace fontawesome icons with SVG files
 * Add comments using Mastodon
 * Introduce a highlight colour, or make tinted instead of plain black?  Brownish (like a raccoon)?
 * Rebuild gallery in Pico
