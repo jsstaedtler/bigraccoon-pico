@@ -3,7 +3,7 @@ title: I Played Xenoblade Chronicles 3 - Chapter 2
 date: 2022-08-03
 byline: The first chapter told us everything we knew was wrong, but now we start to learn what we're really up against
 image: bg/articles/xc3/xc3ch2.jpg
-template: xc3-page
+template: article-xc3
 ---
 
 This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.

@@ -3,7 +3,7 @@ title: I Played Xenoblade Chronicles 3 - Chapter 4
 date: 2022-08-20
 byline: The party grapples with the meaning of their artificially short lives in a world with no freedom, but they gain new hope and motivation to carry on
 image: bg/articles/xc3/xc3ch4.jpg
-template: xc3-page
+template: article-xc3
 hidden: true
 ---
 

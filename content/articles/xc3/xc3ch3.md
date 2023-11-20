@@ -3,7 +3,7 @@ title: I Played Xenoblade Chronicles 3 - Chapter 3
 date: 2022-08-09
 byline: A longer chapter, that pays off at the end when things reeeeally start to go nuts
 image: bg/articles/xc3/xc3ch3.jpg
-template: xc3-page
+template: article-xc3
 ---
 
 This was originally written as a long thread on Twitter—that's why it's organized in chunks of up to 280 characters and 4 images.  I've stitched them all together into a single article here.
