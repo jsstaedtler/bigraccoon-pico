@@ -1,0 +1,38 @@
+<!-- Site navigation -->
+<nav id="nav">
+	<div id="homebutton" class="hidden">
+		<a href="{{ base_url }}" class="home"><img id="logowhite" src="{{ assets_url }}/bigraccoon_logo_white.png" alt="Home"></a>
+		<a href="{{ base_url }}" class="home"><img id="logoblack" src="{{ assets_url }}/bigraccoon_logo_black.png" alt="Home"></a>
+	</div>
+	
+	<div id="menu">
+	
+		<div id="menubutton">
+			<span id="navPanelToggle" onClick="toggleMenu();">Menu</span>
+		</div>
+	
+		<div id="navLinks">
+			<ul class="links">
+			{% for page in pages(depthOffset=0) if page.title and not page.hidden %}
+				{% set page_parent = page.id | split('/') %}
+				<li{% if (page.id == current_page.id) or (page_parent[0] == current_parent[0]) %} class="active"{% endif %}>
+					<a href="{{ page.url }}">{{ page.title }}</a>
+				</li>
+			{% endfor %}
+			</ul>
+
+			<ul class="icons">
+				<li><span class="menucontrol">
+					<span class="serif-font">Aa</span>
+					<label class="toggleswitch" onclick="toggleFont()"><input type="checkbox" id="fonttoggle"><span class="switchslider"></span></label>
+					<span class="sans-font">Aa</span>
+				</span></li>
+				<li><a href="#main" class="icon solid fa-arrow-up"><span class="label">Back to Top</span></a></li>
+			</ul>
+		</div>
+	
+	</div>
+</nav>
+
+<div id="navBuffer"></div>
+<!-- --------------- -->

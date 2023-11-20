@@ -9,7 +9,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
-		<title>{{ site_title }}</title>
+		<title>{{ site_title }} &#x2022; Works by J.S. Staedtler</title>
     {% if meta.description %}
         <meta name="description" content="{{ meta.description|striptags }}" />
     {% endif %}
@@ -49,44 +49,9 @@
 				</ul>
 			</div>
 
-			<!-- Site navigation -->
-			<nav id="nav">
-				<div id="homebutton" class="active hidden">
-					<a href="{{ base_url }}" class="home"><img src="{{ assets_url }}/bigraccoon_logo_black.png" alt="Home"></a>
-				</div>
-				
-				<div id="menu">
-				
-					<div id="menubutton">
-						<span id="navPanelToggle" onClick="toggleMenu();">Menu</span>
-					</div>
-				
-					<div id="navLinks">
-						<ul class="links">
-						{% for page in pages(depthOffset=0) if page.title and not page.hidden %}
-							<li>
-								<a href="{{ page.url }}">{{ page.title }}</a>
-							</li>
-						{% endfor %}
-						</ul>
 
-						<ul class="icons">
-							<li><span class="menucontrol">
-								<span class="serif-font">Aa</span>
-								<label class="toggleswitch" onclick="toggleFont()"><input type="checkbox" id="fonttoggle"><span class="switchslider"></span></label>
-								<span class="sans-font">Aa</span>
-							</span></li>
-							<li><a href="#main" class="icon solid fa-arrow-up"><span class="label">Back to Top</span></a></li>
-							<!-- li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li -->
-						</ul>
-					</div>
-					
-				</div>
-			</nav>
-
-			<div id="navBuffer"></div>
+{{ include("segment-navbar.twig") }}
+			
 
 			<!-- Main -->
 			<div id="main">
@@ -141,56 +106,9 @@
 
 			</div>
 
-			<!-- Footer -->
-<!--			<footer id="footer">
-				<section>
-					<form method="post" action="#">
-						<div class="fields">
-							<div class="field">
-								<label for="name">Name</label>
-								<input type="text" name="name" id="name" />
-							</div>
-							<div class="field">
-								<label for="email">Email</label>
-								<input type="text" name="email" id="email" />
-							</div>
-							<div class="field">
-								<label for="message">Message</label>
-								<textarea name="message" id="message" rows="3"></textarea>
-							</div>
-						</div>
-						<ul class="actions">
-							<li><input type="submit" value="Send Message" /></li>
-						</ul>
-					</form>
-				</section>
-				<section class="split contact">
-					<section class="alt">
-						<h3>Address</h3>
-						<p>1234 Somewhere Road #87257<br />
-						Nashville, TN 00000-0000</p>
-					</section>
-					<section>
-						<h3>Phone</h3>
-						<p><a href="#">(000) 000-0000</a></p>
-					</section>
-					<section>
-						<h3>Email</h3>
-						<p><a href="#">info@untitled.tld</a></p>
-					</section>
-					<section>
-						<h3>Social</h3>
-						<ul class="icons alt">
-							<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</section>
-				</section>
-			</footer>
--->
-                        {{ include("segment-copyright.twig") }}
+
+{{ include("segment-copyright.twig") }}
+
 
 		</div>
 

@@ -60,46 +60,15 @@
 				<a href="{{ base_url }}"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
 			</header>
 
-			<!-- Site navigation -->
-			<nav id="nav">
-				<div id="homebutton" class="hidden">
-					<a href="{{ base_url }}" class="home"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="Home"></a>
-				</div>
-						
-				<div id="menu">
-				
-					<div id="menubutton">
-						<span id="navPanelToggle" onClick="toggleMenu();">Menu</span>
-					</div>
-				
-					<div id="navLinks">
-						<ul class="links">
-						{% for page in pages(depthOffset=0) if page.title and not page.hidden %}
-							{% set page_parent = page.id | split('/') %}
-							<li{% if (page.id == current_page.id) or (page_parent[0] == current_parent[0]) %} class="active"{% endif %}>
-								<a href="{{ page.url }}">{{ page.title }}</a>
-							</li>
-						{% endfor %}
-						</ul>
 
-						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
-					</div>
-					
-				</div>
-			</nav>
+{{ include("segment-navbar.twig") }}
 			
-			<div id="navBuffer"></div>
-				
+
 			<!-- Main content -->
 			<div id="main">
 			    
 
-				{{ include("segment-pagination.twig") }}
+{{ include("segment-pagination.twig") }}
 
 
 				<!-- Post -->
@@ -117,22 +86,14 @@
 				</section>
 				
 				
-				{{ include("segment-pagination.twig") }}
+{{ include("segment-pagination.twig") }}
 
 
 			</div>
 
-			<!-- Footer -->
-			<footer id="footer">
-			</footer>
 
-			<!-- Copyright -->
-			<div id="copyright">
-				<ul>
-					<li>&copy; Untitled</li>
-					<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</div>
+{{ include("segment-copyright.twig") }}
+
 
 		</div>
 
