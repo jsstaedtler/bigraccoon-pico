@@ -5119,6 +5119,9 @@ input, select, textarea {
 	display: inline-block;
 }
 
+
+/* For the font toggle switch */
+
 .serif-font {
 	font-family: "Merriweather", Georgia, serif;
 	font-size: 0.9rem;
@@ -5178,6 +5181,16 @@ input:checked + .switchslider:before {  /* How far to move when checked */
 	-webkit-transform: translateX(14px);
 	-ms-transform: translateX(14px);
 	transform: translateX(14px);
+}
+
+@media screen and (max-width: /*980px*/ 736px) {
+	
+    /* At this screen size, the navpanel has a different background and the toggle switch needs to be recoloured */
+
+	.switchslider {
+        background-color: black;
+	}
+	
 }
 
 
