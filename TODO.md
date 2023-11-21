@@ -1,6 +1,6 @@
 #### To complete before release
 * JS on page load to see if checkboxes are checked, and if so, to activate their feature (eg. text style, spoiler reveal)
-* Change colour of font toggle to contrast against background
+* Make back-to-top button slide into view at the same time as the home button
 * Navbar buttons (eg home button image, text style toggle, back-to-top button):
 	* Blue on hover, with transition
 	* In condensed navbar, keep circle around back-to-top button?
