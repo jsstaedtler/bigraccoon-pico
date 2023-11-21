@@ -5134,7 +5134,7 @@ input, select, textarea {
 	font-weight: 600;
 }
 
-.toggleswitch {  /* The area of the background rectangle */
+.toggleswitch {  /* Defines the boundary of the switch */
 	position: relative;
 	display: inline-block;
 	width: 30px;
@@ -5149,7 +5149,7 @@ input, select, textarea {
 	height: 0;
 }
 
-.switchslider {
+.switchslider {  /* The rectangle part of the switch */
 	position: absolute;
 	cursor: pointer;
 	top: 0;
@@ -5173,9 +5173,11 @@ input, select, textarea {
 	transition: .4s;
 }
 
+/* Background rectangle when switched On (to the right) */
+/*
 input:checked + .switchslider {
 	background-color: white;
-}
+} */
 
 input:checked + .switchslider:before {  /* How far to move when checked */
 	-webkit-transform: translateX(14px);
@@ -5184,15 +5186,16 @@ input:checked + .switchslider:before {  /* How far to move when checked */
 }
 
 @media screen and (max-width: /*980px*/ 736px) {
-	
     /* At this screen size, the navpanel has a different background and the toggle switch needs to be recoloured */
 
 	.switchslider {
-        background-color: black;
+        background-color: #555;
 	}
-	
-}
 
+	.switchslider:before { 
+        background-color: white;
+	}
+}
 
 
 span.logo_icon img {
