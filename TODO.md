@@ -1,8 +1,6 @@
 #### To complete before release
 * JS on page load to see if checkboxes are checked, and if so, to activate their feature (eg. text style, spoiler reveal)
-* Make back-to-top button slide into view at the same time as the home button
 * Navbar buttons (eg home button image, text style toggle, back-to-top button):
-	* Blue on hover, with transition
 	* In condensed navbar, keep circle around back-to-top button?
 	* Make buttons right of section tabs look good in condensed navbar (make them vertical)
 * Does main logo at the top of each page, or the copyright footer, need a border or dropshadow?
@@ -16,6 +14,8 @@
 * Click images to zoom in on them in a lightbox view
 * Add dark-mode toggle
 * Replace fontawesome icons with SVG files
+* Get rid of jQuery
+	* Figure out how that "scrolly" thing works to smoothly move between points on the page
 * Split <HEAD> of templates into reusable segment
 * Add comments using Mastodon
 * Introduce a highlight colour, or make tinted instead of plain black?  Brownish (like a raccoon)?
