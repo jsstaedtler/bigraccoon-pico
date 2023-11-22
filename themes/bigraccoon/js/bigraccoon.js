@@ -4,6 +4,7 @@ var navBarTop;
 var logo;
 var logoMid;
 var homeButton;
+var backtotopButton;
 var bgs;
 var bgWidth;
 var bgRightOffset;
@@ -50,7 +51,7 @@ document.addEventListener("click", closeMenuOnClickOutside);
 
 function resetDimensions() {
 	// We don't measure the top of #nav, because it may have been changed to 0.
-	// Instead, we get the top position of the #main element (adjusted by how far the page has ascrolled), and subtract the height of the navbar.
+	// Instead, we get the top position of the #main element (adjusted by how far the page has scrolled), and subtract the height of the navbar.
 	// That vertical position on the page is the threshold where the navbar should stick and unstick.
 	navBar = document.getElementById("nav");
 	navBarTop = document.getElementById("main").getBoundingClientRect().top + window.scrollY - navBar.clientHeight;
@@ -60,6 +61,7 @@ function resetDimensions() {
 	logoMid = logo.getBoundingClientRect().top + window.scrollY + (logo.clientHeight / 2);
 	
 	homeButton = document.getElementById("homebutton");
+	backtotopButton = document.getElementById("backtotopbutton");
 	
 	// The page background should be 100% wide and centered, but if a scrollbar has shrunken the viewport, the page BG remains in place but everything else gets a new centerline a bit to the left.
 	// The Body object of the page has a clientWidth that measures the true width of the viewport (without the scrollbar).
@@ -92,8 +94,10 @@ function scrollChanges() {
 	// If the page scrolls past the middle of the logo, present the logo on the navbar
 	if (window.pageYOffset >= logoMid) {
 		homeButton.classList.remove("hidden");
+		backtotopButton.classList.remove("hidden");
 	} else {
 		homeButton.classList.add("hidden");
+		backtotopButton.classList.add("hidden");
 	}
 }
 

@@ -3891,6 +3891,19 @@ input, select, textarea {
 			width: 0;
 		}
 		
+/* N */	#backtotopbutton {
+			width: 2.2rem;
+			-moz-transition: 0.5s;
+			-webkit-transition: 0.5s;
+			-ms-transition: 0.5s;
+			transition: 0.5s;
+		}
+		
+		#backtotopbutton.hidden {
+			width: 0;
+			margin-right: 0;
+		}
+		
 /* N */	#nav ul.links li a.home {
 			padding: 0 1rem;
 			border: 0;
@@ -3940,7 +3953,6 @@ input, select, textarea {
 			max-height: 4rem;
 			margin-bottom: 0;
 /*			margin-left: auto; */
-/* C */		margin-right: 1rem;
 			float: right;
 		}
 		
