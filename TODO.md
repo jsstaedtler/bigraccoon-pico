@@ -12,6 +12,7 @@
 	
 #### After release
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
+	* Or reset when scrolling back to the top?
 * Click images to zoom in on them in a lightbox view
 * Add dark-mode toggle
 * Replace fontawesome icons with SVG files
