@@ -65,8 +65,8 @@
 					
 					{{ content }}
 					
-					{% for page in pages(current_page.id) if not page.hidden %}
 					<ul class="pageslist">
+					{% for page in pages(current_page.id) if not page.hidden %}
 						<li>
 							<a href="{{ page.url }}">
 								<p class="date">{{ page.date_formatted }}</p>
@@ -75,8 +75,8 @@
 								<p class="excerpt">{{ page.meta.byline }}</p>
 							</a>
 						</li>
-					</ul>
 					{% endfor %}
+					</ul>
 
 				</section>
 

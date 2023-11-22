@@ -5280,6 +5280,7 @@ span.logo_icon img {
 }
 
 ul.pageslist li .date {
+	display: block;
 	margin: 0 0 0 0;
 	position: relative;
 }
