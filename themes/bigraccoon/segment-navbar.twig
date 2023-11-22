@@ -13,6 +13,7 @@
 	
 		<div id="navLinks">
 			<ul class="links">
+			{% set current_parent = current_page.id | split('/') %}
 			{% for page in pages(depthOffset=0) if page.title and not page.hidden %}
 				{% set page_parent = page.id | split('/') %}
 				<li{% if (page.id == current_page.id) or (page_parent[0] == current_parent[0]) %} class="active"{% endif %}>
