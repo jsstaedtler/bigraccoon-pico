@@ -4866,24 +4866,26 @@ input, select, textarea {
 			padding-left: 0;
 		}
 
-			#copyright ul li {
-				border-left: solid 2px;
-				display: inline-block;
-				line-height: 1;
-				margin-left: 1rem;
-				padding-left: 1rem;
-			}
+/* C
+		#copyright ul li {
+			border-left: solid 2px;
+			display: inline-block;
+			line-height: 1;
+			margin-left: 1rem;
+			padding-left: 1rem;
+		}
 
-				#copyright ul li:first-child {
-					border-left: 0;
-					margin-left: 0;
-					padding-left: 0;
-				}
+		#copyright ul li:first-child {
+			border-left: 0;
+			margin-left: 0;
+			padding-left: 0;
+		}
+*/
 
 		@media screen and (max-width: 1280px) {
 
 			#copyright {
-				margin: 4rem auto;
+				margin: 3rem auto;
 			}
 
 		}
