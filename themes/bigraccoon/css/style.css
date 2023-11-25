@@ -145,6 +145,7 @@ input, select, textarea {
 
 	body {
 		color: #212931;
+/* N */	fill: #212931;
 	}
 
 	body, input, select, textarea {
@@ -3963,8 +3964,16 @@ input, select, textarea {
 			height: 4rem;
 		}
 		
-/* N */	#nav ul.icons img {
+/* N */	#nav ul.icons img, #nav ul.icons svg {
+			-moz-transition: fill 0.2s ease-in-out;
+			-webkit-transition: fill 0.2s ease-in-out;
+			-ms-transition: fill 0.2s ease-in-out;
+			transition: fill 0.2s ease-in-out;
 			height: 1.8rem;
+		}
+		
+/* N */	#nav ul.icons svg:hover {
+			fill: #18bfef;
 		}
 		
 		/* Icon images should be black, and will be inverted to white on a dark background */
@@ -3972,6 +3981,10 @@ input, select, textarea {
 			#nav ul.icons img {
 				filter: invert(100%)
 			}
+			
+			 #nav ul.icons svg {
+				 fill: white;
+			 }
 		}
 		
 		#navBuffer {
