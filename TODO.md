@@ -1,4 +1,5 @@
 #### To complete before release
+* Fix back-to-top button hiding in mobile menu
 * JS on page load to see if checkboxes are checked, and if so, to activate their feature (eg. text style, spoiler reveal)
 * Test site with JS disabled
 * On mobile, close menu after clicking back-to-top button
