@@ -2835,32 +2835,32 @@ input, select, textarea {
 
 /* Icons */
 
-	ul.icons {
-		cursor: default;
-		list-style: none;
-		padding-left: 0;
-	}
+		ul.icons {
+			cursor: default;
+			list-style: none;
+			padding-left: 0;
+		}
 
 		ul.icons li {
 			display: inline-block;
-/* C */		padding: 0;
+/* C */		padding: 0.5rem 0 0;
 /* N */		margin-right: 1rem;
 			vertical-align: middle;
 		}
 
-			ul.icons li:last-child {
-				padding-right: 0;
-			}
+		ul.icons li:last-child {
+			padding-right: 0;
+		}
 
-			ul.icons li .icon:before {
-				width: 2.25rem;
-				height: 2.25rem;
-				line-height: 2.25rem;
-				display: inline-block;
-				text-align: center;
-				border-radius: 100%;
-				font-size: 1.25rem;
-			}
+		ul.icons li .icon:before {
+			width: 2.25rem;
+			height: 2.25rem;
+			line-height: 2.25rem;
+			display: inline-block;
+			text-align: center;
+			border-radius: 100%;
+			font-size: 1.25rem;
+		}
 
 		ul.icons.alt li .icon:before {
 			-moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -3899,9 +3899,12 @@ input, select, textarea {
 			transition: 0.5s;
 		}
 		
-		#backtotopbutton.hidden {
-			width: 0;
-			margin-right: 0;
+/* Don't hide the back-to-top button when it's in the dropdown menu */
+		@media screen and (min-width: 737px) {
+			#backtotopbutton.hidden {
+				width: 0;
+				margin-right: 0;
+			}
 		}
 		
 /* N */	#nav ul.links li a.home {
@@ -3958,6 +3961,17 @@ input, select, textarea {
 		
 		#nav ul.icons li {
 			height: 4rem;
+		}
+		
+/* N */	#nav ul.icons img {
+			height: 1.8rem;
+		}
+		
+		/* Icon images should be black, and will be inverted to white on a dark background */
+/* N */	@media screen and (min-width: 737px) {
+			#nav ul.icons img {
+				filter: invert(100%)
+			}
 		}
 		
 		#navBuffer {
