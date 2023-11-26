@@ -4,6 +4,7 @@
 * Test site in Chrome, Safari, Edge, IE(?)
     * Chrome mobile: article listing bullets are misaligned
 * Get rid of underline in article listing bylines
+* Black home button not appearing on mobile navbar
 * Make BG image fade in sooner
 * Piwigo
 	* Adjust page header to integrate it better with the Pico site
