@@ -2,6 +2,8 @@
 * JS on page load to see if checkboxes are checked, and if so, to activate their feature (eg. text style, spoiler reveal)
 * Test site with JS disabled
 * Test site in Chrome, Edge, IE(?)
+    * Chrome: article listing bullets are misaligned
+* Get rid of underline in article listing bylines
 * Piwigo
 	* Adjust page header to integrate it better with the Pico site
 	
