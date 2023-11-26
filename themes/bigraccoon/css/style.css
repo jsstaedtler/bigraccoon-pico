@@ -4194,6 +4194,7 @@ input, select, textarea {
 		width: calc(100% - 4rem);
 		max-width: 72rem;
 		z-index: 2;
+/* N */	box-shadow: 0 0.75rem 0.5rem -0.35rem rgba(30, 37, 45, 0.5);
 	}
 
 		#main > * {
