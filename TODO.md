@@ -2,11 +2,8 @@
 * JS on page load to see if checkboxes are checked, and if so, to activate their feature (eg. text style, spoiler reveal)
 * Test site with JS disabled
 * Test site in Chrome, Safari, Edge, IE(?)
-    * Chrome mobile: article listing bullets are misaligned
-* Get rid of underline in article listing bylines
-* Black home button not appearing on mobile navbar
+    * Chrome mobile: article listing bullets are misaligned, but only when any list item has a byline - and doesn't happen on narrow desktop browser
 * Make BG image fade in sooner
-* Make 404 page
 * Piwigo
 	* Adjust page header to integrate it better with the Pico site
 	
