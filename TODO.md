@@ -12,6 +12,7 @@
 * Store all fonts locally
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
+* In the pagination bar, add greyed-out buttons at the start/end so it looks better balanced
 * On mobile, close menu after clicking back-to-top button
 	* Need to make this execute, *and* still keep scrolling to the top
 * Click images to zoom in on them in a lightbox view
