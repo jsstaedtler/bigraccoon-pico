@@ -4027,11 +4027,11 @@ input, select, textarea {
 				background-color: #ffffff;
 			}
 			
-/* N */ 	#homebutton img#logowhite {
+/* N */ 	#homebutton a#logowhite {
 				display: none;
 			}
 		
-/* N */ 	#homebutton img#logoblack {
+/* N */ 	#homebutton a#logoblack {
 				display: initial;
 				filter: opacity(85%);
 			}
