@@ -4833,7 +4833,7 @@ input, select, textarea {
 	#copyright {
 		color: #ffffff;
 		position: relative;
-		color: rgba(255, 255, 255, 0.67);
+		color: rgba(255, 255, 255, 0.75);
 		cursor: default;
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-size: 0.8rem;
@@ -4894,6 +4894,17 @@ input, select, textarea {
 			padding-left: 0;
 		}
 
+		#copyright ul li {
+			border-left: 0;
+			margin: 0.5rem 0 0 0;
+			padding-left: 0;
+			display: block;
+		}
+
+		#copyright ul li:first-child {
+			margin-top: 0;
+		}
+
 /* C
 		#copyright ul li {
 			border-left: solid 2px;
@@ -4918,20 +4929,6 @@ input, select, textarea {
 
 		}
 
-		@media screen and (max-width: 480px) {
-
-			#copyright ul li {
-				border-left: 0;
-				margin: 1rem 0 0 0;
-				padding-left: 0;
-				display: block;
-			}
-
-				#copyright ul li:first-child {
-					margin-top: 0;
-				}
-
-		}
 
 /* Nav Panel */
 
