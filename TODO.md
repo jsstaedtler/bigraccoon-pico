@@ -18,6 +18,7 @@
 * On mobile, close menu after clicking back-to-top button
 	* Need to make this execute, *and* still keep scrolling to the top
 * Click images to zoom in on them in a lightbox view
+    * Good example: https://html5up.net/uploads/demos/big-picture/
 * Add dark-mode toggle
 * Replace fontawesome icons with SVG code
 * Get rid of jQuery
