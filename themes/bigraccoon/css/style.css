@@ -5330,6 +5330,10 @@ ul.pageslist li {
 	clear: both;
 }
 
+ul.pageslist li a {
+	border-bottom: 0 none;
+}
+
 ul.pageslist li span.image.right {
 	top: initial;
 	max-width: 33%
