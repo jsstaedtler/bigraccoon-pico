@@ -14,4 +14,4 @@ I'm not a capital-G gamer, but I do have a decent ratio of games played to games
 
 I'm a dirty anti-capitalist lefty (without the dirt), and you won't find me on the corporate social media behemoths.  I happily promote **[Mastodon](https://fedi.garden/)** and other platforms on the Fediverse, and you'll find me at **[@jsstaedtler@mastodon.art](https://mastodon.art/@jsstaedtler)**.  Check out the **[Links page](%base_url%/links)** for more ways to follow my work and support me.
 
-Thank you for your interest and your audience!
+Finally, my original creative work is published under the [**Creative Commons Attribution license** (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).  This means you can freely distribute, adapt, or modify my creations (even commercially), *as long as* you clearly credit me as the original creator.  One big reason for this is I love to see how other artists draw my original characters, and if you do so, please let me know!
