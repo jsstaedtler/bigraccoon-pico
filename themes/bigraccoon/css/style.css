@@ -162,7 +162,7 @@ input, select, textarea {
 		line-height: 2;
 	}
 
-	a, a h1, a h2, a h3, a h4, a h5, a h6 {
+	a, a h1, a h2, a h3, a h4, a h5, a h6, a strong, a b {
 		-moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 		-webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
@@ -170,10 +170,6 @@ input, select, textarea {
 		border-bottom: dotted 1px;
 		text-decoration: none;
 	}
-
-		a:hover {
-			border-bottom-color: transparent;
-		}
 
 	strong, b {
 		font-weight: 600;
@@ -312,11 +308,15 @@ input, select, textarea {
 		border-bottom-color: rgba(33, 41, 49, 0.5);
 	}
 
-		a:hover {
-			border-bottom-color: transparent;
-			color: #18bfef !important;
-		}
+	a:hover {
+		border-bottom-color: transparent;
+		color: #18bfef !important;
+	}
 
+	a strong:hover, a b:hover {
+		color: #18bfef;
+	}
+	
 	strong, b {
 		color: #212931;
 	}
@@ -4925,6 +4925,15 @@ input, select, textarea {
 
 			#copyright {
 				margin: 3rem auto;
+			}
+
+		}
+
+
+		@media screen and (max-width: 736px) {
+
+			#copyright {
+				margin: 2rem auto;
 			}
 
 		}
