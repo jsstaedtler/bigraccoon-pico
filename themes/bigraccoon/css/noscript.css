@@ -20,7 +20,7 @@
 /* C */		background-size: auto,																cover;
 			background-position: center,														top center;
 			background-repeat: no-repeat,														no-repeat;
-			background-attachment: scroll,														scroll;
+			background-attachment: fixed,														fixed;
 	}
 
 		#wrapper.fade-in:before {
@@ -48,7 +48,7 @@
         }
         
 /* N */ #nav div#navLinks {
-	        height: 13rem;
+	        height: 4rem;
 	    }
 		
 /* N */	#navPanelToggle:before {
@@ -59,3 +59,12 @@
 			color: initial;
 			cursor: default;
 		}
+
+	/* At this width, #navLinks will be styled as a panel, but with "display: none" by default.   */
+	@media screen and (max-width: /*980px*/ 736px) {
+		
+		#nav div#navLinks {
+	        height: 13rem;
+	    }
+		
+	}
