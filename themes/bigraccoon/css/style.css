@@ -3937,11 +3937,11 @@ input, select, textarea {
 			margin: 0.5rem 1rem;
 		}
 			
-/* N */ #homebutton img#logowhite {
+/* N */ #homebutton a#logowhite {
 			display: initial;
 		}
 		
-/* N */ #homebutton img#logoblack {
+/* N */ #homebutton a#logoblack {
 			display: none;
 		}
 
