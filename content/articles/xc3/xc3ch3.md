@@ -16,12 +16,7 @@ Obviously, this article contains spoilers for Chapters 3 and earlier of __Xenobl
 
 It also makes the occasional reference back to the first __Xenoblade Chronicles__, its sequel __Xenoblade Chronicles 2__, and the DLC expansions for each: __Future Connected__ and __Torna - The Golden Country__.  Those will add new context to __XC3__, but could be considered minor spoilers for those games.
 
-*Additionally*, I've added a few new entries which contain spoilers for *the entirety of __Xenoblade Chronicles 3__* (including DLC expansion __Future Redeemed__).  *But those will be hidden by default.*  Click here if you would like to view those as well:
-
-<noscript>*Unfortunately, Javascript must be enabled to dynamically reveal the additional spoiler content*</noscript>
-
-<input id="spoilerswitchbox" type="checkbox" name="spoilerswitchbox" onChange="toggleSpoilers(this);">
-<label id="spoilerswitchlabel" for="spoilerswitchbox"><h4>Reveal full-game spoilers</h4></label>
+<div id="spoilerToggleSection"></div>
 
 </div>
 

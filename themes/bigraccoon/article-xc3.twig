@@ -24,7 +24,6 @@
 		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
 		<style>
 			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
-			/* #nav.sticky { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); } */
 			blockquote { display: none; }
 		</style>
 		
@@ -84,7 +83,10 @@
 							
 				</section>
 				
+				{# Huge hack job to let the spoiler checkbox instructions only appear if JavaScript is enabled in the browser. #}
+				{# There is an empty div in the content file with id="spoilerToggleSection" and it will get filled in at this point. #}
 				<script>
+					document.getElementById("spoilerToggleSection").innerHTML = '<p><em>Additionally</em>, I&#39;ve added a few new entries which contain spoilers for <em>the entirety of <strong>Xenoblade Chronicles 3</strong></em> (including DLC expansion <strong>Future Redeemed</strong>).  <em>But those will be hidden by default.</em>  Click here if you would like to view those as well:</p><input id="spoilerswitchbox" type="checkbox" name="spoilerswitchbox" onChange="toggleSpoilers(this);"><label id="spoilerswitchlabel" for="spoilerswitchbox"><h4>Reveal full-game spoilers</h4></label>';
 					toggleSpoilers(document.getElementById("spoilerswitchbox"));
 				</script>
 				
