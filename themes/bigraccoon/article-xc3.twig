@@ -35,8 +35,7 @@
 			</style>
 		</noscript>
 		
-		<!-- This template treats blockquotes as spoilers, and allows them to hidden or revealed by the user -->
-		
+		<!-- This template treats blockquotes as spoilers, and allows them to be hidden or revealed by the user -->
 		<script>
 			function toggleSpoilers(checkbox) {
 				var i;
@@ -84,6 +83,10 @@
 					{{ content }}
 							
 				</section>
+				
+				<script>
+					toggleSpoilers(document.getElementById("spoilerswitchbox"));
+				</script>
 				
 				
 {{ include("segment-pagination.twig") }}
