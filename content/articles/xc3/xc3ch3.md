@@ -218,6 +218,10 @@ Uh oh.  This answers the question of "what's under all that swirling cloud at th
 
 </div>
 
+> Our heroes will eventually end up traversing that northern route *in reverse*.  If they were to take it from this point, they would first have to backtrack through Lower Aetia; find some way of getting up to Capticorn Peak; traverse the snowy fields of level 50ish monsters; descend in Cadensia *directly beneath* Agnus Castle; sneak out of the castle region via the bay (only made easier if they could somehow commandeer an Agnian boat); traverse the massive Erythia Sea (again, hopefully with a boat); and finally come up against the sealed harbour of Swordmarch.
+
+> Ethel really did them a solid here with her recommendation.
+
 ----
 
 This is both hilarious and sad.  In order to save humanity, Vandham told these kids to go to the city.  But he never expected they wouldn't know what a city even is.
@@ -722,6 +726,8 @@ I don't know if he means the regular people of Aionios are fated for doom and de
 > B is referring to the fate of the young soldiers, and how they suffer explicitly for the benefit of the Consuls and Moebius.
 
 > It *is* a bit curious that B disappeared very quickly, while K's corpse stuck around long enough to debate over.  But it can basically be chalked up to what best served the storytelling: they had to unmask K, but unmasking every other Consul would get repetitive (and require many unique faces to be modeled by the developers).
+
+> Finally, only Aionian soldiers give off red motes, since only they can have their life force absorbed.  Everyone else gives off white motes, even monsters—which is a bit curious since, in early Chapter 1, it was shown that monsters contributed a small amount to Flame Clocks.
 
 ----
 
