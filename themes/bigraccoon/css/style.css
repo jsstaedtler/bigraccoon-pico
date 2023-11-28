@@ -7,6 +7,16 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+html: {
+	height: 100%;
+}
+
+body {
+	min-height:100%;
+	line-height: 1;
+	-webkit-text-size-adjust: none;
+}
+
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -29,10 +39,6 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;}
 
-body {
-	line-height: 1;
-}
-
 ol, ul {
 	list-style: none;
 }
@@ -49,10 +55,6 @@ blockquote, q {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-}
-
-body {
-	-webkit-text-size-adjust: none;
 }
 
 mark {
