@@ -5262,21 +5262,14 @@ span.logo_icon img {
   list-style-position: inside;
 }
 
-.post ul li::before {
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-    text-transform: none !important;
-	font-style: normal;
-	font-variant: normal;
-	text-rendering: auto;
-	font-family: 'Font Awesome 5 Free';
-	font-weight: 900;
-    content: '\f105';
-    font-size: 130%;
-    line-height: 0;
-    margin: 0 0.7rem 0 -1.5rem;
-    position: relative;
-    top: 0.1rem;
+.post ul li {
+	position: relative;
+	padding-left: 2rem;
+	margin-bottom: 1rem;
+	background-image: url(/assets/chevron-right.svg);
+	background-position: 0 0.2rem;
+	background-size: 2rem 2rem;
+	background-repeat: no-repeat;
 }
 
 /* Pico puts <p> blocks inside its <li> blocks which messes up bullet alignment */
@@ -5291,28 +5284,12 @@ span.logo_icon img {
 #main ul.pageslist {
    	list-style-type: none;
    	list-style-position: inside;
-/*	display: inline-block; */
 }
 
-#main ul.pageslist li:before {
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-/*	float: left; */
-	position: relative;
-	font-style: normal;
-	font-variant: normal;
-	text-rendering: auto;
-	line-height: 1;
-	text-transform: none !important;
-	font-family: 'Font Awesome 5 Free';
-	font-weight: 900;
-	font-size: 175%;
-	content: '\f105';
-	line-height: 0;
-/*	margin-top: 2.8rem; */
-	margin-left: -1.8rem;
-	margin-right: 0.9375em;
-	top: 5.4rem;
+ul.pageslist li {
+	padding-left: 2.3rem;
+	background-position: -1rem 2.4rem;
+	background-size: 3rem 3rem;
 }
 
 ul.pageslist li .date {
