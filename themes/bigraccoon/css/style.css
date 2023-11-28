@@ -5357,9 +5357,10 @@ div.imgblock img, div.imgblock video {
 		height: auto;
 	}
 	
-	#main ul.pageslist li:before {
-		font-size: 150%;
-		margin-left: -1.5rem;
-		top: 4.9rem;
+	ul.pageslist li {
+		padding-left: 2.3rem;
+		background-position: -0.5rem 2.2rem;
+		background-size: 2.5rem 2.5rem;
 	}
+
 }
