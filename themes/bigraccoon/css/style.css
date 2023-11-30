@@ -3155,8 +3155,8 @@ input, select, textarea {
 		width: 100%;
 		margin: 0 0 2rem 2px;
 /* C */	padding: 2rem 4rem 2rem 4rem;
-/* N */	padding-top: 2rem !important;
-/* N */	padding-bottom: 2rem !important;
+/* N */	padding-top: 2rem;
+/* N */	padding-bottom: 2rem;
 /* N */	border-width: 0 !important;
 	}
 
@@ -4214,12 +4214,13 @@ input, select, textarea {
 			text-align: center;
 		}
 
-		#main > .post, #main > .pagination {
+		#main > .post {
 			padding: 6rem 8rem 6rem 8rem;
 		}
 		
 		#main > .pagination {
 			border: 0;
+			padding: 2rem 8rem;
 		}
 		
 /* N */	#main > .pagination + .post {
@@ -4249,16 +4250,24 @@ input, select, textarea {
 
 			@media screen and (max-width: 1280px) {
 
-				#main > .post, #main > .pagination {
+				#main > .post {
 					padding: 4rem 4rem 3rem;
+				}
+				
+				#main > .pagination {
+					padding: 2rem 4rem;
 				}
 
 			}
 
 			@media screen and (max-width: 736px) {
 
-				#main > .post, #main > .pagination {
+				#main > .post {
 					padding: 2rem;
+				}
+				
+				#main > .pagination {
+					padding: 1rem 2rem 2rem;
 				}
 
 					#main > .post header.major > .date {
