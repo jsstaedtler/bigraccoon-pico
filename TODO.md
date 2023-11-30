@@ -1,13 +1,7 @@
-#### To complete before release
-* JS on page load to see if checkboxes are checked, and if so, to activate their feature (eg. text style, spoiler reveal)
-* Test site with JS disabled
 * Test site in Chrome, Safari, Edge, IE(?)
     * Chrome mobile: article listing bullets are misaligned, but only when any list item has a byline - and doesn't happen on narrow desktop browser
 * Make BG image fade in sooner
-* Piwigo
-	* Adjust page header to integrate it better with the Pico site
-	
-#### After release
+* Add OpenGraph meta tags to all pages (pulling data programmatically)
 * Store all fonts locally
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
@@ -22,6 +16,7 @@
 	* Figure out how that "scrolly" thing works to smoothly move between points on the page
 * Split <HEAD> of templates into reusable segment
 	* Twig renders the segment before inserting, which makes no sense for <HEAD> content, so browser rendering goes haywire
+        * But maybe that only applies to certain bits of HEAD content?
 * Add comments using Mastodon
 * Does main logo at the top of each page, or the copyright footer, need a border or dropshadow?
 	* Dropshadow doesn't work well on transparent imgs, may need background-image and filter trickery
@@ -30,7 +25,7 @@
 * Introduce a highlight colour, or make tinted instead of plain black?  Brownish (like a raccoon)?
 * Rebuild gallery in Pico
 	* Background images:
-		* Same image as the page you're viewing?
+		* Same image as the page you're viewing? (Need to use a small size to preserve bandwidth)
 		* A blurred rendition of the image (eg. a colour value matrix)?
 		* A solid colour, derived somehow from the image?
 		* A common background across all pages?
