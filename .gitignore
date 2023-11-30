@@ -11,11 +11,13 @@ desktop.ini
 ._*
 
 
-### Content of assets and content folders (not relevant to the site's construction)
-/assets/*
-/content/*
+### Content of assets and content folders (but the empty folders are necessary)
+/assets/**
+/content/**
 
-/testing
+/testing/
+
+*.bak
 
 ### Old Piwigo gallery (not part of this project)
 /gallery/
