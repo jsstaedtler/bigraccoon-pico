@@ -3868,7 +3868,7 @@ input, select, textarea {
 			-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 			display: block;
-			font-size: 0.8rem;
+/* C		font-size: 0.8rem; */
 			outline: none;
 			padding: 0 2rem;
 		}
@@ -4082,8 +4082,7 @@ input, select, textarea {
 				border-bottom: 0;
 				display: block;
 				font-family: "Source Sans Pro", Helvetica, sans-serif;
-				font-size: 0.9rem;
-				font-size: 0.9rem;
+/* C			font-size: 0.9rem; */
 				font-weight: 900;
 				letter-spacing: 0.075em;
 				padding: 0;
@@ -5279,8 +5278,8 @@ span.logo_icon img {
 	padding-left: 2rem;
 	margin-bottom: 1rem;
 	background-image: url(/testing/assets/chevron-right.svg);
-	background-position: 0 0.2rem;
-	background-size: 2rem 2rem;
+	background-position: 0 0.2em;
+	background-size: 2em 2em;
 	background-repeat: no-repeat;
 }
 
@@ -5300,8 +5299,8 @@ span.logo_icon img {
 
 ul.pageslist li {
 	padding-left: 2.3rem;
-	background-position: -1rem 2.4rem;
-	background-size: 3rem 3rem;
+	background-position: -1em 2.4em;
+	background-size: 3em 3em;
 }
 
 ul.pageslist li .date {
