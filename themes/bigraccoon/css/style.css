@@ -300,6 +300,11 @@ input, select, textarea {
 	.align-right {
 		text-align: right;
 	}
+	
+	.faded {
+		color: #425862;
+		background-color: #eeeeee;
+	}
 
 	input, select, textarea {
 		color: #212931;
@@ -2053,7 +2058,7 @@ input, select, textarea {
 /* Box */
 
 	.box {
-		border: solid 2px;
+		border: solid 2px #eeeeee;
 		margin-bottom: 2rem;
 		padding: 1.5rem;
 	}
@@ -2070,9 +2075,6 @@ input, select, textarea {
 			padding: 0;
 		}
 
-	.box {
-		border-color: #eeeeee;
-	}
 
 /* Button */
 
@@ -2723,15 +2725,14 @@ input, select, textarea {
 		padding-left: 0;
 	}
 
-		ul.actions li {
+		.post ul.actions li {
 			padding: 0 0 0 1rem;
 			vertical-align: middle;
+			margin: 0;
+			position: initial;
+			background: none;
 		}
 		
-		ul.actions li:before {
-			content: none !important;
-		}
-
 		ul.actions.special {
 			-moz-justify-content: center;
 			-webkit-justify-content: center;
@@ -5360,9 +5361,9 @@ div.imgblock img, div.imgblock video {
 	}
 	
 	ul.pageslist li {
-		padding-left: 2rem;
-		background-position: -0.5rem 2.4rem;
-		background-size: 2.3rem 2.3rem;
+		padding-left: 2em;
+		background-position: -0.5em 2.4em;
+		background-size: 2.3em 2.3em;
 	}
 
 }
