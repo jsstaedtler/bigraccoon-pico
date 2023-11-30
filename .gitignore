@@ -11,16 +11,18 @@ desktop.ini
 ._*
 
 
+*.bak
+
 ### Content of assets and content folders (but the empty folders are necessary)
 /assets/**
 /content/**
 
-/testing/
-
-*.bak
-
 ### Old Piwigo gallery (not part of this project)
 /gallery/
+/testing/
+
+### Live site config (but the config template will remain)
+/config/config.yml
 
 ### .htaccess may be different for each server
 .htaccess
