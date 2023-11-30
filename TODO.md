@@ -1,5 +1,5 @@
 * Test site in Chrome, Safari, Edge, IE(?)
-    * Chrome mobile: article listing bullets are misaligned, but only when any list item has a byline - and doesn't happen on narrow desktop browser
+    * Chrome mobile: can probably fix bullet misalignment by putting the bullet on the title element, instead of the entire LI
 * Make BG image fade in sooner
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
 * Store all fonts locally
