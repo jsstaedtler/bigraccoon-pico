@@ -2,6 +2,8 @@
     * Chrome mobile: can probably fix bullet misalignment by putting the bullet on the title element, instead of the entire LI
 * Make BG image fade in sooner
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
+* Make a News section
+        * Could put the latest news at the top, and latest artwork/article side-by-side below that
 * Store all fonts locally
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
