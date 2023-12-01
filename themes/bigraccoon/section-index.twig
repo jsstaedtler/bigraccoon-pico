@@ -71,9 +71,17 @@
 						<li>
 							<a href="{{ page.url }}">
 								<p class="date">{{ page.date_formatted }}</p>
-								{% if page.meta.image %}<span class="image right"><img src="{{ assets_url }}/{{ page.meta.image }}"></span>{% endif %}
+								
+							{% if page.meta.image %}
+								<span class="image right"><img src="{{ assets_url }}/{{ page.meta.image }}"></span>
+							{% endif %}
+							
 								<h3>{{ page.title }}</h3>
-								<p class="excerpt">{{ page.meta.byline }}</p>
+								
+							{% if page.meta.blurb %}
+								<p class="excerpt">{{ page.meta.blurb }}</p>
+							{% endif %}
+							
 							</a>
 						</li>
 					{% endfor %}

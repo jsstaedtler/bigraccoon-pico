@@ -89,12 +89,18 @@
 
 				<article class="post featured">
 				    <header class="major">
-				    <h3>Latest Article</h3>
-					<span class="date">{{ latest_article.date_formatted }}</span>
-					<h2><a href="{{ latest_article.url }}">{{ latest_article.title }}</a></h2>
-					<p>{{ latest_article.meta.byline }}</p>
+						<h3>Latest Article</h3>
+						<span class="date">{{ latest_article.date_formatted }}</span>
+						<h2><a href="{{ latest_article.url }}">{{ latest_article.title }}</a></h2>
+					{% if latest_article.meta.blurb %}
+						<p>{{ latest_article.meta.blurb }}</p>
+					{% endif %}
 					</header>
-					<a href="{{ latest_article.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_article.meta.image }}" alt="Image??" /></a>
+					
+				{% if latest_article.meta.image %}
+					<a href="{{ latest_article.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_article.meta.image }}"{% if latest_article.meta.imagedescription %} alt="{{ latest_article.meta.imagedescription }}"{% endif %}></a>
+				{% endif %}
+				
 					<ul class="actions special stacked">
 						<li><a href="{{ latest_article.url }}" class="button large">Read More</a></li>
 						<li><a href="{{ pages["articles/index"].url }}" class="button primary large">View All Articles</a></li>
