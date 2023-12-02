@@ -73,7 +73,7 @@
 								<p class="date">{{ page.date_formatted }}</p>
 								
 							{% if page.meta.image %}
-								<span class="image right"><img src="{{ assets_url }}/{{ page.meta.image }}"></span>
+								<span class="image right"><img src="{{ assets_url }}/{{ page.meta.image }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}></span>
 							{% endif %}
 							
 								<h3>{{ page.title }}</h3>
