@@ -70,10 +70,15 @@
 				<!-- Artwork section -->
 				<article class="post featured">
 				    <header class="major">
-				    <h3>Latest Artwork</h3>
-					<span class="date">22 Sep 2023</span>
+						<h3>Latest Artwork</h3>
+						<span class="date">22 Sep 2023</span>
+					{% if meta.gallerytitle %}
+						<a href="{{ meta.gallerylink }}"><h2>{{ meta.gallerytitle }}</h2></a>
+					{% endif %}
 					</header>
-					<a href="{{ meta.gallerylink }}" class="image main"><img src="{{ meta.gallerythumbnail }}" alt="" /></a>
+					
+					<a href="{{ meta.gallerylink }}" class="image main"><img src="{{ meta.gallerythumbnail }}"{% if meta.gallerydescription %} alt="{{ meta.gallerydescription }}"{% endif %}></a>
+					
 					<ul class="actions special stacked">
 						<li><a href="{{ meta.gallerylink }}" class="button large">See Details</a></li>
 						<li><a href="{{ pages["gallery/index"].url }}" class="button primary large">Visit the Gallery</a></li>
@@ -91,7 +96,7 @@
 				    <header class="major">
 						<h3>Latest Article</h3>
 						<span class="date">{{ latest_article.date_formatted }}</span>
-						<h2><a href="{{ latest_article.url }}">{{ latest_article.title }}</a></h2>
+						<a href="{{ latest_article.url }}"><h2>{{ latest_article.title }}</h2></a>
 					{% if latest_article.meta.blurb %}
 						<p>{{ latest_article.meta.blurb }}</p>
 					{% endif %}
