@@ -5322,6 +5322,7 @@ ul.pageslist li .date:after {
 
 ul.pageslist li {
 	clear: both;
+	margin-bottom: 2rem;
 }
 
 ul.pageslist li a {
@@ -5330,7 +5331,8 @@ ul.pageslist li a {
 
 ul.pageslist li span.image.right {
 	top: initial;
-	max-width: 33%
+	max-width: 33%;
+	margin-bottom: 0;
 }
 
 
