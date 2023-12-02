@@ -164,13 +164,21 @@ input, select, textarea {
 		line-height: 2;
 	}
 
-	a, a h1, a h2, a h3, a h4, a h5, a h6, a strong, a b {
+	a, a h1, a h2, a h3, a h4, a h5, a h6 {
+/* C	-moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		-webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		-ms-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+		transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+*/
+		border-bottom: dotted 1.5px;
+		text-decoration: none;
+	}
+	
+	a, a strong, a b {
 		-moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 		-webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-		border-bottom: dotted 1px;
-		text-decoration: none;
 	}
 
 	strong, b {
@@ -4865,7 +4873,7 @@ input, select, textarea {
 
 		#copyright a {
 			color: #ffffff;
-			border-bottom-color: rgba(255, 255, 255, 0.75);
+			border-bottom-color: rgba(255, 255, 255, 0.5);
 		}
 
 			#copyright a:hover {
@@ -5340,7 +5348,7 @@ ul.pageslist li h3:before {
 	background-size: 3.5rem 3.5rem;
 	width: 3.5rem;
 	height: 3.5rem;
-	top: 2.2rem;
+	top: 2.1rem;
 	left: -1.3rem;
 }
 
@@ -5384,13 +5392,13 @@ div.imgblock img, div.imgblock video {
 		background-size: 2.3em 2.3em;
 	}
 	
-ul.pageslist li h3:before {
+	ul.pageslist li h3:before {
 
-	background-size: 2.8rem 2.8rem;
-	width: 2.8rem;
-	height: 2.8rem;
-	top: 2.2rem;
-	left: -0.8rem;
-}
+		background-size: 2.8rem 2.8rem;
+		width: 2.8rem;
+		height: 2.8rem;
+		top: 2.1rem;
+		left: -0.8rem;
+	}
 
 }
