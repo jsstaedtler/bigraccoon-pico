@@ -1,1 +1,2 @@
-# This file is meant to be empty
+# Keep the live site's config out of this repository
+config.yml
