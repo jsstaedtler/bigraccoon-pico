@@ -28,8 +28,9 @@ twig_config:                        # Twig template engine config
 ##
 # Content
 #
-date_format: %e %b %Y                  # Pico's default date format;
+date_format: %a, %e %b %Y           # Pico's default date format;
                                     #     See https://php.net/manual/en/function.strftime.php for more info
+php_date_format: D, j M Y           # When formatting any other dates than the default "date" meta attribute
 pages_order_by_meta: author         # Sort pages by meta value "author" (set "pages_order_by" to "meta")
 pages_order_by: date                # Change how Pico sorts pages ("alpha" for alphabetical order, "date", or "meta")
 pages_order: desc                   # Sort pages in ascending ("asc") or descending ("desc") order

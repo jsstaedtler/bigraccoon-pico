@@ -71,7 +71,7 @@
 				<article class="post featured">
 				    <header class="major">
 						<h3>Latest Artwork</h3>
-						<span class="date">22 Sep 2023</span>
+						<span class="date">{{ meta.gallerydate | date(config.php_date_format) }}</span>
 					{% if meta.gallerytitle %}
 						<a href="{{ meta.gallerylink }}"><h2>{{ meta.gallerytitle }}</h2></a>
 					{% endif %}

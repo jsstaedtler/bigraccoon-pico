@@ -5324,7 +5324,7 @@ ul.pageslist li .date:after {
 	position: absolute;
 	top: 50%;
 	right: 0;
-	width: calc(100% - 7rem);
+	width: calc(100% - 9rem);
 	border-top: solid 2px;
 	border-top-color: #eeeeee;
 }
