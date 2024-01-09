@@ -3264,6 +3264,10 @@ input, select, textarea {
 /*			visibility: hidden; */
 			font-size: 0;
 		}
+		
+/* N */	.pagination .next.disabled, .pagination .previous.disabled {
+			visibility: hidden;
+		}
 
 /* N */ .pagination .previous:before, .pagination .next:before {
 			font-size: 0.9rem;
@@ -3272,6 +3276,10 @@ input, select, textarea {
 /* N */ .pagination .previous:before, .pagination .next:before {
             visibility: visible;
             display: inline-block;
+}
+
+/* N */ .pagination .previous.disabled:before, .pagination .next.disabled:before {
+            visibility: hidden;
 }
 
 /* N */ .pagination span.title {

@@ -38,11 +38,11 @@
 	{# But here we want Prev (on the left) to go to the page written *before* this one, and Next (on the right) to the one written *after*. #}
 	{# Therefore, we swap the Prev and Next page values. #}
 	
-	{% if next_page.id %}<a href="{{ next_page.url }}" class="previous"><span class="abbrev">Prev</span> <span class="title">{{ next_page.title }}</span></a>{% endif %}
+	<a href="{{ next_page.url }}" class="previous{% if not next_page.id %} disabled{% endif %}"><span class="abbrev">Prev</span> <span class="title">{{ next_page.title }}</span></a>
 	
 	<a href="{{ current_parent.url }}" class="up">Index</a>
 	
-	{% if previous_page.id %}<a href="{{ previous_page.url }}" class="next"><span class="abbrev">Next</span> <span class="title">{{ previous_page.title }}</span></a>{% endif %}
+	<a href="{{ previous_page.url }}" class="next{% if not previous_page.id %} disabled{% endif %}"><span class="abbrev">Next</span> <span class="title">{{ previous_page.title }}</span></a>
 	
 </div>
 <!-- ------------------ -->
