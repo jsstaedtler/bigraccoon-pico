@@ -23,16 +23,22 @@
         <link rel="canonical" href="{{ current_page.url }}" />
     {% endif %}
 	
+	{# Find out what our parent page is #}
+	{% set current_parent = NULL %}
+	{% set parents_array = pages(current_page.id, offset=-1) %}		{# Returns an array with a single element #}
+	{% for parent_obj in parents_array %}							{# ...therefore this will only iterate once #}
+		{% set current_parent = parent_obj %}
+	{% endfor %}
+	
 		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
 		<style>
-			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
-			blockquote { display: none; }
+			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
 		</style>
 		
 		<noscript>
 			<link rel="stylesheet" href="{{ theme_url }}/css/noscript.css" type="text/css" />
 			<style>
-				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
+				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
 			</style>
 		</noscript>
 	</head>
@@ -59,7 +65,7 @@
 
 				<!-- Post -->
 				<section class="post">
-
+				
 					<header class="major">
 						<span class="date">{{ meta.date_formatted }}</span>
 						<h2>{{ meta.title }}</h2>
