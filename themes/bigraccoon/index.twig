@@ -68,6 +68,7 @@
 {{ include("_segment-announcement.twig") }}
 
 				<!-- Artwork section -->
+				
 				<article class="post featured">
 				    <header class="major">
 						<h3>Latest Artwork</h3>
@@ -86,13 +87,46 @@
 				</article>
 
 
+				<section class="posts">
+				
+				<!-- News section -->
+
+				{# Get all child pages of the News section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
+				{% set latest_news_id = pages("news", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
+				{% set latest_news = pages[latest_news_id] %}
+
+				<article class="post">
+				    <header class="major">
+						<h3>Latest News</h3>
+						<span class="date">{{ latest_news.date_formatted }}</span>
+						<a href="{{ latest_news.url }}"><h2>{{ latest_news.title }}</h2></a>
+					{# % if latest_news.meta.blurb %}
+						<p>{{ latest_news.meta.blurb }}</p>
+					{% endif % #}
+					</header>
+					
+				{% if latest_article.news.image %}
+					<a href="{{ latest_news.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_news.meta.image }}"{% if latest_news.meta.imagedescription %} alt="{{ latest_news.meta.imagedescription }}"{% endif %}></a>
+				{% endif %}
+				
+					{# latest_news.raw_content|length > 200 ? latest_news.raw_content|slice(0, 200) ~ '...' : latest_news.raw_content #}
+					
+					{{ latest_news_id|content }}
+				
+					<ul class="actions special stacked">
+						<li><a href="{{ latest_news.url }}" class="button large">Read More</a></li>
+						<li><a href="{{ pages["news/index"].url }}" class="button primary large">View All News Items</a></li>
+					</ul>
+				</article>
+
+
 				<!-- Articles section -->
 
 				{# Get all child pages of the articles section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
 				{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
 				{% set latest_article = pages[latest_article_id] %}
 
-				<article class="post featured">
+				<article class="post">
 				    <header class="major">
 						<h3>Latest Article</h3>
 						<span class="date">{{ latest_article.date_formatted }}</span>
@@ -111,6 +145,8 @@
 						<li><a href="{{ pages["articles/index"].url }}" class="button primary large">View All Articles</a></li>
 					</ul>
 				</article>
+				
+				</section>
 
                 
 				<!-- Post -->
