@@ -96,7 +96,7 @@
 				{% set latest_news = pages[latest_news_id] %}
 
 				<article class="post">
-				    <header class="major">
+				    <header>
 						<h3>Latest News</h3>
 						<span class="date">{{ latest_news.date_formatted }}</span>
 						<a href="{{ latest_news.url }}"><h2>{{ latest_news.title }}</h2></a>
@@ -127,7 +127,7 @@
 				{% set latest_article = pages[latest_article_id] %}
 
 				<article class="post">
-				    <header class="major">
+				    <header>
 						<h3>Latest Article</h3>
 						<span class="date">{{ latest_article.date_formatted }}</span>
 						<a href="{{ latest_article.url }}"><h2>{{ latest_article.title }}</h2></a>
