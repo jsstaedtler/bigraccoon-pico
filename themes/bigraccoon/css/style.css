@@ -3251,6 +3251,7 @@ input, select, textarea {
 				display: inline-block;
 				color: inherit !important;
 				line-height: inherit;
+				visibility: visible;
 			}
 
 		.pagination .previous:before {
@@ -3268,6 +3269,10 @@ input, select, textarea {
 			content: '\f106';
 			margin-right: 0.9375em;
 		}
+
+/* N */ .pagination .next.disabled, .pagination .previous.disabled, .pagination .next.disabled:before, .pagination .previous.disabled:before {
+            visibility: hidden;
+}
 
 /* N */ .pagination span.title {
 		    display: inline;
@@ -3296,15 +3301,6 @@ input, select, textarea {
 /* N */ .pagination .previous:before, .pagination .next:before {
 			font-size: 0.9rem;
 		}
-
-/* N */ .pagination .previous:before, .pagination .next:before {
-            visibility: visible;
-            display: inline-block;
-}
-
-/* N */ .pagination .previous.disabled:before, .pagination .next.disabled:before {
-            visibility: hidden;
-}
 
 /* N */ .pagination span.title {
 		    display: none;
