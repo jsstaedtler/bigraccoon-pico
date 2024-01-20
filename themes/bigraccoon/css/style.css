@@ -2971,6 +2971,10 @@ input, select, textarea {
 			font-style: italic;
 		}
 
+		header > .date {
+			margin-top: -1rem;
+		}
+		
 		header > h1 + p {
 			font-size: 1.1rem;
 			margin-top: -0.5rem;
@@ -3008,6 +3012,7 @@ input, select, textarea {
 
 		header.major > .date {
 			font-size: 1rem;
+			margin-top: -1.5rem;
 /*			margin: 0 0 4rem 0; */
 		}
 
@@ -3055,18 +3060,24 @@ input, select, textarea {
 			right: 0;
 		}
 
-		@media screen and (max-width: /*980px*/ 736px) {
+		@media screen and (max-width: 736px) {
 
 			header br {
 				display: none;
 			}
 
-		}
-
-		@media screen and (max-width: 736px) {
-
 			header.major {
 				margin: 0 0 2rem 0;
+			}
+			
+			header.major h1 {
+				font-size: 4rem;
+				line-height: 1.1;
+			}
+
+			header.major h2 {
+				font-size: 3rem;
+				line-height: 1.3;
 			}
 
 		}
@@ -4237,7 +4248,7 @@ input, select, textarea {
 
 		#main > * {
 			padding: 4rem 4rem 2rem 4rem ;
-			border-top: solid 2px #eeeeee;
+/* C		border-top: solid 2px #eeeeee; */
 			margin: 0;
 		}
 
@@ -4283,40 +4294,40 @@ input, select, textarea {
 		}
 		
 
-			@media screen and (max-width: 1280px) {
+		@media screen and (max-width: 1280px) {
 
-				#main > .post {
-					padding: 4rem 4rem 3rem;
-				}
-				
-				#main > .pagination {
-					padding: 2rem 4rem;
-				}
-
+			#main > .post {
+				padding: 4rem 4rem 3rem;
+			}
+			
+			#main > .pagination {
+				padding: 2rem 4rem;
 			}
 
-			@media screen and (max-width: 736px) {
+		}
 
-				#main > .post {
-					padding: 2rem;
-				}
-				
-				#main > .pagination {
-					padding: 1rem 2rem 2rem;
-				}
+		@media screen and (max-width: 736px) {
 
-					#main > .post header.major > .date {
-						margin-top: 0;
-						margin-bottom: 1rem;
-					}
-
-					#main > .post header.major > h1, #main > .post header.major h2 {
-						font-size: 2.5rem;
-						line-height: 1.2;
-						margin: 0 0 1.5rem 0;
-					}
-
+			#main > .post {
+				padding: 2rem;
 			}
+			
+			#main > .pagination {
+				padding: 1rem 2rem 2rem;
+			}
+
+			#main > .post header.major > .date {
+/*				margin-top: 0; */
+				margin-bottom: 1rem;
+			}
+
+/*			#main > .post header.major > h1, #main > .post header.major h2 {
+				font-size: 2.5rem;
+				line-height: 1.2;
+				margin: 0 0 1.5rem 0;
+			}
+*/
+		}
 
 		#main > .posts {
 			display: -moz-flex;
@@ -4379,12 +4390,8 @@ input, select, textarea {
 			@media screen and (max-width: 980px) {
 
 				#main > .posts > * {
-					width: 50%;
-				}
-
-				#main > .posts > * {
 					padding: 2.5rem;
-					width: 50%;
+/* C */				width: 100%;
 				}
 
 			}
@@ -4392,14 +4399,10 @@ input, select, textarea {
 			@media screen and (max-width: 736px) {
 
 				#main > .posts > * {
-					width: 100%;
-				}
-
-				#main > .posts > * {
 					padding: 2rem;
-					width: 100%;
+/*					width: 100%; */
 				}
-
+/*
 				#main > .posts > article:nth-child(2n - 1) {
 					border-left-width: 2px;
 				}
@@ -4415,7 +4418,7 @@ input, select, textarea {
 				#main > .posts > article:nth-child(-n + 1) {
 					border-top-width: 0;
 				}
-
+*/
 				#main > .posts > article .image {
 					max-width: 25rem;
 					margin-left: auto;
@@ -4428,6 +4431,7 @@ input, select, textarea {
 
 			#main > * {
 				padding: 2rem 2rem 0.1rem 2rem ;
+				border-top-width: 0;
 			}
 
 		}
