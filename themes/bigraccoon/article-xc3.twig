@@ -6,10 +6,21 @@
 -->
 <html>
 	<head>
+	{# Find out what our parent page is #}
+	{% set current_parent = pages(current_page.id, offset=-1) | first %}		{# Returns an array with a single element, so just save the first one #}
+
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
-		<link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
+		<meta property="og:url" content="{{ current_page.url }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{% if meta.title %}{{ meta.title }} - {% endif %}{{ site_title }}">
+        <meta property="og:image" content="{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:site_name" content="bigraccoon.ca - Works by JS Staedtler">
+        <meta property="twitter:card" content="summary_large_image">
+		
+		<link rel="shortcut icon" type="image/png" href="{{ assets_url }}/favicon.png">
 
 		<title>{% if meta.title %}{{ meta.title }} &#x2022; {% endif %}{{ site_title }}</title>
     {% if meta.description %}
@@ -25,14 +36,14 @@
 	
 		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
 		<style>
-			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
+			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
 			blockquote { display: none; }
 		</style>
 		
 		<noscript>
 			<link rel="stylesheet" href="{{ theme_url }}/css/noscript.css" type="text/css" />
 			<style>
-				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
+				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
 			</style>
 		</noscript>
 		
