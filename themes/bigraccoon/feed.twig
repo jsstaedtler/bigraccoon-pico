@@ -9,7 +9,7 @@
     <pubDate>{{ "now" | date(RFC822) }}</pubDate>
     <lastBuildDate>{{ "now" | date(RFC822) }}</lastBuildDate>
     <generator>Pico</generator>
-    {% for page in pages if page.id not in ['index','feed'] and not page.hidden and not end %}
+    {% for page in pages if pages(page.id) | length == 0 and page.id not in ['index','feed','gallery','links'] and not page.hidden and not end %}
       <item>
         <title>{{ page.title | e }}</title>
         <description>{{ page.id | content | e }}</description>
