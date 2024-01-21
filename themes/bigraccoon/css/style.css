@@ -2896,7 +2896,7 @@ input, select, textarea {
 
 	ul {
 		list-style: disc;
-		margin: 0 0 2rem 0;
+/* C	margin: 0 0 2rem 0; */
 /* C	padding-left: 1rem; */
 	}
 
@@ -2961,7 +2961,7 @@ input, select, textarea {
 
 		header > .date {
 			display: block;
-			font-size: 0.8rem;
+			font-size: 0.9rem;
 			height: 1;
 			margin: 0 0 1rem 0;
 			position: relative;
@@ -2971,6 +2971,10 @@ input, select, textarea {
 			font-style: italic;
 		}
 
+		header > .date {
+			margin-top: -1rem;
+		}
+		
 		header > h1 + p {
 			font-size: 1.1rem;
 			margin-top: -0.5rem;
@@ -3008,45 +3012,79 @@ input, select, textarea {
 
 		header.major > .date {
 			font-size: 1rem;
-/*				margin: 0 0 4rem 0; */
+			margin-top: -1.5rem;
+/*			margin: 0 0 4rem 0; */
 		}
 
-		header.major > .date:before, header.major > .date:after {
+		header.major h1 {
+			font-size: 5rem;
+			line-height: 1.1;
+		}
+
+		header.major h2 {
+			font-size: 3.8rem;
+			line-height: 1.3;
+		}
+
+		header.major h3 {
+			font-size: 2.3rem;
+		}
+
+		header.major h4 {
+			font-size: 1.2rem;
+		}
+
+		header.major h5 {
+			font-size: 1rem;
+		}
+
+		header.major h6 {
+			font-size: 0.9rem;
+		}
+		
+		header > .date:before, header > .date:after {
 			content: '';
 			display: block;
 			position: absolute;
 			top: 50%;
 			width: calc(50% - 6rem);
 			border-top: solid 2px;
+			border-top-color: #eeeeee;
 		}
 
-		header.major > .date:before {
+		header > .date:before {
 			left: 0;
 		}
 
-		header.major > .date:after {
+		header > .date:after {
 			right: 0;
 		}
 
-		@media screen and (max-width: /*980px*/ 736px) {
+		@media screen and (max-width: 736px) {
 
 			header br {
 				display: none;
 			}
 
-		}
-
-		@media screen and (max-width: 736px) {
-
 			header.major {
 				margin: 0 0 2rem 0;
 			}
+			
+			header.major h1 {
+				font-size: 3rem;
+				line-height: 1.1;
+			}
 
+			header.major h2 {
+				font-size: 2.5rem;
+				line-height: 1.3;
+			}
+
+			header.major h3 {
+				font-size: 2rem;
+			}
 		}
 
-	header.major .date:before, header.major .date:after {
-		border-top-color: #eeeeee;
-	}
 
 /* Table */
 
@@ -3227,6 +3265,7 @@ input, select, textarea {
 				display: inline-block;
 				color: inherit !important;
 				line-height: inherit;
+				visibility: visible;
 			}
 
 		.pagination .previous:before {
@@ -3244,6 +3283,10 @@ input, select, textarea {
 			content: '\f106';
 			margin-right: 0.9375em;
 		}
+
+/* N */ .pagination .next.disabled, .pagination .previous.disabled, .pagination .next.disabled:before, .pagination .previous.disabled:before {
+            visibility: hidden;
+}
 
 /* N */ .pagination span.title {
 		    display: inline;
@@ -3264,15 +3307,14 @@ input, select, textarea {
 /*			visibility: hidden; */
 			font-size: 0;
 		}
+		
+/* N */	.pagination .next.disabled, .pagination .previous.disabled {
+			visibility: hidden;
+		}
 
 /* N */ .pagination .previous:before, .pagination .next:before {
 			font-size: 0.9rem;
 		}
-
-/* N */ .pagination .previous:before, .pagination .next:before {
-            visibility: visible;
-            display: inline-block;
-}
 
 /* N */ .pagination span.title {
 		    display: none;
@@ -4166,7 +4208,7 @@ input, select, textarea {
 				box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.2);
 				visibility: visible; */
 /*				display:block; */
-				height: 13rem;
+				height: 16.5rem;
 			}
 
 		}
@@ -4209,7 +4251,7 @@ input, select, textarea {
 
 		#main > * {
 			padding: 4rem 4rem 2rem 4rem ;
-			border-top: solid 2px #eeeeee;
+/* C		border-top: solid 2px #eeeeee; */
 			margin: 0;
 		}
 
@@ -4238,7 +4280,7 @@ input, select, textarea {
 
 /*		#main > .post header.major > .date {
 			margin-top: -2rem;
-		} */
+		}
 
 		#main > .post header.major > h1 {
 			font-size: 4rem;
@@ -4249,46 +4291,46 @@ input, select, textarea {
 		#main > .post header.major h2 {
 			font-size: 3rem;
 		}
-
+*/
 		#main > .post.featured {
 			text-align: center;
 		}
 		
 
-			@media screen and (max-width: 1280px) {
+		@media screen and (max-width: 1280px) {
 
-				#main > .post {
-					padding: 4rem 4rem 3rem;
-				}
-				
-				#main > .pagination {
-					padding: 2rem 4rem;
-				}
-
+			#main > .post {
+				padding: 4rem 4rem 3rem;
+			}
+			
+			#main > .pagination {
+				padding: 2rem 4rem;
 			}
 
-			@media screen and (max-width: 736px) {
+		}
 
-				#main > .post {
-					padding: 2rem;
-				}
-				
-				#main > .pagination {
-					padding: 1rem 2rem 2rem;
-				}
+		@media screen and (max-width: 736px) {
 
-					#main > .post header.major > .date {
-						margin-top: 0;
-						margin-bottom: 1rem;
-					}
-
-					#main > .post header.major > h1, #main > .post header.major h2 {
-						font-size: 2.5rem;
-						line-height: 1.2;
-						margin: 0 0 1.5rem 0;
-					}
-
+			#main > .post {
+				padding: 2rem;
 			}
+			
+			#main > .pagination {
+				padding: 1rem 2rem 2rem;
+			}
+
+			#main > .post header.major > .date {
+/*				margin-top: 0; */
+				margin-bottom: 1rem;
+			}
+
+/*			#main > .post header.major > h1, #main > .post header.major h2 {
+				font-size: 2.5rem;
+				line-height: 1.2;
+				margin: 0 0 1.5rem 0;
+			}
+*/
+		}
 
 		#main > .posts {
 			display: -moz-flex;
@@ -4351,12 +4393,8 @@ input, select, textarea {
 			@media screen and (max-width: 980px) {
 
 				#main > .posts > * {
-					width: 50%;
-				}
-
-				#main > .posts > * {
 					padding: 2.5rem;
-					width: 50%;
+/* C */				width: 100%;
 				}
 
 			}
@@ -4364,14 +4402,10 @@ input, select, textarea {
 			@media screen and (max-width: 736px) {
 
 				#main > .posts > * {
-					width: 100%;
-				}
-
-				#main > .posts > * {
 					padding: 2rem;
-					width: 100%;
+/*					width: 100%; */
 				}
-
+/*
 				#main > .posts > article:nth-child(2n - 1) {
 					border-left-width: 2px;
 				}
@@ -4387,7 +4421,7 @@ input, select, textarea {
 				#main > .posts > article:nth-child(-n + 1) {
 					border-top-width: 0;
 				}
-
+*/
 				#main > .posts > article .image {
 					max-width: 25rem;
 					margin-left: auto;
@@ -4400,6 +4434,7 @@ input, select, textarea {
 
 			#main > * {
 				padding: 2rem 2rem 0.1rem 2rem ;
+				border-top-width: 0;
 			}
 
 		}

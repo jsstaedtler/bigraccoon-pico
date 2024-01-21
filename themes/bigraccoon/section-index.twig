@@ -60,7 +60,7 @@
 					<header class="major">
 						<h1>{{ meta.title }}</h1>
 						
-						{% if meta.byline %}<p>{{ meta.byline }}</p>{% endif %}
+						{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
 					</header>
 					{% endif %}
 					
@@ -86,7 +86,7 @@
 						</li>
 					{% endfor %}
 					
-						{# One empty li at the end, to clear the float on the image thumbnails #}
+						{# One empty li at the end, to clear the CSS "float" on the image thumbnails #}
 						<li></li>
 					</ul>
 					
