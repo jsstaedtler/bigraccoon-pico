@@ -15,6 +15,7 @@
 		<meta property="og:url" content="{{ current_page.url }}">
         <meta property="og:type" content="website">
         <meta property="og:title" content="{% if meta.title %}{{ meta.title }} - {% endif %}{{ site_title }}">
+        {% if meta.blurb %}<meta property="og:description" content="{{ meta.blurb }}">{% endif %}
         <meta property="og:image" content="{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}">
         <meta property="og:locale" content="en_US">
         <meta property="og:site_name" content="bigraccoon.ca - Works by JS Staedtler">
