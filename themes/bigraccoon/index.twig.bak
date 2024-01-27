@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html class="no-js">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
-    <title>{% if meta.title %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
+        <meta property="og:url" content="{{ current_page.url }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="bigraccoon.ca - Works by JS Staedtler">
+        <meta property="og:description" content="Drawings, articles, and social media links">
+        <meta property="og:image" content="https://bigraccoon.ca/gallery/upload/2023/01/14/20230114000855-6e7fbada.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:site_name" content="bigraccoon.ca - Works by JS Staedtler">
+        <meta property="twitter:card" content="summary_large_image">
+
+		<link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
+		<link rel="alternate" type="application/rss+xml" title="bigraccoon.ca - Works by J.S. Staedtler" href="https://bigraccoon.ca/feed">
+		<link rel="me" href="https://mastodon.art/@jsstaedtler">
+		
+		<title>{{ site_title }} &#x2022; Works by J.S. Staedtler</title>
+		
     {% if meta.description %}
         <meta name="description" content="{{ meta.description|striptags }}" />
     {% endif %}
@@ -15,83 +35,151 @@
     {% if current_page %}
         <link rel="canonical" href="{{ current_page.url }}" />
     {% endif %}
-
-    <link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
-    <link rel="stylesheet" href="{{ theme_url }}/css/droidsans.css" type="text/css" />
-    <link rel="stylesheet" href="{{ theme_url }}/css/fontello.css" type="text/css" />
 	
-    <style>
-        blockquote {
-            font-style: normal;
-            margin-left: 1em;
-			margin-top: 1em;
-            padding-left: 1em;
-			padding-top: 1em;
-            border: 0.5em solid #f5f5f5;
-        }
-    </style>
+		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
+		<style>
+			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}//{{ meta.image }}"); }
+		</style>
+
+		<noscript>
+			<link rel="stylesheet" href="{{ theme_url }}/css/noscript.css" type="text/css" />
+			<style>
+				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
+			</style>
+		</noscript>
+	</head>
 	
-</head>
-<body{% if config.theme_config.widescreen %} class="widescreen"{% endif %}>
+	<body class="is-preload">
 
-    <div id="header" role="banner">
-        <div class="container">
-            <a id="nav-toggle" title="Toggle Menu" role="button" aria-controls="nav" aria-expanded="false" tabindex="1">
-                <span class="icon-menu" aria-hidden="true"></span>
-                <span class="sr-only">Toggle Menu</span>
-            </a>
-            {% if pages["_meta"].meta.logo %}
-                <div id="logo" aria-hidden="true">
-                    <a href="{{ "index"|link }}">
-                        <img src="{{ pages["_meta"].meta.logo|url }}" alt="" />
-                    </a>
-                </div>
-            {% endif %}
-            <div id="title"{{ pages["_meta"].meta.tagline ? ' class="tagline"' }}>
-                <a href="{{ "index"|link }}">
-                    <h1>{{ site_title }}</h1>
-                    {{ pages["_meta"].meta.tagline|markdown }}
-                </a>
-            </div>
-            <div id="nav" role="navigation" tabindex="-1">
-                <ul>
-                    {% for page in pages(depthOffset=-1) if page.title and not page.hidden %}
-                        <li{% if page.id == current_page.id %} class="active"{% endif %}>
-                            <a href="{{ page.url }}">{{ page.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </div>
+		<!-- Wrapper -->
+		<div id="wrapper" class="fade-in">
 
-    <div id="main" role="main">
-        <div class="container">
-            {{ content }}
-        </div>
-    </div>
+			<!-- Intro-style page header-->
+			<div id="intro">
+				<a href="#nav" class="scrolly"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
+				<a href="#nav" class="scrolly"><h3>{{ meta.description }}</h3></a>
+				<ul class="actions">
+					<li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+				</ul>
+			</div>
 
-    <div id="footer">
-        <div class="container">
-            <div class="social">
-                {% for social in pages["_meta"].meta.social %}
-                    <a href="{{ social.url }}" title="{{ social.title }}" role="button">
-                        <span class="icon-{{ social.icon }}" aria-hidden="true"></span>
-                        <span class="sr-only">{{ social.title }}</span>
-                    </a>
-                {% endfor %}
-            </div>
-            <p>
-                <a href="http://picocms.org/">Pico</a> was made by <a href="http://gilbert.pellegrom.me">Gilbert Pellegrom</a>
-                and is maintained by <a href="https://github.com/picocms/Pico/graphs/contributors">The Pico Community</a>.
-                Released under the <a href="https://github.com/picocms/Pico/blob/master/LICENSE.md">MIT license</a>.
-            </p>
-        </div>
-    </div>
+{{ include("_segment-navbar.twig") }}
 
-    <script src="{{ theme_url }}/js/modernizr-3.3.1-custom.min.js" type="text/javascript"></script>
-    <script src="{{ theme_url }}/js/utils.js" type="text/javascript"></script>
-    <script src="{{ theme_url }}/js/pico.js" type="text/javascript"></script>
+			<!-- Main -->
+			<div id="main">
+			    
+{{ include("_segment-announcement.twig") }}
 
-</body>
+				<!-- Artwork section -->
+				
+				<article class="post featured">
+				    <header class="major">
+						<h3>Latest Artwork</h3>
+						<span class="date">{{ meta.gallerydate | date(config.php_date_format) }}</span>
+					{% if meta.gallerytitle %}
+						<a href="{{ meta.gallerylink }}"><h2>{{ meta.gallerytitle }}</h2></a>
+					{% endif %}
+					</header>
+					
+					<a href="{{ meta.gallerylink }}" class="image main"><img src="{{ meta.gallerythumbnail }}"{% if meta.gallerydescription %} alt="{{ meta.gallerydescription }}"{% endif %}></a>
+					
+					<ul class="actions special stacked">
+						<li><a href="{{ meta.gallerylink }}" class="button large">See Details</a></li>
+						<li><a href="{{ pages["gallery/index"].url }}" class="button primary large">Visit the Gallery</a></li>
+					</ul>
+				</article>
+
+
+				<section class="posts">
+				
+				<!-- News section -->
+
+				{# Get all child pages of the News section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
+				{% set latest_news_id = pages("news", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
+				{% set latest_news = pages[latest_news_id] %}
+
+				<article class="post">
+				    <header>
+						<h3>Latest News</h3>
+						<span class="date">{{ latest_news.date_formatted }}</span>
+						<a href="{{ latest_news.url }}"><h2>{{ latest_news.title }}</h2></a>
+					{# % if latest_news.meta.blurb %}
+						<p>{{ latest_news.meta.blurb }}</p>
+					{% endif % #}
+					</header>
+					
+				{% if latest_article.news.image %}
+					<a href="{{ latest_news.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_news.meta.image }}"{% if latest_news.meta.imagedescription %} alt="{{ latest_news.meta.imagedescription }}"{% endif %}></a>
+				{% endif %}
+				
+					{# latest_news.raw_content|length > 200 ? latest_news.raw_content|slice(0, 200) ~ '...' : latest_news.raw_content #}
+					
+					{{ latest_news_id|content }}
+				
+					<ul class="actions special stacked">
+						<li><a href="{{ latest_news.url }}" class="button large">Read More</a></li>
+						<li><a href="{{ pages["news/index"].url }}" class="button primary large">View All News Items</a></li>
+					</ul>
+				</article>
+
+
+				<!-- Articles section -->
+
+				{# Get all child pages of the articles section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
+				{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
+				{% set latest_article = pages[latest_article_id] %}
+
+				<article class="post">
+				    <header>
+						<h3>Latest Article</h3>
+						<span class="date">{{ latest_article.date_formatted }}</span>
+						<a href="{{ latest_article.url }}"><h2>{{ latest_article.title }}</h2></a>
+					{% if latest_article.meta.blurb %}
+						<p>{{ latest_article.meta.blurb }}</p>
+					{% endif %}
+					</header>
+					
+				{% if latest_article.meta.image %}
+					<a href="{{ latest_article.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_article.meta.image }}"{% if latest_article.meta.imagedescription %} alt="{{ latest_article.meta.imagedescription }}"{% endif %}></a>
+				{% endif %}
+				
+					<ul class="actions special stacked">
+						<li><a href="{{ latest_article.url }}" class="button large">Read More</a></li>
+						<li><a href="{{ pages["articles/index"].url }}" class="button primary large">View All Articles</a></li>
+					</ul>
+				</article>
+				
+				</section>
+
+                
+				<!-- Post -->
+				<article class="post">
+
+					{% if meta.title %}
+					<header class="major">
+						<h3>{{ meta.title }}</h3>
+					</header>
+					{% endif %}
+
+					{{ content }}
+					
+				</article>
+
+			</div>
+
+{{ include("_segment-copyright.twig") }}
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="{{ theme_url }}/js/jquery.min.js"></script>
+		<script src="{{ theme_url }}/js/jquery.scrollex.min.js"></script>
+		<script src="{{ theme_url }}/js/jquery.scrolly.min.js"></script>
+		<script src="{{ theme_url }}/js/browser.min.js"></script>
+		<script src="{{ theme_url }}/js/breakpoints.min.js"></script>
+		<script src="{{ theme_url }}/js/util.js"></script>
+		<script src="{{ theme_url }}/js/main.js"></script>
+		<script src="{{ theme_url }}/js/bigraccoon.js"></script>
+
+	</body>
 </html>
