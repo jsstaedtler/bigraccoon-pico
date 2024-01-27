@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	{% block html_head %}
+
+	{# Find out what our parent page is #}
+	{% set current_parent = pages(current_page.id, offset=-1) | first %}		{# Returns an array with a single element, so just save the first one #}
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    {% if meta.description %}
+        <meta name="description" content="{{ meta.description|striptags }}" />
+    {% endif %}
+    {% if meta.robots %}
+        <meta name="robots" content="{{ meta.robots }}" />
+    {% endif %}
+    {% if current_page %}
+        <link rel="canonical" href="{{ current_page.url }}" />
+    {% endif %}
+
+		<meta property="og:url" content="{{ current_page.url }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{% if meta.title %}{{ meta.title }} - {% endif %}{{ site_title }}">
+        {% if meta.blurb %}<meta property="og:description" content="{{ meta.blurb|striptags }}">{% endif %}
+        <meta property="og:image" content="{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:site_name" content="bigraccoon.ca - Works by JS Staedtler">
+        <meta property="twitter:card" content="summary_large_image">
+		
+		<link rel="shortcut icon" type="image/png" href="{{ assets_url }}/favicon.png">
+
+		<title>{% if meta.title %}{{ meta.title }} &#x2022; {% endif %}{{ site_title }}</title>
+
+
+		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
+		<style>
+			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
+			blockquote { display: none; }
+		</style>
+		
+		<noscript>
+			<link rel="stylesheet" href="{{ theme_url }}/css/noscript.css" type="text/css" />
+			<style>
+				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
+			</style>
+		</noscript>
+		
+	{% endblock html_head %}
+	</head>
+	
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+		<div id="wrapper" class="fade-in">
+
+		{% block page_header %}
+		
+			<!-- Page header -->
+			<header id="header">
+				<a href="{{ base_url }}"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
+			</header>
+			
+		{% endblock page_header %}
+		
+		{% block navbar %}
+
+			<!-- Site navigation -->
+			<nav id="nav">
+				<div id="homebutton" class="hidden">
+					<a href="{{ base_url }}" id="logowhite" class="home"><img src="{{ assets_url }}/bigraccoon_logo_white.png" title="Main Page" alt="bigraccoon.ca logo"></a>
+					<a href="{{ base_url }}" id="logoblack" class="home"><img src="{{ assets_url }}/bigraccoon_logo_black.png" title="Main Page" alt="bigraccoon.ca logo"></a>
+				</div>
+				
+				<div id="menu">
+				
+					<div id="menubutton">
+						<span id="navPanelToggle" onClick="toggleMenu();">Menu</span>
+					</div>
+				
+					<div id="navLinks">
+						<ul class="links">
+						{% set current_parent = current_page.id | split('/') %}
+						{% for page in pages(depthOffset=0)|sort_by(['meta','sectionorder']) if page.title and not page.hidden %}
+							{% set page_parent = page.id | split('/') %}
+							<li{% if (page.id == current_page.id) or (page_parent[0] == current_parent[0]) %} class="active"{% endif %}>
+								<a href="{{ page.url }}">{{ page.title }}</a>
+							</li>
+						{% endfor %}
+						</ul>
+
+						<ul class="icons">
+							{# <li><span class="menucontrol">
+								<span class="serif-font">Aa</span>
+								<label class="toggleswitch" onclick="toggleFont()"><input type="checkbox" id="fonttoggle"><span class="switchslider"></span></label>
+								<span class="sans-font">Aa</span>
+							</span></li> #}
+							<li id="backtotopbutton" class="hidden"><a href="#main" class="scrolly">
+								<svg role="img" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><title>Back to top</title><path d="M208.48535,143.51855a12.0001,12.0001,0,0,1-16.9707,16.97071L140,108.97461v115.0293a12,12,0,1,1-24,0V108.97461L64.48535,160.48926a12.0001,12.0001,0,0,1-16.9707-16.97071l72-72c.00732-.00756.01562-.01367.02344-.021q.40869-.40686.85546-.77319c.14161-.1167.291-.218.437-.32691.16748-.12549.33154-.25537.50537-.37183.17383-.11621.35449-.217.53271-.32348.15772-.094.31153-.19312.47412-.28.18164-.09741.36866-.17993.5542-.26709.16944-.07983.33594-.16455.50977-.23657.18115-.0752.3667-.13575.55078-.20166.18506-.06641.36768-.13721.55664-.19458.18652-.0564.376-.0979.56445-.14527.19092-.04785.3794-.10156.57422-.14013.21973-.04346.44141-.06983.6626-.10108.1665-.02344.33008-.05542.498-.072a12.08048,12.08048,0,0,1,2.373,0c.168.0166.33155.04858.49805.072.22119.03125.44287.05762.6626.10108.19482.03857.3833.09228.57422.14013.18847.04737.37793.08887.56445.14527.189.05713.37109.12817.55566.19433.18457.06592.37061.12671.55225.20215.17334.072.33936.15625.50879.23609.18555.0874.37305.16992.55469.26733.16259.08691.3164.186.47412.28.17822.10644.35888.20727.53271.32348.17383.11646.33789.24634.50537.37183.146.10889.29541.21021.437.32691q.44678.36584.85546.77319c.00782.00732.01612.01343.02344.021ZM216,28H40a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Z"/></svg>
+							</a></li>
+						</ul>
+					</div>
+				
+				</div>
+			</nav>
+
+			<div id="navBuffer"></div>
+
+		{% endblock navbar %}
+
+			<!-- Main -->
+			<div id="main">
+			
+			{% block page_body %}
+			    
+{{ include("_segment-announcement.twig") }}
+
+				<!-- A post -->
+				<section class="post">
+
+				{% block page_content %}
+				
+					<header class="major">
+						{% if meta.date %}<span class="date">{{ meta.date_formatted }}</span>{% endif %}
+						{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+						{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
+					</header>
+					
+					{{ content }}
+					
+				{% endblock page_content %}
+							
+				</section>
+				
+			{% endblock page_body %}
+
+			</div>
+			
+		{% block page_footer %}
+
+			<!-- Copyright statements -->
+			<div id="copyright"><ul>
+				<li>Original works by JS Staedtler provided under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons license CC BY 4.0</a></li>
+				<li>Site content managed using <a href="https://picocms.org/">Pico</a></li>
+				<li>Site design adapted from <a href="https://html5up.net/uploads/demos/massively/">Massively</a> by <a href="https://html5up.net">HTML5 UP</a></li>
+				<li><a href="https://phosphoricons.com/">Phosphor</a> SVG icons provided under the <a href="https://github.com/phosphor-icons/homepage/blob/master/LICENSE">MIT License</a></li>
+			</ul></div>
+
+		{% endblock page_footer %}
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="{{ theme_url }}/js/jquery.min.js"></script>
+		<script src="{{ theme_url }}/js/jquery.scrollex.min.js"></script>
+		<script src="{{ theme_url }}/js/jquery.scrolly.min.js"></script>
+		<script src="{{ theme_url }}/js/browser.min.js"></script>
+		<script src="{{ theme_url }}/js/breakpoints.min.js"></script>
+		<script src="{{ theme_url }}/js/util.js"></script>
+		<script src="{{ theme_url }}/js/main.js"></script>
+		<script src="{{ theme_url }}/js/bigraccoon.js"></script>
+
+	</body>
+</html>
