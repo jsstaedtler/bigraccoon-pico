@@ -191,7 +191,7 @@ input, select, textarea {
 
 	p {
 		text-align: justify;
-		margin: 0 0 2rem 0;
+		margin: 0 0 1.5rem 0;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -5314,6 +5314,7 @@ span.logo_icon img {
 .post ul {
   list-style: none;
   list-style-position: inside;
+  padding-left: 1rem;
 }
 
 .post ul li {

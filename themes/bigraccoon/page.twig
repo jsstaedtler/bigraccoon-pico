@@ -1,97 +1,12 @@
-<!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-		<meta property="og:url" content="{{ current_page.url }}">
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="{% if meta.title %}{{ meta.title }} - {% endif %}{{ site_title }}">
-        {% if meta.blurb %}<meta property="og:description" content="{{ meta.blurb }}">{% endif %}
-        <meta property="og:image" content="{{ assets_url }}/{{ meta.image }}">
-        <meta property="og:locale" content="en_US">
-        <meta property="og:site_name" content="bigraccoon.ca - Works by JS Staedtler">
-        <meta property="twitter:card" content="summary_large_image">
-		
-		<link rel="shortcut icon" type="image/png" href="{{ assets_url }}/favicon.png">
+{# A plain old page, with a simple H1 title and content #}
+{% extends "_base.twig" %}
 
-		<title>{% if meta.title %}{{ meta.title }} &#x2022; {% endif %}{{ site_title }}</title>
-    {% if meta.description %}
-        <meta name="description" content="{{ meta.description|striptags }}" />
-    {% endif %}
-    {% if meta.robots %}
-        <meta name="robots" content="{{ meta.robots }}" />
-    {% endif %}
+{% block page_content %}
 
-    {% if current_page %}
-        <link rel="canonical" href="{{ current_page.url }}" />
-    {% endif %}
+	<header class="major">
+		<h1>{{ meta.title }}</h1>
+	</header>
 	
-		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
-		<style>
-			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
-		</style>
-
-		<noscript>
-			<link rel="stylesheet" href="{{ theme_url }}/css/noscript.css" type="text/css" />
-			<style>
-				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
-			</style>
-		</noscript>
-	</head>
-	
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-		<div id="wrapper" class="fade-in">
-
-			<!-- Page header -->
-			<header id="header">
-				<a href="{{ base_url }}"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
-			</header>
-
-{{ include("_segment-navbar.twig") }}
-
-			<!-- Main -->
-			<div id="main">
-			    
-{{ include("_segment-announcement.twig") }}
-
-				<!-- Post -->
-				<section class="post">
-					
-					{% if meta.title %}
-					<header class="major">
-						<h1>{{ meta.title }}</h1>
-						
-						{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
-					</header>
-					{% endif %}
-					
-					{{ content }}
-
-				</section>
-
-			</div>
-
-{{ include("_segment-copyright.twig") }}
-
-		</div>
-
-		<!-- Scripts -->
-		<script src="{{ theme_url }}/js/jquery.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrollex.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrolly.min.js"></script>
-		<script src="{{ theme_url }}/js/browser.min.js"></script>
-		<script src="{{ theme_url }}/js/breakpoints.min.js"></script>
-		<script src="{{ theme_url }}/js/util.js"></script>
-		<script src="{{ theme_url }}/js/main.js"></script>
-		<script src="{{ theme_url }}/js/bigraccoon.js"></script>
-
-	</body>
-</html>
+	{{ content }}
+							
+{% endblock page_content %}
