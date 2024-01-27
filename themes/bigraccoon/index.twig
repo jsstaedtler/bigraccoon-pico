@@ -1,14 +1,20 @@
-<!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
+{# The front page, which has many customizations compared to the base template #}
+{% extends "_base.twig" %}
+
+{% block html_head %}
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    {% if meta.description %}
+        <meta name="description" content="{{ meta.description|striptags }}" />
+    {% endif %}
+    {% if meta.robots %}
+        <meta name="robots" content="{{ meta.robots }}" />
+    {% endif %}
 
+    {% if current_page %}
+        <link rel="canonical" href="{{ current_page.url }}" />
+    {% endif %}
+	
         <meta property="og:url" content="{{ current_page.url }}">
         <meta property="og:type" content="website">
         <meta property="og:title" content="bigraccoon.ca - Works by JS Staedtler">
@@ -25,17 +31,6 @@
 		
 		<title>{{ site_title }} &#x2022; Works by J.S. Staedtler</title>
 		
-    {% if meta.description %}
-        <meta name="description" content="{{ meta.description|striptags }}" />
-    {% endif %}
-    {% if meta.robots %}
-        <meta name="robots" content="{{ meta.robots }}" />
-    {% endif %}
-
-    {% if current_page %}
-        <link rel="canonical" href="{{ current_page.url }}" />
-    {% endif %}
-	
 		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
 		<style>
 			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}//{{ meta.image }}"); }
@@ -47,139 +42,113 @@
 				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
 			</style>
 		</noscript>
-	</head>
-	
-	<body class="is-preload">
+{% endblock html_head %}
 
-		<!-- Wrapper -->
-		<div id="wrapper" class="fade-in">
-
-			<!-- Intro-style page header-->
-			<div id="intro">
-				<a href="#nav" class="scrolly"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
-				<a href="#nav" class="scrolly"><h3>{{ meta.description }}</h3></a>
-				<ul class="actions">
-					<li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-				</ul>
-			</div>
-
-{{ include("_segment-navbar.twig") }}
-
-			<!-- Main -->
-			<div id="main">
-			    
-{{ include("_segment-announcement.twig") }}
-
-				<!-- Artwork section -->
-				
-				<article class="post featured">
-				    <header class="major">
-						<h3>Latest Artwork</h3>
-						<span class="date">{{ meta.gallerydate | date(config.php_date_format) }}</span>
-					{% if meta.gallerytitle %}
-						<a href="{{ meta.gallerylink }}"><h2>{{ meta.gallerytitle }}</h2></a>
-					{% endif %}
-					</header>
-					
-					<a href="{{ meta.gallerylink }}" class="image main"><img src="{{ meta.gallerythumbnail }}"{% if meta.gallerydescription %} alt="{{ meta.gallerydescription }}"{% endif %}></a>
-					
-					<ul class="actions special stacked">
-						<li><a href="{{ meta.gallerylink }}" class="button large">See Details</a></li>
-						<li><a href="{{ pages["gallery/index"].url }}" class="button primary large">Visit the Gallery</a></li>
-					</ul>
-				</article>
-
-
-				<section class="posts">
-				
-				<!-- News section -->
-
-				{# Get all child pages of the News section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
-				{% set latest_news_id = pages("news", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
-				{% set latest_news = pages[latest_news_id] %}
-
-				<article class="post">
-				    <header>
-						<h3>Latest News</h3>
-						<span class="date">{{ latest_news.date_formatted }}</span>
-						<a href="{{ latest_news.url }}"><h2>{{ latest_news.title }}</h2></a>
-					{# % if latest_news.meta.blurb %}
-						<p>{{ latest_news.meta.blurb }}</p>
-					{% endif % #}
-					</header>
-					
-				{% if latest_article.news.image %}
-					<a href="{{ latest_news.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_news.meta.image }}"{% if latest_news.meta.imagedescription %} alt="{{ latest_news.meta.imagedescription }}"{% endif %}></a>
-				{% endif %}
-				
-					{# latest_news.raw_content|length > 200 ? latest_news.raw_content|slice(0, 200) ~ '...' : latest_news.raw_content #}
-					
-					{{ latest_news_id|content }}
-				
-					<ul class="actions special stacked">
-						<li><a href="{{ latest_news.url }}" class="button large">Read More</a></li>
-						<li><a href="{{ pages["news/index"].url }}" class="button primary large">View All News Items</a></li>
-					</ul>
-				</article>
-
-
-				<!-- Articles section -->
-
-				{# Get all child pages of the articles section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
-				{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
-				{% set latest_article = pages[latest_article_id] %}
-
-				<article class="post">
-				    <header>
-						<h3>Latest Article</h3>
-						<span class="date">{{ latest_article.date_formatted }}</span>
-						<a href="{{ latest_article.url }}"><h2>{{ latest_article.title }}</h2></a>
-					{% if latest_article.meta.blurb %}
-						<p>{{ latest_article.meta.blurb }}</p>
-					{% endif %}
-					</header>
-					
-				{% if latest_article.meta.image %}
-					<a href="{{ latest_article.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_article.meta.image }}"{% if latest_article.meta.imagedescription %} alt="{{ latest_article.meta.imagedescription }}"{% endif %}></a>
-				{% endif %}
-				
-					<ul class="actions special stacked">
-						<li><a href="{{ latest_article.url }}" class="button large">Read More</a></li>
-						<li><a href="{{ pages["articles/index"].url }}" class="button primary large">View All Articles</a></li>
-					</ul>
-				</article>
-				
-				</section>
-
-                
-				<!-- Post -->
-				<article class="post">
-
-					{% if meta.title %}
-					<header class="major">
-						<h3>{{ meta.title }}</h3>
-					</header>
-					{% endif %}
-
-					{{ content }}
-					
-				</article>
-
-			</div>
-
-{{ include("_segment-copyright.twig") }}
-
+{% block page_header %}
+		<!-- Intro-style page header-->
+		<div id="intro">
+			<a href="#nav" class="scrolly"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
+			<a href="#nav" class="scrolly"><h3>{{ meta.description }}</h3></a>
+			<ul class="actions">
+				<li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+			</ul>
 		</div>
+{% endblock page_header %}
 
-		<!-- Scripts -->
-		<script src="{{ theme_url }}/js/jquery.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrollex.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrolly.min.js"></script>
-		<script src="{{ theme_url }}/js/browser.min.js"></script>
-		<script src="{{ theme_url }}/js/breakpoints.min.js"></script>
-		<script src="{{ theme_url }}/js/util.js"></script>
-		<script src="{{ theme_url }}/js/main.js"></script>
-		<script src="{{ theme_url }}/js/bigraccoon.js"></script>
+{% block page_body %}
+		<!-- Artwork section -->
+		
+		<article class="post featured">
+			<header class="major">
+				<h3>Latest Artwork</h3>
+				<span class="date">{{ meta.gallerydate | date(config.php_date_format) }}</span>
+			{% if meta.gallerytitle %}
+				<a href="{{ meta.gallerylink }}"><h2>{{ meta.gallerytitle }}</h2></a>
+			{% endif %}
+			</header>
+			
+			<a href="{{ meta.gallerylink }}" class="image main"><img src="{{ meta.gallerythumbnail }}"{% if meta.gallerydescription %} alt="{{ meta.gallerydescription }}"{% endif %}></a>
+			
+			<ul class="actions special stacked">
+				<li><a href="{{ meta.gallerylink }}" class="button large">See Details</a></li>
+				<li><a href="{{ pages["gallery/index"].url }}" class="button primary large">Visit the Gallery</a></li>
+			</ul>
+		</article>
 
-	</body>
-</html>
+
+		<section class="posts">
+		
+		<!-- News section -->
+
+		{# Get all child pages of the News section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
+		{% set latest_news_id = pages("news", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
+		{% set latest_news = pages[latest_news_id] %}
+
+		<article class="post">
+			<header>
+				<h3>Latest News</h3>
+				<span class="date">{{ latest_news.date_formatted }}</span>
+				<a href="{{ latest_news.url }}"><h2>{{ latest_news.title }}</h2></a>
+			{# % if latest_news.meta.blurb %}
+				<p>{{ latest_news.meta.blurb }}</p>
+			{% endif % #}
+			</header>
+			
+		{% if latest_article.news.image %}
+			<a href="{{ latest_news.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_news.meta.image }}"{% if latest_news.meta.imagedescription %} alt="{{ latest_news.meta.imagedescription }}"{% endif %}></a>
+		{% endif %}
+		
+			{# latest_news.raw_content|length > 200 ? latest_news.raw_content|slice(0, 200) ~ '...' : latest_news.raw_content #}
+			
+			{{ latest_news_id|content }}
+		
+			<ul class="actions special stacked">
+				<li><a href="{{ latest_news.url }}" class="button large">Read More</a></li>
+				<li><a href="{{ pages["news/index"].url }}" class="button primary large">View All News Items</a></li>
+			</ul>
+		</article>
+
+
+		<!-- Articles section -->
+
+		{# Get all child pages of the articles section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
+		{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
+		{% set latest_article = pages[latest_article_id] %}
+
+		<article class="post">
+			<header>
+				<h3>Latest Article</h3>
+				<span class="date">{{ latest_article.date_formatted }}</span>
+				<a href="{{ latest_article.url }}"><h2>{{ latest_article.title }}</h2></a>
+			{% if latest_article.meta.blurb %}
+				<p>{{ latest_article.meta.blurb }}</p>
+			{% endif %}
+			</header>
+			
+		{% if latest_article.meta.image %}
+			<a href="{{ latest_article.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_article.meta.image }}"{% if latest_article.meta.imagedescription %} alt="{{ latest_article.meta.imagedescription }}"{% endif %}></a>
+		{% endif %}
+		
+			<ul class="actions special stacked">
+				<li><a href="{{ latest_article.url }}" class="button large">Read More</a></li>
+				<li><a href="{{ pages["articles/index"].url }}" class="button primary large">View All Articles</a></li>
+			</ul>
+		</article>
+		
+		</section>
+
+
+		<!-- Post -->
+		<article class="post">
+
+			{% if meta.title %}
+			<header class="major">
+				<h2>{{ meta.title }}</h2>
+			</header>
+			{% endif %}
+
+			{{ content }}
+			
+		</article>
+	
+{% endblock page_body %}

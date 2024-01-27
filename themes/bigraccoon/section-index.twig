@@ -1,8 +1,9 @@
+{# An index page which lists all subpages.  Any such subpage could itself be another index. #}
 {% extends "_base.twig" %}
 
 {% block page_content %}
 	<header class="major">
-		{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
 		{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
 	</header>
 	

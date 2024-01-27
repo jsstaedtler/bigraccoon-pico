@@ -1,103 +1,15 @@
-<!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-	{# Find out what our parent page is #}
-	{% set current_parent = pages(current_page.id, offset=-1) | first %}		{# Returns an array with a single element, so just save the first one #}
+{# Like a regular article, but without presenting a blurb.  For news articles, the blurb is simply just the first sentence or two of the content #}
+{% extends "_base.twig" %}
 
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-		<meta property="og:url" content="{{ current_page.url }}">
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="{% if meta.title %}{{ meta.title }} - {% endif %}{{ site_title }}">
-        {% if meta.blurb %}<meta property="og:description" content="{{ meta.blurb }}">{% endif %}
-        <meta property="og:image" content="{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}">
-        <meta property="og:locale" content="en_US">
-        <meta property="og:site_name" content="bigraccoon.ca - Works by JS Staedtler">
-        <meta property="twitter:card" content="summary_large_image">
-		
-		<link rel="shortcut icon" type="image/png" href="{{ assets_url }}/favicon.png">
+{% block page_content %}
+	{{ include("_segment-pagination.twig") }}
 
-		<title>{% if meta.title %}{{ meta.title }} &#x2022; {% endif %}{{ site_title }}</title>
-    {% if meta.description %}
-        <meta name="description" content="{{ meta.description|striptags }}" />
-    {% endif %}
-    {% if meta.robots %}
-        <meta name="robots" content="{{ meta.robots }}" />
-    {% endif %}
-
-    {% if current_page %}
-        <link rel="canonical" href="{{ current_page.url }}" />
-    {% endif %}
+	<header class="major">
+		<span class="date">{{ meta.date_formatted }}</span>
+		<h2>{{ meta.title }}</h2>
+	</header>
 	
-		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
-		<style>
-			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
-			blockquote { display: none; }
-		</style>
-		
-		<noscript>
-			<link rel="stylesheet" href="{{ theme_url }}/css/noscript.css" type="text/css" />
-			<style>
-				#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
-			</style>
-		</noscript>
-	</head>
+	{{ content }}
 	
-	<!-- body class="is-preload" -->
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-		<div id="wrapper" class="fade-in">
-
-			<!-- Page header -->
-			<header id="header">
-				<a href="{{ base_url }}"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
-			</header>
-
-{{ include("_segment-navbar.twig") }}
-			
-			<!-- Main content -->
-			<div id="main">
-			    
-{{ include("_segment-announcement.twig") }}
-
-{{ include("_segment-pagination.twig") }}
-
-				<!-- Post -->
-				<section class="post">
-
-					<header class="major">
-						<span class="date">{{ meta.date_formatted }}</span>
-						<h2>{{ meta.title }}</h2>
-					</header>
-					
-					{{ content }}
-							
-				</section>
-				
-{{ include("_segment-pagination.twig") }}
-
-			</div>
-
-{{ include("_segment-copyright.twig") }}
-
-		</div>
-
-		<!-- Scripts -->
-		<script src="{{ theme_url }}/js/jquery.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrollex.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrolly.min.js"></script>
-		<script src="{{ theme_url }}/js/browser.min.js"></script>
-		<script src="{{ theme_url }}/js/breakpoints.min.js"></script>
-		<script src="{{ theme_url }}/js/util.js"></script>
-		<script src="{{ theme_url }}/js/main.js"></script>
-		<script src="{{ theme_url }}/js/bigraccoon.js"></script>
-
-	</body>
-</html>
+	{{ include("_segment-pagination.twig") }}
+{% endblock page_content %}
