@@ -35,3 +35,11 @@
 			
 	{{ include("_segment-pagination.twig") }}
 {% endblock page_body %}
+
+{% block scripts %}
+	{# Add lightbox elements and script #}
+	{{ include("_segment-lightbox.twig") }}
+	
+	{{ parent() }}
+	<script src="{{ theme_url }}/js/bigraccoon-lightbox.js"></script>
+{% endblock scripts %}
