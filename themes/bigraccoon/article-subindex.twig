@@ -1,0 +1,45 @@
+{# An index page which lists all subpages.  Any such subpage could itself be another index. #}
+{% extends "_base.twig" %}
+
+{% block page_body %}
+	{{ include("_segment-pagination.twig") }}
+
+	<!-- A post -->
+	<section class="post">
+
+		<header class="major">
+			{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
+			{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
+		</header>
+		
+		{{ content }}
+		
+		<ul class="pageslist">
+		{% for page in pages(current_page.id)|sort((a, b) => b.date <=> a.date) if not page.hidden %}
+			<li>
+				<a href="{{ page.url }}">
+					<p class="date">{{ page.date_formatted }}</p>
+					
+				{% if page.meta.image %}
+					<span class="image right"><img src="{{ assets_url }}/{{ page.meta.image }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}></span>
+				{% endif %}
+				
+					<h3>{{ page.title }}</h3>
+					
+				{% if page.meta.blurb %}
+					<p class="excerpt">{{ page.meta.blurb }}</p>
+				{% endif %}
+				
+				</a>
+			</li>
+		{% endfor %}
+		
+			{# One empty li at the end, to clear the CSS "float" on the image thumbnails #}
+			<li></li>
+		</ul>
+
+	</section>
+	
+	{{ include("_segment-pagination.twig") }}
+	
+{% endblock page_body %}	
