@@ -4267,6 +4267,11 @@ input, select, textarea {
 			padding: 6rem 8rem 6rem 8rem;
 		}
 		
+/* N */	#main .post p img, #main .post p video {
+			max-width: 100%;
+		}
+
+		
 		#main > .pagination {
 			border: 0;
 			padding: 2rem 8rem;
