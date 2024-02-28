@@ -112,7 +112,7 @@
 		<!-- Articles section -->
 
 		{# Get all child pages of the articles section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
-		{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
+		{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|sort((a, b) => b.date <=> a.date)|keys|first %}
 		{% set latest_article = pages[latest_article_id] %}
 
 		<article class="post">
