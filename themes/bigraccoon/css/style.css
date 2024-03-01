@@ -2890,17 +2890,17 @@ input, select, textarea {
 		padding-left: 1.25rem;
 	}
 
-		ol li {
+	ol > li {
 			padding-left: 0.25rem;
-		}
-
+	}
+	
 	ul {
 		list-style: disc;
 /* C	margin: 0 0 2rem 0; */
 /* C	padding-left: 1rem; */
 	}
 
-		ul li {
+		ul > li {
 			padding-left: 0.5rem;
 		}
 
@@ -2909,12 +2909,12 @@ input, select, textarea {
 			padding-left: 0;
 		}
 
-			ul.divided li {
+			ul.divided > li {
 				border-top: solid 1px;
 				padding: 0.5rem 0;
 			}
 
-				ul.divided li:first-child {
+				ul.divided > li:first-child {
 					border-top: 0;
 					padding-top: 0;
 				}
@@ -2933,19 +2933,19 @@ input, select, textarea {
 			margin-left: 2rem;
 		}
 
-	ul.divided li {
+	ul.divided > li {
 		border-top-color: #eeeeee;
 	}
 
-	ul.icons li a.icon:hover:before {
+	ul.icons > li a.icon:hover:before {
 		color: #18bfef;
 	}
 
-	ul.icons.alt li .icon:before {
+	ul.icons.alt > li .icon:before {
 		box-shadow: inset 0 0 0 2px #eeeeee;
 	}
 
-	ul.icons.alt li a.icon:hover:before {
+	ul.icons.alt > li a.icon:hover:before {
 		box-shadow: inset 0 0 0 2px #18bfef;
 	}
 
@@ -5322,7 +5322,7 @@ span.logo_icon img {
   padding-left: 1rem;
 }
 
-.post ul li {
+.post ul > li {
 	position: relative;
 	padding-left: 1.5rem;
 	margin-bottom: 1rem;
@@ -5333,11 +5333,9 @@ span.logo_icon img {
 }
 
 /* Pico's markdown conversion puts <p> blocks inside its <li> blocks which messes up bullet alignment */
-
-.post ul li p {
+.post ul > li p {
 	display: inline;
 }
-
 
 /* Do even fancier things with article listing ULs */
 
@@ -5346,20 +5344,20 @@ span.logo_icon img {
    	list-style-position: inside;
 }
 
-ul.pageslist li {
+ul.pageslist > li {
 	clear: both;
 	margin-bottom: 2rem;
 	padding-left: 2.3rem;
 	background: none;
 }
 
-ul.pageslist li .date {
+ul.pageslist > li .date {
 	display: block;
 	margin: 0 0 0 0;
 	position: relative;
 }
 
-ul.pageslist li .date:after {
+ul.pageslist > li .date:after {
 	content: '';
 	display: block;
 	position: absolute;
@@ -5370,18 +5368,18 @@ ul.pageslist li .date:after {
 	border-top-color: #eeeeee;
 }
 
-ul.pageslist li a {
+ul.pageslist > li a {
 	border-bottom: 0 none;
 }
 
-ul.pageslist li span.image.right {
+ul.pageslist > li span.image.right {
 	top: initial;
 	max-width: 33%;
 	margin-bottom: 0;
 }
 
 /* The custom bullet sticks to the header text, so it's defined here instead of on the <li>.  ":before:" with "position: absolute" is used (instead of a simple background-image) so that it can exist outside the area of the <li>. */
-ul.pageslist li h3:before {
+ul.pageslist > li h3:before {
 	content: " ";
 	display: block;
 	position: absolute;
@@ -5393,7 +5391,7 @@ ul.pageslist li h3:before {
 	left: -1.3rem;
 }
 
-ul.pageslist li p.excerpt {
+ul.pageslist > li p.excerpt {
 	font-style: italic;
 }
 
