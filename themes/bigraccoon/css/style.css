@@ -2885,13 +2885,24 @@ input, select, textarea {
 /* List */
 
 	ol {
-		list-style: decimal;
+		list-style: none;
+		counter-reset: index;
 		margin: 0 0 2rem 0;
-		padding-left: 1.25rem;
+		padding-left: 2.2rem;
 	}
 
 	ol > li {
-			padding-left: 0.25rem;
+/* N */	counter-increment: index;
+		padding-left: 0.25rem;
+	}
+	
+	ol > li:before {
+		content: counter(index) ".  ";
+		font-size: 1.4em;
+		font-weight: 700;
+		line-height: 1.6em;
+		margin-left: -1.6rem;
+		margin-right: 0.2rem;
 	}
 	
 	ul {
@@ -2918,6 +2929,10 @@ input, select, textarea {
 					border-top: 0;
 					padding-top: 0;
 				}
+				
+	li > ol, li > ul {
+		margin-top: 1rem;
+	}
 
 	dl {
 		margin: 0 0 2rem 0;
@@ -5332,8 +5347,12 @@ span.logo_icon img {
 	background-repeat: no-repeat;
 }
 
+.post ol > li {
+	margin-bottom: 1rem;
+}
+
 /* Pico's markdown conversion puts <p> blocks inside its <li> blocks which messes up bullet alignment */
-.post ul > li p {
+.post ul > li > p, .post ol > li > p {
 	display: inline;
 }
 
