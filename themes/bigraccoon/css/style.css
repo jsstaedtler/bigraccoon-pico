@@ -3253,6 +3253,13 @@ input, select, textarea {
 			padding: 0 0.75rem;
 		}
 		
+/* N */ .pagination .next, .pagination .prev {
+			max-width: 40%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		
 /* N */ .pagination .up {
 			position: absolute;
 			width: 6rem;
