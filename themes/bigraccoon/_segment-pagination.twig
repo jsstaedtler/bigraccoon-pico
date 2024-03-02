@@ -15,7 +15,7 @@
 	{% set current_parent = parents_array | first %}				{# ...so just save the first one #}
 
 {# Get all child pages of that parent (ie. the siblings of this page), as long as they aren't hidden #}
-	{% set siblingid_array = pages(current_parent.id)|filter(p => not p.hidden)|keys %}
+	{% set siblingid_array = pages(current_parent.id)|sort((a, b) => b.date <=> a.date)|filter(p => not p.hidden)|keys %}
 
 {# Initialize these variables so they exist outside the scope of the following loops #}
 	{% set next_page = NULL %}
