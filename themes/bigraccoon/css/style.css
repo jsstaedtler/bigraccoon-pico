@@ -2989,6 +2989,7 @@ input, select, textarea {
 
 		header > p {
 			font-style: italic;
+			text-align: center;
 		}
 
 		header > .date {
