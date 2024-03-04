@@ -10,7 +10,7 @@
 	{{ content }}
 	
 	<ul class="pageslist">
-	{% for page in pages(current_page.id) if not page.hidden %}
+	{% for page in pages(current_page.id)|sort((a, b) => b.date <=> a.date) if not page.hidden %}
 		<li>
 			<a href="{{ page.url }}">
 				<p class="date">{{ page.date_formatted }}</p>

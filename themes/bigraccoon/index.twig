@@ -19,13 +19,19 @@
         <meta property="og:type" content="website">
         <meta property="og:title" content="bigraccoon.ca - Works by JS Staedtler">
         <meta property="og:description" content="Drawings, articles, and social media links">
-        <meta property="og:image" content="https://bigraccoon.ca/gallery/upload/2023/01/14/20230114000855-6e7fbada.png">
-        <meta property="og:image:type" content="image/png">
+        <meta property="og:image" content="{{ assets_url }}/{{ meta.image }}">
+        <meta property="og:image:type" content="image/jpeg">
         <meta property="og:locale" content="en_US">
         <meta property="og:site_name" content="bigraccoon.ca - Works by JS Staedtler">
         <meta property="twitter:card" content="summary_large_image">
 
-		<link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
+	    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#eeeeee">
 		<link rel="alternate" type="application/rss+xml" title="bigraccoon.ca - Works by J.S. Staedtler" href="https://bigraccoon.ca/feed">
 		<link rel="me" href="https://mastodon.art/@jsstaedtler">
 		
@@ -33,7 +39,7 @@
 		
 		<link rel="stylesheet" href="{{ theme_url }}/css/style.css" type="text/css" />
 		<style>
-			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}//{{ meta.image }}"); }
+			#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("{{ assets_url }}/{{ meta.image }}"); }
 		</style>
 
 		<noscript>
@@ -112,7 +118,7 @@
 		<!-- Articles section -->
 
 		{# Get all child pages of the articles section (which aren't hidden, and which aren't a subsection index), then pick the newest one #}
-		{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|keys|first %}
+		{% set latest_article_id = pages("articles", depth=null)|filter(a => not (a.hidden or a.id ends with "index"))|sort((a, b) => b.date <=> a.date)|keys|first %}
 		{% set latest_article = pages[latest_article_id] %}
 
 		<article class="post">

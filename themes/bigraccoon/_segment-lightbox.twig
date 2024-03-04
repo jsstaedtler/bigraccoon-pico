@@ -1,0 +1,20 @@
+<!-- Modal lightbox to view full-size images -->
+<div id="lightbox" class="modal">
+	<div id="lightbox-content">
+		<img id="lightbox-image" style="max-width: 100%; max-height: 100%; margin: auto; box-shadow: 0 0 20px 0 black;">
+
+		<!-- Close button -->
+		<span id="lightbox-close" onclick="lightboxClose()">&times;</span>
+	
+		<!-- Next/previous controls -->
+		<a id="lightbox-prev" onclick="lightboxChange(-1)">&#10094;</a>
+		<a id="lightbox-next" onclick="lightboxChange(1)">&#10095;</a>
+
+		<!-- Caption text -->
+		<!-- div id="lightbox-caption">
+		  <p id="caption"></p>
+		</div -->
+	</div>
+</div>
+
+<script src="{{ theme_url }}/js/bigraccoon.js"></script>

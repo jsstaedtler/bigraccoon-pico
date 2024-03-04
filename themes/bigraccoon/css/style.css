@@ -251,8 +251,8 @@ input, select, textarea {
 	}
 
 	blockquote {
-/*		border-left: solid 4px; */
-/*		font-style: italic; */
+		border-left: solid 4px;
+		font-style: italic; 
 /* C */	margin: 2rem 0 2rem 0;
 /* C */	padding: 1rem 2rem 1rem 2rem;
 /* N */	background-color: #eeeeee;
@@ -264,11 +264,11 @@ input, select, textarea {
 	}
 
 	code {
-		border: solid 2px;
+		border: solid 1px;
 		font-family: "Courier New", monospace;
 		font-size: 0.9rem;
-		margin: 0 0.25rem;
-		padding: 0.25rem 0.65rem;
+		margin: 0 0.15rem;
+		padding: 0.25rem 0.3rem;
 	}
 
 	pre {
@@ -282,8 +282,13 @@ input, select, textarea {
 			display: block;
 			line-height: 1.75;
 			padding: 1rem 1.5rem;
+			margin: 0;
 			overflow-x: auto;
 		}
+		
+	p + pre {
+		margin: 1.5rem 0;
+	}
 
 	#main hr {
 		border: 0;
@@ -341,12 +346,12 @@ input, select, textarea {
 	}
 
 	blockquote {
-		border-left-color: #eeeeee;
+		border-left-color: #cccccc;
 	}
 
 	code {
-		background: rgba(220, 220, 220, 0.25);
-		border-color: #eeeeee;
+		background: rgba(225, 225, 200, 0.25);
+		border-color: #cccc99;
 	}
 	
 
@@ -2760,6 +2765,7 @@ input, select, textarea {
 			-ms-flex-direction: column;
 			flex-direction: column;
 			margin-left: 0;
+			padding: 0;
 		}
 
 			ul.actions.stacked li {
@@ -2885,22 +2891,33 @@ input, select, textarea {
 /* List */
 
 	ol {
-		list-style: decimal;
+		list-style: none;
+		counter-reset: index;
 		margin: 0 0 2rem 0;
-		padding-left: 1.25rem;
+		padding-left: 2.2rem;
 	}
 
-		ol li {
-			padding-left: 0.25rem;
-		}
-
+	ol > li {
+/* N */	counter-increment: index;
+		padding-left: 0.25rem;
+	}
+	
+	ol > li:before {
+		content: counter(index) ".  ";
+		font-size: 1.4em;
+		font-weight: 700;
+		line-height: 1.6em;
+		margin-left: -1.6rem;
+		margin-right: 0.2rem;
+	}
+	
 	ul {
 		list-style: disc;
 /* C	margin: 0 0 2rem 0; */
 /* C	padding-left: 1rem; */
 	}
 
-		ul li {
+		ul > li {
 			padding-left: 0.5rem;
 		}
 
@@ -2909,15 +2926,19 @@ input, select, textarea {
 			padding-left: 0;
 		}
 
-			ul.divided li {
+			ul.divided > li {
 				border-top: solid 1px;
 				padding: 0.5rem 0;
 			}
 
-				ul.divided li:first-child {
+				ul.divided > li:first-child {
 					border-top: 0;
 					padding-top: 0;
 				}
+				
+	li > ol, li > ul {
+		margin-top: 1rem;
+	}
 
 	dl {
 		margin: 0 0 2rem 0;
@@ -2933,19 +2954,19 @@ input, select, textarea {
 			margin-left: 2rem;
 		}
 
-	ul.divided li {
+	ul.divided > li {
 		border-top-color: #eeeeee;
 	}
 
-	ul.icons li a.icon:hover:before {
+	ul.icons > li a.icon:hover:before {
 		color: #18bfef;
 	}
 
-	ul.icons.alt li .icon:before {
+	ul.icons.alt > li .icon:before {
 		box-shadow: inset 0 0 0 2px #eeeeee;
 	}
 
-	ul.icons.alt li a.icon:hover:before {
+	ul.icons.alt > li a.icon:hover:before {
 		box-shadow: inset 0 0 0 2px #18bfef;
 	}
 
@@ -2969,6 +2990,7 @@ input, select, textarea {
 
 		header > p {
 			font-style: italic;
+			text-align: center;
 		}
 
 		header > .date {
@@ -3231,6 +3253,13 @@ input, select, textarea {
 /* C */	.pagination .next, .pagination .previous, .pagination .up {
 			text-decoration: none;
 			padding: 0 0.75rem;
+		}
+		
+/* N */ .pagination .next, .pagination .prev {
+			max-width: 40%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
 		}
 		
 /* N */ .pagination .up {
@@ -4266,6 +4295,11 @@ input, select, textarea {
 		#main > .post {
 			padding: 6rem 8rem 6rem 8rem;
 		}
+		
+/* N */	#main .post p img, #main .post p video {
+			max-width: 100%;
+		}
+
 		
 		#main > .pagination {
 			border: 0;
@@ -5317,7 +5351,7 @@ span.logo_icon img {
   padding-left: 1rem;
 }
 
-.post ul li {
+.post ul > li {
 	position: relative;
 	padding-left: 1.5rem;
 	margin-bottom: 1rem;
@@ -5327,12 +5361,14 @@ span.logo_icon img {
 	background-repeat: no-repeat;
 }
 
-/* Pico puts <p> blocks inside its <li> blocks which messes up bullet alignment */
-
-.post ul li p {
-	display: inline;
+.post ol > li {
+	margin-bottom: 1rem;
 }
 
+/* Pico's markdown conversion puts <p> blocks inside its <li> blocks which messes up bullet alignment */
+.post ul > li > p, .post ol > li > p {
+	display: inline;
+}
 
 /* Do even fancier things with article listing ULs */
 
@@ -5341,20 +5377,20 @@ span.logo_icon img {
    	list-style-position: inside;
 }
 
-ul.pageslist li {
+ul.pageslist > li {
 	clear: both;
 	margin-bottom: 2rem;
 	padding-left: 2.3rem;
 	background: none;
 }
 
-ul.pageslist li .date {
+ul.pageslist > li .date {
 	display: block;
 	margin: 0 0 0 0;
 	position: relative;
 }
 
-ul.pageslist li .date:after {
+ul.pageslist > li .date:after {
 	content: '';
 	display: block;
 	position: absolute;
@@ -5365,18 +5401,18 @@ ul.pageslist li .date:after {
 	border-top-color: #eeeeee;
 }
 
-ul.pageslist li a {
+ul.pageslist > li a {
 	border-bottom: 0 none;
 }
 
-ul.pageslist li span.image.right {
+ul.pageslist > li span.image.right {
 	top: initial;
 	max-width: 33%;
 	margin-bottom: 0;
 }
 
 /* The custom bullet sticks to the header text, so it's defined here instead of on the <li>.  ":before:" with "position: absolute" is used (instead of a simple background-image) so that it can exist outside the area of the <li>. */
-ul.pageslist li h3:before {
+ul.pageslist > li h3:before {
 	content: " ";
 	display: block;
 	position: absolute;
@@ -5388,9 +5424,12 @@ ul.pageslist li h3:before {
 	left: -1.3rem;
 }
 
-ul.pageslist li p.excerpt {
+ul.pageslist > li p.excerpt {
 	font-style: italic;
 }
+
+
+/* A block of 1 to 4 images which display 2x2 on desktop, and in a single column on mobile */
 
 div.imgblock {
     text-align: center;
@@ -5438,3 +5477,85 @@ div.imgblock img, div.imgblock video {
 	}
 
 }
+
+
+/* Modal lightbox */
+
+div#lightbox {
+	display: none;
+	position: fixed;
+	z-index: 10;
+	padding: 1rem;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+div#lightbox-content {
+	position: relative;
+	display: flex;
+	z-index: 11;
+	margin: auto;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	max-width: 1200px;
+}
+
+div#lightbox-image {
+	z-index: 12;
+	margin: auto;
+	box-shadow: inset 0 0 0 2px #212931;
+}
+
+span#lightbox-close {
+	color: white;
+	position: absolute;
+	z-index: 13;
+	top: 10px;
+	right: 25px;
+	font-size: 35px;
+	font-weight: bold;
+	line-height: 35px;
+}
+
+span#lightbox-close:hover, span#lightbox-close:focus {
+	color: #999;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a#lightbox-prev, a#lightbox-next {
+	cursor: pointer;
+	position: absolute;
+	z-index: 13;
+	top: 50%;
+	width: auto;
+	padding: 16px;
+	margin-top: -50px;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	transition: 0.6s ease;
+	border-radius: 0 3px 3px 0;
+	border: 0;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+a#lightbox-next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+a#lightbox-prev:hover, a#lightbox-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+a#lightbox-prev.disabled, a#lightbox-next.disabled {
+	display: none;
+}
+
