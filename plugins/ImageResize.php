@@ -130,7 +130,7 @@ class ImageResize extends AbstractPicoPlugin
             $image->writeImage($newFile);
         } else {
             $image = imagecreatefromstring(file_get_contents($file));
-            $newResource = imagescale($image, $resizedWidth, $resizedHeight);
+            $newResource = imagescale($image, $resizedWidth, $resizedHeight, IMG_BICUBIC);
             imagejpeg($newResource, $newFile, $this->quality);
         }
 
