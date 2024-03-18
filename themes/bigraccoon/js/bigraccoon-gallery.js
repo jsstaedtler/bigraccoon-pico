@@ -73,7 +73,7 @@ function br_adjustThumbnailSizes() {
 			const numMargins = rowArray[r].length/* - 1*/;
 			const ratio = (pageWidth - numMargins * imageMargin * 2) / (rowWidthArray[r] - numMargins * imageMargin * 2);
 			
-			console.log(`Row: ${r} | rowWidth: ${rowWidthArray[r]} | numMargins: ${numMargins} | ratio: ${ratio}`);
+			//console.log(`Row: ${r} | rowWidth: ${rowWidthArray[r]} | numMargins: ${numMargins} | ratio: ${ratio}`);
 
 			// Now apply that height to each image in this row
 			for (var i = 0; i < rowArray[r].length; i++) {
@@ -96,10 +96,10 @@ function br_adjustThumbnailSizes() {
 				newWidth += imageRect.width + imageMargin * 2;
 			}
 			
-			console.log(`Row: ${r} | newWidth: ${newWidth}`);
+			//console.log(`Row: ${r} | newWidth: ${newWidth}`);
 		}
 		
-		console.log(`pageWidth: ${pageWidth}`);
+		//console.log(`pageWidth: ${pageWidth}`);
 		
 	}
 	
@@ -108,18 +108,24 @@ function br_adjustThumbnailSizes() {
 
 function br_getOriginalThumbnailHeight() {
 	
-	console.log("DOMContentLoaded!");
+	//console.log("DOMContentLoaded!");
 
 	br_imageArray = document.getElementById("thumbnails").children;				// Actually an array of <a> elements, each containing an <img>
 	const br_imageRect = br_imageArray[0].children[0].getBoundingClientRect();	// We'll take the dimensions from the first image
 	br_originalHeight = br_imageRect.height;									// Assuming they all start with the same height
 
-	console.log(`br_originalHeight: ${br_originalHeight}`);
+	//console.log(`br_originalHeight: ${br_originalHeight}`);
 
 	// Now perform the resizing for the first time
 	br_adjustThumbnailSizes();
 }
 
 
-window.addEventListener("load", br_getOriginalThumbnailHeight);
+// If the page hasn't finished loading yet, add an event listener.  If it has finished loading, just run the function immediately.
+if (document.readyState === "loading") {
+	window.addEventListener("load", br_getOriginalThumbnailHeight);
+} else {
+	br_getOriginalThumbnailHeight();
+}
+
 window.addEventListener("resize", br_adjustThumbnailSizes);
