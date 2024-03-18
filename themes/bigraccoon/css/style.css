@@ -5559,3 +5559,25 @@ a#lightbox-prev.disabled, a#lightbox-next.disabled {
 	display: none;
 }
 
+
+div#thumbnails {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+div#thumbnails a {
+	border: none;
+	margin: 0;
+	padding: 0;
+	line-height: initial;
+}
+
+div#thumbnails img {
+	width: auto;
+	max-width: 100%;
+	height: 12rem;
+	padding: 0;
+	margin: 2px;
+	display: block;
+}
