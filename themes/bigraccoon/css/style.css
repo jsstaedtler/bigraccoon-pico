@@ -5567,17 +5567,30 @@ div#thumbnails {
 }
 
 div#thumbnails a {
-	border: none;
-	margin: 0;
+	border: solid 2px #eeeeee;
 	padding: 0;
+	margin: 2px;
 	line-height: initial;
 }
 
 div#thumbnails img {
 	width: auto;
 	max-width: 100%;
-	height: 12rem;
+	height: 10rem;
+	border: none;
 	padding: 0;
-	margin: 2px;
+	margin: 0;
 	display: block;
+}
+
+div#thumbnails a:hover {
+	border-color: #18bfef;
+}
+
+@media screen and (max-width: 736px) {
+
+	div#thumbnails img {
+		height: 6rem;
+	}
+
 }
