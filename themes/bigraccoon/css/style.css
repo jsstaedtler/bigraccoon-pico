@@ -5576,11 +5576,15 @@ div#thumbnails a {
 div#thumbnails img {
 	width: auto;
 	max-width: 100%;
-	height: 10rem;
+	height: 12rem;
 	border: none;
 	padding: 0;
 	margin: 0;
 	display: block;
+}
+
+div#thumbnails img.cropped {
+	object-fit: cover
 }
 
 div#thumbnails a:hover {
@@ -5588,6 +5592,14 @@ div#thumbnails a:hover {
 }
 
 @media screen and (max-width: 736px) {
+
+	div#thumbnails img {
+		height: 8rem;
+	}
+
+}
+
+@media screen and (max-width: 480px) {
 
 	div#thumbnails img {
 		height: 6rem;
