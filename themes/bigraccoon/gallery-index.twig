@@ -3,11 +3,11 @@
 {% block page_content %}
 	<header class="major">
 		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
-		{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
+<!--		{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
 	</header>
 	
 	{{ content }}
-	
+-->
 <!--
 	<p>OMG TAGS</p>
 	{% set tags = get_all_tags() %}
@@ -23,11 +23,11 @@
 
 	{% set segment_size = config.segment_size %}
 	{% set total_segments = ((all_pages|length) / segment_size)|round(0, 'ceil') %}
-	
+{#	
 	<p>all_pages|length = {{ all_pages|length }}</p>
 	<p>segment_size = {{ segment_size }}</p>
 	<p>total_segments = {{ total_segments }}</p>
-
+#}
 	{# Get the value of any "?page=n" parameter in the URL, and if it's not an int, set it to 1 #}
 	{% set current_segment_number = url_param('page', 'int', 1) %}
 
@@ -39,10 +39,10 @@
 		{% set current_segment_number = total_segments %}
 	{% endif %}
 	
-	
+{#
 	<p>current_segment_number = {{ current_segment_number }}</p>
 	<p>current_segment_start = {{ (current_segment_number - 1) * segment_size }}</p>
-	
+#}
 	{% set current_segment = all_pages|slice((current_segment_number - 1) * segment_size, segment_size) %}
 	
 
