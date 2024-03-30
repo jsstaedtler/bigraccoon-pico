@@ -57,6 +57,7 @@ function lightboxOpen(i) {
 	draw();
 }
 
+
 function lightboxZoomIn() {
 	i = document.getElementById("lightbox-image");
 	i.style.maxWidth = null;
@@ -65,6 +66,7 @@ function lightboxZoomIn() {
 	i.setAttribute("onclick", "lightboxZoomOut();");
 }
 
+
 function lightboxZoomOut() {
 	i = document.getElementById("lightbox-image");
 	i.style.maxWidth = "100%";
@@ -72,6 +74,7 @@ function lightboxZoomOut() {
 	i.style.cursor = "zoom-in";
 	i.setAttribute("onclick", "lightboxZoomIn();");
 }
+
 
 function lightboxChange(n) {	// n=1 for next image, n=-1 for previous image, 0 for no change (but reevaluate what buttons ae enabled)
 	// Be sure the next/previous index actually exists before switching to it
@@ -105,16 +108,18 @@ function lightboxChange(n) {	// n=1 for next image, n=-1 for previous image, 0 f
 	MIN_ZOOM = Math.min(scaleWidth, scaleHeight);
 	MAX_ZOOM = MIN_ZOOM * 5;
 	
-	// Reset the position and zoom level of the br_canvas
+	// Reset the position and zoom level of the br_canvas, so the image fits in the centre
 	cameraOffset = {x: window.innerWidth / 2, y: window.innerHeight / 2};
 	cameraZoom = MIN_ZOOM;
-	
-	console.log(`cw: ${cw}`);
-	console.log(`ch: ${ch}`);
-	console.log(`iw: ${br_imageWidth}`);
-	console.log(`ih: ${br_imageHeight}`);
-	console.log(`MIN_ZOOM: ${MIN_ZOOM}`);
+/*
+	console.log(`cw: ${cw}`); //300 - 
+	console.log(`ch: ${ch}`); //200 - 
+	console.log(`iw: ${br_imageWidth}`); //300 - 100 - 150 (0 to 0)
+	console.log(`ih: ${br_imageHeight}`); //600 - 200 - 300 (-50 to +50)
+	console.log(`MIN_ZOOM: ${MIN_ZOOM}`); //1 - 0.333 - 0.5
+*/
 }
+
 
 function lightboxClose() {
 	document.getElementById("lightbox").style.display = "none";
@@ -123,18 +128,8 @@ function lightboxClose() {
 
 
 
-// Get all images inside an imageblock, and make them clickable to open in the lightbox
-br_imageList = document.querySelectorAll("div.imgblock img");
-for (var i = 0; i < br_imageList.length; i++) {
-	br_imageList[i].setAttribute("onclick", "lightboxOpen(" + i + ");");
-	br_imageList[i].style.cursor = "zoom-in";
-} 
 
-
-
-
-
-// br_canvas stuff
+// Canvas stuff
 
 
 function draw() {
@@ -142,12 +137,6 @@ function draw() {
     br_canvas.width = window.innerWidth;
     br_canvas.height = window.innerHeight;
 	
-	// At least one dimension of the br_canvas must always be filled by the image, with no gaps.
-	// That will ensure the image doesn't get dragged mostly off-screen, and that it won't move at all at MIN_ZOOM.
-	// So if there's an extra gap, we need to change the cameraOffset.
-	
-	
-    
     // Translate to the br_canvas centre before zooming - so you'll always zoom on what you're looking directly at
     br_ctx.translate(window.innerWidth / 2, window.innerHeight / 2);
     br_ctx.scale(cameraZoom, cameraZoom);
@@ -165,16 +154,14 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
+
 // Gets the relevant location from a mouse or single touch event
-function getEventLocation(e)
-{
-    if (e.touches && e.touches.length == 1)
-    {
+function getEventLocation(e) {
+    if (e.touches && e.touches.length == 1) {
         return {x: e.touches[0].clientX, y: e.touches[0].clientY};
     }
-    else if (e.clientX && e.clientY)
-    {
-        return {x: e.clientX, y: e.clientY}   ;     
+    else if (e.clientX && e.clientY) {
+        return {x: e.clientX, y: e.clientY};     
     }
 }
 
@@ -182,31 +169,52 @@ function getEventLocation(e)
 let isDragging = false;
 let dragStart = {x: 0, y: 0};
 
-function onPointerDown(e)
-{
+
+function onPointerDown(e) {
     isDragging = true;
     dragStart.x = getEventLocation(e).x / cameraZoom - cameraOffset.x;
     dragStart.y = getEventLocation(e).y / cameraZoom - cameraOffset.y;
+	
+	//console.log("Pointer down");
 }
 
-function onPointerUp(e)
-{
+
+function onPointerUp(e) {
     isDragging = false;
     initialPinchDistance = null;
     lastZoom = cameraZoom;
+	
+	//console.log(`cameraOffset: ${cameraOffset.x}, ${cameraOffset.y}`);	
+	//console.log("Pointer up");
 }
 
-function onPointerMove(e)
-{
+
+function onPointerMove(e) {
     if (isDragging) {
         cameraOffset.x = getEventLocation(e).x / cameraZoom - dragStart.x;
         cameraOffset.y = getEventLocation(e).y / cameraZoom - dragStart.y;
-    }
+	
+		// The image may only pan if it is wide/tall enough to exceed the canvas
+		// Calculate how far the image may move
+		pannableWidth = Math.max(0, (br_imageWidth - window.innerWidth / cameraZoom) / 2);
+		pannableHeight = Math.max(0, (br_imageHeight - window.innerHeight / cameraZoom) / 2);
+
+		// Put the cameraOffset back if it exceeds that limit
+		cameraOffset.x = Math.max(cameraOffset.x, window.innerWidth / 2 - pannableWidth);
+		cameraOffset.x = Math.min(cameraOffset.x, window.innerWidth / 2 + pannableWidth);
+		cameraOffset.y = Math.max(cameraOffset.y, window.innerHeight / 2 - pannableHeight);
+		cameraOffset.y = Math.min(cameraOffset.y, window.innerHeight / 2 + pannableHeight);
+	}
 }
 
-function handleTouch(e, singleTouchHandler)
-{
-    if (e.touches.length == 1) {
+
+function handleTouch(e, singleTouchHandler) {
+	//console.log(`handleTouch: ${e.touches.length} touches`)
+	
+    if (e.touches.length == 0) {
+        onPointerUp(e);
+    }
+    else if (e.touches.length == 1) {
         singleTouchHandler(e);
     }
     else if (e.type == "touchmove" && e.touches.length == 2) {
@@ -215,11 +223,12 @@ function handleTouch(e, singleTouchHandler)
     }
 }
 
+
 let initialPinchDistance = null;
 let lastZoom = cameraZoom;
 
-function handlePinch(e)
-{
+
+function handlePinch(e) {
     e.preventDefault();
     
     let touch1 = {x: e.touches[0].clientX, y: e.touches[0].clientY};
@@ -230,16 +239,14 @@ function handlePinch(e)
     
     if (initialPinchDistance == null) {
         initialPinchDistance = currentDistance;
-    }
-    else {
+    } else {
         adjustZoom(null, currentDistance/initialPinchDistance);
     }
 }
 
-function adjustZoom(zoomAmount, zoomFactor)
-{
-    if (!isDragging)
-    {
+
+function adjustZoom(zoomAmount, zoomFactor) {
+    if (!isDragging) {
         if (zoomAmount) {
             cameraZoom += zoomAmount;
         }
@@ -250,18 +257,41 @@ function adjustZoom(zoomAmount, zoomFactor)
         
         cameraZoom = Math.min(cameraZoom, MAX_ZOOM);
         cameraZoom = Math.max(cameraZoom, MIN_ZOOM);
+		
+		// The image may only pan if it is wide/tall enough to exceed the canvas
+		// Calculate how far the image may move
+		pannableWidth = Math.max(0, (br_imageWidth - window.innerWidth / cameraZoom) / 2);
+		pannableHeight = Math.max(0, (br_imageHeight - window.innerHeight / cameraZoom) / 2);
+
+		// Put the cameraOffset back if it exceeds that limit
+		cameraOffset.x = Math.max(cameraOffset.x, window.innerWidth / 2 - pannableWidth);
+		cameraOffset.x = Math.min(cameraOffset.x, window.innerWidth / 2 + pannableWidth);
+		cameraOffset.y = Math.max(cameraOffset.y, window.innerHeight / 2 - pannableHeight);
+		cameraOffset.y = Math.min(cameraOffset.y, window.innerHeight / 2 + pannableHeight);
+
         
         //console.log(zoomAmount);
-		console.log(cameraZoom);
-		console.log(cameraOffset);
+		//console.log(cameraOffset);
     }
 }
 
+
+
+// Event handlers
 br_canvas.addEventListener('mousedown', onPointerDown);
 br_canvas.addEventListener('touchstart', (e) => handleTouch(e, onPointerDown));
 br_canvas.addEventListener('mouseup', onPointerUp);
-br_canvas.addEventListener('touchend',  (e) => handleTouch(e, onPointerUp));
+br_canvas.addEventListener('touchend', (e) => handleTouch(e, onPointerUp));
 br_canvas.addEventListener('mousemove', onPointerMove);
 br_canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove));
 br_canvas.addEventListener('wheel', (e) => adjustZoom(e.deltaY * SCROLL_SENSITIVITY));
+
+
+
+// Get all images inside an imageblock, and make them clickable to open in the lightbox
+br_imageList = document.querySelectorAll("div.imgblock img");
+for (var i = 0; i < br_imageList.length; i++) {
+	br_imageList[i].setAttribute("onclick", "lightboxOpen(" + i + ");");
+	br_imageList[i].style.cursor = "zoom-in";
+} 
 
