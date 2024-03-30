@@ -1,30 +1,22 @@
 * Test site in Chrome, Safari, Edge, IE(?)
-    * Chrome mobile: can probably fix bullet misalignment by putting the bullet on the title element, instead of the entire LI
 * Make BG image fade in sooner
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
-* Make a News section
-        * Could put the latest news at the top, and latest artwork/article side-by-side below that
 * Store all fonts locally
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
-* In the pagination bar, add greyed-out buttons at the start/end so it looks better balanced
+* Maybe instead of back-to-top button linking to an ID, have it scroll up until the navbar unsticks
 * On mobile, close menu after clicking back-to-top button
 	* Need to make this execute, *and* still keep scrolling to the top
-* Click images to zoom in on them in a lightbox view
-    * Good example: https://html5up.net/uploads/demos/big-picture/
+* Improve buttons in lightbox
 * Add dark-mode toggle
 * Replace fontawesome icons with SVG code
 * Get rid of jQuery
 	* Figure out how that "scrolly" thing works to smoothly move between points on the page
-* Split <HEAD> of templates into reusable segment
-	* Twig renders the segment before inserting, which makes no sense for <HEAD> content, so browser rendering goes haywire
-        * But maybe that only applies to certain bits of HEAD content?
-* Add comments using Mastodon
-* Does main logo at the top of each page, or the copyright footer, need a border or dropshadow?
-	* Dropshadow doesn't work well on transparent imgs, may need background-image and filter trickery
-	* Or, simpler, keep the background tinted dark enough at the top of the page
-	* Need to test with a pure white background image
-* Introduce a highlight colour, or make tinted instead of plain black?  Brownish (like a raccoon)?
+* Add comments
+	* Or just reaction buttons?
+* Introduce a highlight colour, or make tinted instead of plain black?
+	* Brownish (like a raccoon)?
+	* Or the existing bright blue could be more prminent
 * Rebuild gallery in Pico
 	* Background images:
 		* Same image as the page you're viewing? (Need to use a small size to preserve bandwidth)
