@@ -8,6 +8,9 @@
 * On mobile, close menu after clicking back-to-top button
 	* Need to make this execute, *and* still keep scrolling to the top
 * Improve buttons in lightbox
+	* Close on single-tap?
+	* Make entire edge regions go prev/next?  Make sure this jives with tap-to-close
+	* Make browser back button close lightbox
 * Add dark-mode toggle
 * Replace fontawesome icons with SVG code
 * Get rid of jQuery
