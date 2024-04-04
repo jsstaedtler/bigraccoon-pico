@@ -40,13 +40,13 @@ function toggleMenu() {
 }
 
 // On click, test whether the navPanel menu is visible, and if the click was outside of it, close the navPanel
-function closeMenuOnClickOutside() {
+function closeMenuOnClickOutside(event) {
 	if (document.getElementById("navLinks").matches(".panelVisible") && !document.getElementById("nav").contains(event.target)) {
 		closeMenu();
 	}
 }
 
-document.addEventListener("click", closeMenuOnClickOutside);
+document.addEventListener("click", (e) => closeMenuOnClickOutside(e));
 
 
 function resetDimensions() {
