@@ -61,7 +61,7 @@
 	{% for page in current_segment %}
 		<a href="{{ page.url }}">
 			{# The resize() function comes from the Pico plugin ImageResize #}
-			{{ page.meta.adultonly }} <img src="/{{ resize( 'assets/' ~ page.meta.image, 300, null ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
+			{{ page.meta.adultonly }} <img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
 		</a>
 	{% endfor %}
 	</div>
