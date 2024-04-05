@@ -1,4 +1,6 @@
 // Global variables
+const br_lightboxStateOpened = "lightbox-open";		// Any arbitrary string to identify the state of the lightbox being open
+
 var br_imageList;
 var br_imgblockMembers;
 var br_imgblockIndex;
@@ -35,7 +37,7 @@ function getAncestorByClass(e, c) {
 function lightboxOpen(i) {
 	document.getElementById("lightbox-image").src = br_imageList[i].src;			// Set the big image to what was clicked
 	br_imgblockMembers = getAncestorByClass(br_imageList[i], "imgblock").children;	// Note: this returns the <p> elements containing the images,
-																				//   so use "br_imgblockMembers[i].firstElementChild" to get each image
+																					//   so use "br_imgblockMembers[i].firstElementChild" to get each image
 
 	// Find the index of the selected image within its imgblock
 	if (br_imgblockMembers) {
@@ -127,6 +129,33 @@ function lightboxClose() {
 }
 
 
+function lightboxExitButton() {
+	history.back();
+}
+
+
+function onPopstate(e) {
+	if (e.state) {
+		console.log(e.state);
+		
+		if (e.state.lightboxIsOpen) {
+			lightboxOpen(e.state.lightboxImage);
+		} else {
+			lightboxClose();
+		}
+	}
+}
+
+
+function onImageClick(i) {
+	// Add a browser history entry, so that clicking the Back button won't exit this entire page.  This has to be done on a link-click event.
+	// If the user goes Back but then Forward again, we need not push this new state - the state will be restored automatically.
+	console.log("Pushing state - lightboxOpen: true");
+	history.pushState({lightboxIsOpen: true, lightboxImage: i}, "");
+	
+	// Now open the lightbox for the clicked image
+	lightboxOpen(i);
+}
 
 
 // Canvas stuff
@@ -277,21 +306,28 @@ function adjustZoom(zoomAmount, zoomFactor) {
 
 
 
-// Event handlers
+// Canvas event handlers
 br_canvas.addEventListener('mousedown', onPointerDown);
 br_canvas.addEventListener('touchstart', (e) => handleTouch(e, onPointerDown));
 br_canvas.addEventListener('mouseup', onPointerUp);
+br_canvas.addEventListener('mouseleave', onPointerUp);
 br_canvas.addEventListener('touchend', (e) => handleTouch(e, onPointerUp));
+br_canvas.addEventListener('touchcancel', (e) => handleTouch(e, onPointerUp));
 br_canvas.addEventListener('mousemove', onPointerMove);
 br_canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove));
 br_canvas.addEventListener('wheel', (e) => adjustZoom(e.deltaY * SCROLL_SENSITIVITY));
 
+// When the browser Back button is pressed
+window.addEventListener("popstate", (e) => onPopstate(e));
 
+// Establish a known history state, during this initial page load, in which the lightbox is closed
+console.log("Replacing state - lightboxOpen: false");
+history.replaceState({lightboxIsOpen: false, lightboxImage: null}, "");
 
 // Get all images inside an imageblock, and make them clickable to open in the lightbox
 br_imageList = document.querySelectorAll("div.imgblock img");
 for (var i = 0; i < br_imageList.length; i++) {
-	br_imageList[i].setAttribute("onclick", "lightboxOpen(" + i + ");");
+	br_imageList[i].setAttribute("onclick", "onImageClick(" + i + ");");
 	br_imageList[i].style.cursor = "zoom-in";
 } 
 
