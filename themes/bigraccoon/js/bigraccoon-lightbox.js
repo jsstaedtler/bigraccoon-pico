@@ -1,6 +1,7 @@
 // Global variables
 const br_lightboxStateOpened = "lightbox-open";		// Any arbitrary string to identify the state of the lightbox being open
 
+var br_image;
 var br_imageList;
 var br_imgblockMembers;
 var br_imgblockIndex;
@@ -38,7 +39,7 @@ function getAncestorByClass(e, c) {
 // Open the lightbox modal and set the image within it.  Also prevent the background page from scrolling.
 // Finally, collect all other members within the same imgblock, and get the index of the one specified, to permit switching to the previous or next image.
 function lightboxOpen(i) {
-	document.getElementById("lightbox-image").src = br_imageList[i].src;			// Set the big image to what was clicked
+	br_image = br_imageList[i];														// Set the big image to what was clicked
 	br_imgblockMembers = getAncestorByClass(br_imageList[i], "imgblock").children;	// Note: this returns the <p> elements containing the images,
 																					//   so use "br_imgblockMembers[i].firstElementChild" to get each image
 
@@ -63,29 +64,11 @@ function lightboxOpen(i) {
 }
 
 
-function lightboxZoomIn() {
-	i = document.getElementById("lightbox-image");
-	i.style.maxWidth = null;
-	i.style.maxHeight = null;
-	i.style.cursor = "zoom-out";
-	i.setAttribute("onclick", "lightboxZoomOut();");
-}
-
-
-function lightboxZoomOut() {
-	i = document.getElementById("lightbox-image");
-	i.style.maxWidth = "100%";
-	i.style.maxHeight = "100%";
-	i.style.cursor = "zoom-in";
-	i.setAttribute("onclick", "lightboxZoomIn();");
-}
-
-
 function lightboxChange(n) {	// n=1 for next image, n=-1 for previous image, 0 for no change (but reevaluate what buttons ae enabled)
 	// Be sure the next/previous index actually exists before switching to it
 	if (br_imgblockMembers[br_imgblockIndex + n]) {
 		br_imgblockIndex += n;
-		document.getElementById("lightbox-image").src = br_imgblockMembers[br_imgblockIndex].firstElementChild.src;
+		br_image.src = br_imgblockMembers[br_imgblockIndex].firstElementChild.src;
 	}
 	
 	// Determine whether next/prev buttons should be enabled
@@ -104,8 +87,8 @@ function lightboxChange(n) {	// n=1 for next image, n=-1 for previous image, 0 f
 	// (it never needs to be so small that both image dimensions are less than 100% of the br_canvas)
 	cw = window.innerWidth;
 	ch = window.innerHeight;
-	br_imageWidth = document.getElementById("lightbox-image").naturalWidth;
-	br_imageHeight = document.getElementById("lightbox-image").naturalHeight;
+	br_imageWidth = br_image.naturalWidth;
+	br_imageHeight = br_image.naturalHeight;
 	
 	// Get scale of image width and height compared to the br_canvas, and select the smallest one as our new minimum
 	scaleWidth = cw / br_imageWidth;
@@ -139,7 +122,7 @@ function lightboxExitButton() {
 
 function onPopstate(e) {
 	if (e.state) {
-		console.log(e.state);
+		//console.log(e.state);
 		
 		if (e.state.lightboxIsOpen) {
 			lightboxOpen(e.state.lightboxImage);
@@ -153,7 +136,7 @@ function onPopstate(e) {
 function onImageClick(i) {
 	// Add a browser history entry, so that clicking the Back button won't exit this entire page.  This has to be done on a link-click event.
 	// If the user goes Back but then Forward again, we need not push this new state - the state will be restored automatically.
-	console.log("Pushing state - lightboxOpen: true");
+	//console.log("Pushing state - lightboxOpen: true");
 	history.pushState({lightboxIsOpen: true, lightboxImage: i}, "");
 	
 	// Now open the lightbox for the clicked image
@@ -174,16 +157,13 @@ function draw() {
     br_ctx.scale(cameraZoom, cameraZoom);
     br_ctx.translate(-window.innerWidth / 2 + cameraOffset.x, -window.innerHeight / 2 + cameraOffset.y);
     br_ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-	
-	// Get the image, and its width and height
-	i = document.getElementById("lightbox-image");
-	iw = i.naturalWidth;
-	ih = i.naturalHeight;
 
 	// Centre the image on the br_canvas (where 0,0 is the middle of the br_canvas)
-	br_ctx.drawImage(i, -iw / 2, -ih / 2);
+	br_ctx.drawImage(br_image, -br_image.naturalWidth / 2, -br_image.naturalHeight / 2);
 	
-    requestAnimationFrame(draw);
+	if (document.getElementById("lightbox").style.display == "block") {
+		requestAnimationFrame(draw);
+	}
 }
 
 
@@ -333,7 +313,7 @@ br_canvas.addEventListener('dblclick', onDblclick);
 window.addEventListener("popstate", (e) => onPopstate(e));
 
 // Establish a known history state, during this initial page load, in which the lightbox is closed
-console.log("Replacing state - lightboxOpen: false");
+//console.log("Replacing state - lightboxOpen: false");
 history.replaceState({lightboxIsOpen: false, lightboxImage: null}, "");
 
 // Get all images inside an imageblock, and make them clickable to open in the lightbox
