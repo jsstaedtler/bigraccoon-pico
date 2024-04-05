@@ -5501,6 +5501,7 @@ div#lightbox {
 div#lightbox-content {
 	position: relative;
 	display: flex;
+    align-items: center;
 	z-index: 11;
 	margin: auto;
 	padding: 0;
@@ -5515,7 +5516,7 @@ div#lightbox-image {
 	box-shadow: inset 0 0 0 2px #212931;
 }
 
-span#lightbox-close {
+/* span#lightbox-close {
 	color: white;
 	position: absolute;
 	z-index: 13;
@@ -5524,47 +5525,73 @@ span#lightbox-close {
 	font-size: 35px;
 	font-weight: bold;
 	line-height: 35px;
-}
+} */
 
-span#lightbox-close:hover, span#lightbox-close:focus {
-	color: #999;
-	text-decoration: none;
-	cursor: pointer;
-}
 
-a#lightbox-prev, a#lightbox-next {
-	cursor: pointer;
-	position: absolute;
+span#lightbox-close, span#lightbox-prev, span#lightbox-next {
+	display: flex;
+    align-items: center;
+    justify-content: center;
 	z-index: 13;
-	top: 50%;
-	width: auto;
-	padding: 16px;
-	margin-top: -50px;
-	color: white;
-	font-weight: bold;
-	font-size: 20px;
-	transition: 0.6s ease;
-	border-radius: 0 3px 3px 0;
-	border: 0;
+	cursor: pointer;
+	-moz-transition: 0.2s ease-in-out;
+	-webkit-transition: 0.2s ease-in-out;
+	-ms-transition: 0.2s ease-in-out;
+	transition: 0.2s ease-in-out;
+}
+
+span#lightbox-close {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	width: 4rem;
+	height: 4rem;
+}
+
+span#lightbox-prev, span#lightbox-next {
+	position: absolute;
+	width: 4rem;
+	height: 10rem;
 	user-select: none;
 	-webkit-user-select: none;
 }
 
-a#lightbox-next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+span#lightbox-prev {
+	left: 0;
 }
 
-a#lightbox-prev:hover, a#lightbox-next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+span#lightbox-next {
+	right: 0;
 }
 
-a#lightbox-prev.disabled, a#lightbox-next.disabled {
+span#lightbox-close:hover, span#lightbox-prev:hover, span#lightbox-next:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+span#lightbox-close svg, span#lightbox-prev svg, span#lightbox-next svg {
+	display: block;
+	fill: white;
+	width: 3rem;
+	height: 3rem;
+	margin: auto;
+	-moz-transition: fill 0.2s ease-in-out;
+	-webkit-transition: fill 0.2s ease-in-out;
+	-ms-transition: fill 0.2s ease-in-out;
+	transition: fill 0.2s ease-in-out;
+}
+
+span#lightbox-close:hover svg, span#lightbox-close:focus svg,
+span#lightbox-prev:hover svg, span#lightbox-prev:focus svg,
+span#lightbox-next:hover svg, span#lightbox-next:focus svg {
+	fill: #18bfef;
+}
+
+span#lightbox-prev.disabled, span#lightbox-next.disabled {
 	display: none;
 }
 
-#canvas
-{
+
+#canvas {
 	position: relative;
 	width: 100%;
 	height: 100%;
