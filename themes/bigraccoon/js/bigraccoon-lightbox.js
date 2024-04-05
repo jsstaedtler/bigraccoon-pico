@@ -12,6 +12,9 @@ var br_ctx = br_canvas.getContext('2d');
 
 var cameraOffset;
 var cameraZoom = 1;
+var lastZoom = 1;
+var initialPinchDistance = null;
+
 var MAX_ZOOM = 5;
 var MIN_ZOOM = 1;
 var SCROLL_SENSITIVITY = 0.001
@@ -237,6 +240,19 @@ function onPointerMove(e) {
 }
 
 
+function onDblclick(e) {
+	if (cameraZoom == MIN_ZOOM) {
+		// If the image is at the minimum zoom level (ie. immediately after it's been open), then increase it
+		adjustZoom(1);
+	} else {
+		// Otherwise, zoom out to the minimum level (by trying to set it to an extremely small value below MIN_ZOOM)
+		adjustZoom(null, 0.0001);
+	}
+	
+	onPointerUp(e);
+}
+
+
 function handleTouch(e, singleTouchHandler) {
 	//console.log(`handleTouch: ${e.touches.length} touches`)
 	
@@ -251,10 +267,6 @@ function handleTouch(e, singleTouchHandler) {
         handlePinch(e);
     }
 }
-
-
-let initialPinchDistance = null;
-let lastZoom = cameraZoom;
 
 
 function handlePinch(e) {
@@ -278,8 +290,7 @@ function adjustZoom(zoomAmount, zoomFactor) {
     if (!isDragging) {
         if (zoomAmount) {
             cameraZoom += zoomAmount;
-        }
-        else if (zoomFactor) {
+        } else if (zoomFactor) {
             //console.log(zoomFactor);
             cameraZoom = zoomFactor * lastZoom;
         }
@@ -316,6 +327,7 @@ br_canvas.addEventListener('touchcancel', (e) => handleTouch(e, onPointerUp));
 br_canvas.addEventListener('mousemove', onPointerMove);
 br_canvas.addEventListener('touchmove', (e) => handleTouch(e, onPointerMove));
 br_canvas.addEventListener('wheel', (e) => adjustZoom(e.deltaY * SCROLL_SENSITIVITY));
+br_canvas.addEventListener('dblclick', onDblclick);
 
 // When the browser Back button is pressed
 window.addEventListener("popstate", (e) => onPopstate(e));
