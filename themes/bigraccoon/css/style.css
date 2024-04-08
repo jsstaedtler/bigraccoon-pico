@@ -5436,18 +5436,33 @@ ul.pageslist > li p.excerpt {
 /* A block of 1 to 4 images which display 2x2 on desktop, and in a single column on mobile */
 
 div.imgblock {
-    text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
 }
 
 div.imgblock p {
-    display: inline;
+    display: inline-block;
+	width: calc(50% - 4px);
+	max-width: 100%;
+	height: auto;
+	margin: 2px 0;
+	padding: 0;
+	line-height: 0;
 }
 
-div.imgblock img, div.imgblock video {
-    width: calc(50% - 1rem);
-	height: auto;
-	margin: 0 0.25rem 0 0.25rem;
+div.imgblock p a {
+	display: block;
+	border: solid 2px #eeeeee;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
 }
+
+div.imgblock p a:hover, div.imgblock p a:focus {
+	border-color: #18bfef;
+}
+
 
 @media screen and (max-width: 736px) {
 	
@@ -5460,9 +5475,8 @@ div.imgblock img, div.imgblock video {
 		margin: 0 0 1rem 0;
 	}
 	
-	div.imgblock img, div.imgblock video {
+	div.imgblock p {
 		width: 100%;
-		height: auto;
 	}
 	
 	ul.pageslist li {
@@ -5486,7 +5500,7 @@ div.imgblock img, div.imgblock video {
 /* Modal lightbox */
 
 div#lightbox {
-	display: none;
+	display: block;
 	position: fixed;
 	z-index: 10;
 	padding: 0;
@@ -5496,6 +5510,10 @@ div#lightbox {
 	height: 100%;
 	overflow: hidden;
 	background-color: rgba(0, 0, 0, 0.8);
+}
+
+div#lightbox.disabled {
+	display: none;
 }
 
 div#lightbox-content {
