@@ -276,9 +276,15 @@ function getEventLocation(e) {
 
 function onImageClick(e) {
 	
-	// Store the <img> object that was clicked.  Note that although it's the <a> that had the click handler assigned to it,
-	// the resulting event object refers to the element that the <a> contained.
-	br_lightboxImage = e.target;
+	// Store the <img> object that was clicked.  Note that when you mouse-click or touch-tap an <a> element, the
+	// resulting event's target is actually the child element contained within the <a> (in this case, the <img>).
+	// But if you tab-select to the <a> element and press Enter, the event's target is the <a> element itself, in
+	// which case we must capture the target's child element.
+	if (e.target.tagName == "A") {
+		br_lightboxImage = e.target.firstElementChild;
+	} else {
+		br_lightboxImage = e.target;
+	}
 	
 	// Add a browser history entry, so that clicking the Back button won't exit this entire page.  This only needs to be done on a
 	// link-click event.  That's because, if the user goes Back but then Forward again, the state will be restored automatically.
