@@ -2,6 +2,7 @@
 * Make BG image fade in sooner
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
 * Store all fonts locally
+	* Pick a better fixed-width font
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
 * Maybe instead of back-to-top button linking to an ID, have it scroll up until the navbar unsticks
@@ -13,6 +14,7 @@
 * Show reduced-size image thumbnails on pages, but always open full-size in the Lightbox
 	* How to programatically determine what image size is needed for thumbnails?
 	* Just use the native HTML implementation?
+* Display imgblock groups 4-in-a-row on very wide screens?
 * With JS disabled, can images link to their full-size version in a new tab?
 	* Will probably need a Pico plugin or modification to Markdown parsing
 * Add dark-mode toggle
