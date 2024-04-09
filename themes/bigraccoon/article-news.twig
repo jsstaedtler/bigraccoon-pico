@@ -13,3 +13,10 @@
 	
 	{{ include("_segment-pagination.twig") }}
 {% endblock page_content %}
+
+{% block scripts %}
+	{# Add lightbox elements and script #}
+	{{ include("_segment-lightbox.twig") }}
+	
+	{{ parent() }}
+{% endblock scripts %}
