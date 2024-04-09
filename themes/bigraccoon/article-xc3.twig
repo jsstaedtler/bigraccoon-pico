@@ -5,7 +5,7 @@
 	{{ parent() }}
 	
 	<style>
-		blockquote { display: none; }
+		blockquote { display: none; font-style: normal; }
 	</style>
 	
 	<!-- This template treats blockquotes as spoilers, and allows them to be hidden or revealed by the user -->
@@ -41,5 +41,4 @@
 	{{ include("_segment-lightbox.twig") }}
 	
 	{{ parent() }}
-	<script src="{{ theme_url }}/js/bigraccoon-lightbox.js"></script>
 {% endblock scripts %}
