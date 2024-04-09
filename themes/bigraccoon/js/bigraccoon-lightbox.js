@@ -241,7 +241,7 @@ function lightboxClose() {
 	
 	// Stop refreshing the canvas
 	canUpdateCanvas = false;
-	console.log("canUpdateCanvas = false");
+	//console.log("canUpdateCanvas = false");
 	
 	// Hide the lightbox <div>, and reenable scrolling on the page
 	document.getElementById("lightbox").classList.add("disabled");
@@ -280,7 +280,7 @@ function onImageClick(e) {
 	// resulting event's target is actually the child element contained within the <a> (in this case, the <img>).
 	// But if you tab-select to the <a> element and press Enter, the event's target is the <a> element itself, in
 	// which case we must capture the target's child element.
-	if (e.target.tagName == "A") {
+	if (e.target.tagName.toLowerCase == "a") {
 		br_lightboxImage = e.target.firstElementChild;
 	} else {
 		br_lightboxImage = e.target;
