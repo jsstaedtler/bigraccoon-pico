@@ -1,6 +1,25 @@
 @import url(fontawesome-all.min.css);
 @import url("https://fonts.googleapis.com/css?family=Merriweather:300,700,300italic,700italic|Source+Sans+Pro:400,600,900,400italic,900italic");
 
+@font-face {
+  font-family: 'Reddit Mono';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url(../font/RedditMono-Regular.ttf) format('truetype');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Reddit Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../font/RedditMono-Bold.ttf) format('truetype');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
 /*
 	Massively by HTML5 UP
 	html5up.net | @ajlkn
@@ -256,7 +275,6 @@ input, select, textarea {
 
 	blockquote {
 		border-left: solid 4px;
-		font-style: italic; 
 /* C */	margin: 2rem 0 2rem 0;
 /* C */	padding: 1rem 2rem 1rem 2rem;
 /* N */	background-color: #eeeeee;
@@ -269,7 +287,7 @@ input, select, textarea {
 
 	code {
 		border: solid 1px;
-		font-family: "Courier New", monospace;
+		font-family: "Reddit Mono", monospace;
 		font-size: 0.9rem;
 		margin: 0 0.15rem;
 		padding: 0.25rem 0.3rem;
@@ -277,7 +295,7 @@ input, select, textarea {
 
 	pre {
 		-webkit-overflow-scrolling: touch;
-		font-family: "Courier New", monospace;
+		font-family: "Reddit Mono", monospace;
 		font-size: 0.9rem;
 		margin: 0 0 2rem 0;
 	}
