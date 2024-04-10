@@ -2,10 +2,15 @@
 // * Global variables *
 // ********************
 
+let MAX_ZOOM = 5;					// Maximum and minimum permitted zoom levels (which can change based on image and canvas sizes)
+let MIN_ZOOM = 1;						// (Minimum must be > 0)
+const MAX_CANVAS_SIDE = 1200;		// Maximum size of a canvas in Chrome and Firefox is apparently 1200px per side
+const SCROLL_SENSITIVITY = 0.001	// Specifically for how much a scroll wheel changes the zoom level (higher value is faster)
+
 let br_lightboxImage;									// Object representing the one big image to be featured in the lightbox
 let br_canvas = document.getElementById("canvas");		// Object representing the HTML canvas element
-	br_canvas.width = window.innerWidth;					// Immediately set its width and height to fill the entire page
-	br_canvas.height = window.innerHeight;
+	br_canvas.width = Math.min(window.innerWidth, MAX_CANVAS_SIDE);			// Immediately set its width and height to fill the entire page
+	br_canvas.height = Math.min(window.innerHeight, MAX_CANVAS_SIDE);
 let br_ctx = br_canvas.getContext('2d');				// The 2D context object for the canvas
 let canUpdateCanvas = false;							// Controls whether canvas updates should be taking place
 
@@ -15,10 +20,6 @@ let lastZoom = 1;					// Previous zoom level for some calculations
 let initialPinchDistance = null;	// For calculations related to pinch-to-zoom
 let isDragging = false;
 let dragStart = {x: 0, y: 0};
-
-let MAX_ZOOM = 5;					// Maximum and minimum permitted zoom levels (which can change based on image and canvas sizes)
-let MIN_ZOOM = 1;						// (Minimum must be > 0)
-const SCROLL_SENSITIVITY = 0.001	// Specifically for how much a scroll wheel changes the zoom level (higher value is faster)
 
 
 
@@ -78,14 +79,14 @@ function fitImageToCanvas() {
 		cameraZoom = Math.max(cameraZoom, MIN_ZOOM);
 
 		// Calculate how far the image may move based on the current zoom level.
-		let pannableWidth = Math.max(0, (br_lightboxImage.naturalWidth - window.innerWidth / cameraZoom) / 2);
-		let pannableHeight = Math.max(0, (br_lightboxImage.naturalHeight - window.innerHeight / cameraZoom) / 2);
+		let pannableWidth = Math.max(0, (br_lightboxImage.naturalWidth - br_canvas.width / cameraZoom) / 2);
+		let pannableHeight = Math.max(0, (br_lightboxImage.naturalHeight - br_canvas.height / cameraZoom) / 2);
 
 		// Put the cameraOffset back if it exceeds that limit
-		cameraOffset.x = Math.max(cameraOffset.x, window.innerWidth / 2 - pannableWidth);
-		cameraOffset.x = Math.min(cameraOffset.x, window.innerWidth / 2 + pannableWidth);
-		cameraOffset.y = Math.max(cameraOffset.y, window.innerHeight / 2 - pannableHeight);
-		cameraOffset.y = Math.min(cameraOffset.y, window.innerHeight / 2 + pannableHeight);
+		cameraOffset.x = Math.max(cameraOffset.x, br_canvas.width / 2 - pannableWidth);
+		cameraOffset.x = Math.min(cameraOffset.x, br_canvas.width / 2 + pannableWidth);
+		cameraOffset.y = Math.max(cameraOffset.y, br_canvas.height / 2 - pannableHeight);
+		cameraOffset.y = Math.min(cameraOffset.y, br_canvas.height / 2 + pannableHeight);
 		
 }
 
@@ -103,14 +104,14 @@ function drawCanvas() {
 	
 		// Update the size of the canvas to fill the window, in case it has resized.
 		// At the same time, this will erase and reset the canvas scale and coordinates.
-		br_canvas.width = window.innerWidth;
-		br_canvas.height = window.innerHeight;
+		br_canvas.width = Math.min(window.innerWidth, MAX_CANVAS_SIDE);
+		br_canvas.height = Math.min(window.innerHeight, MAX_CANVAS_SIDE);
 		
 		// Apply the current zoom level and context position.  But before doing so, move the centre of the context to the centre of the screen.
 		// This way, the zoom effect won't appear to come from some random point of the screen.
-		br_ctx.translate(window.innerWidth / 2, window.innerHeight / 2);
+		br_ctx.translate(br_canvas.width / 2, br_canvas.height / 2);
 		br_ctx.scale(cameraZoom, cameraZoom);
-		br_ctx.translate(-window.innerWidth / 2 + cameraOffset.x, -window.innerHeight / 2 + cameraOffset.y);
+		br_ctx.translate(-br_canvas.width / 2 + cameraOffset.x, -br_canvas.height / 2 + cameraOffset.y);
 		
 		// Clear existing imagery (so bits of the previous frame don't stick out from under the new one)
 		//br_ctx.clearRect(-window.innerWidth / 2, -window.innerHeight / 2, window.innerWidth / 2, window.innerHeight / 2);
@@ -204,8 +205,8 @@ function lightboxChange(change, reset) {
 		
 		// Get size of the canvas and of br_lightboxImage, to determine the minimum zoom level
 		// (it never needs to be so small that both image dimensions are less than 100% of the br_canvas)
-		cw = window.innerWidth;
-		ch = window.innerHeight;
+		cw = br_canvas.width;
+		ch = br_canvas.height;
 		iw = br_lightboxImage.naturalWidth;
 		ih = br_lightboxImage.naturalHeight;
 		
@@ -213,12 +214,13 @@ function lightboxChange(change, reset) {
 		scaleWidth = cw / iw;
 		scaleHeight = ch / ih;
 		MIN_ZOOM = Math.min(scaleWidth, scaleHeight);
+		MIN_ZOOM = Math.min(MIN_ZOOM, 1);				// Shouldn't be larger than natural resolution
 		MAX_ZOOM = MIN_ZOOM * 5;
 			
 		if (reset) {
 			
 			// Reset the position and zoom level of the canvas, so the image fits precisely in the centre
-			cameraOffset = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+			cameraOffset = {x: br_canvas.width / 2, y: br_canvas.height / 2};
 			cameraZoom = MIN_ZOOM;
 
 		} else {
