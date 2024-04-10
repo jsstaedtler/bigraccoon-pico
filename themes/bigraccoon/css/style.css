@@ -3277,7 +3277,7 @@ input, select, textarea {
 			padding: 0 0.75rem;
 		}
 		
-/* N */ .pagination .next, .pagination .prev {
+/* N */ .pagination .next, .pagination .previous {
 			max-width: 40%;
 			overflow: hidden;
 			white-space: nowrap;
@@ -4433,6 +4433,13 @@ input, select, textarea {
 				border-top-width: 2px;
 				text-align: center;
 			}
+			
+			#main > .posts > article div.news-snippet {
+				max-height: 20rem;
+				overflow: hidden;
+				-webkit-mask: alpha linear-gradient(180deg, white 0 15rem, rgba(255, 255, 255, 0) 20rem) 0 0 / 20rem repeat-x;
+				mask: alpha linear-gradient(180deg, white 0 15rem, rgba(255, 255, 255, 0) 20rem) 0 0 / 20rem repeat-x;
+			}
 
 				#main > .posts > article > :last-child {
 					margin-bottom: 0;
@@ -5457,6 +5464,7 @@ div.imgblock {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
+	margin-bottom: 1.5rem;
 }
 
 div.imgblock p {
