@@ -3840,7 +3840,7 @@ input, select, textarea {
 			-webkit-transition: -webkit-transform 1s ease, opacity 1s ease, background 1s ease;
 			-ms-transition: -ms-transform 1s ease, opacity 1s ease, background 1s ease;
 			transition: box-shadow 0.5s ease, opacity 1s ease, background 1s ease;
-			background: rgba(0, 0, 0, 0.3);
+			background: rgba(0, 0, 0, 0.7);
 /*			height: 4rem; */
 			line-height: 4rem;
 			margin: 0 auto 0 auto;
@@ -3859,11 +3859,6 @@ input, select, textarea {
 		    right: 0;
 		    margin-left: auto;
 		    margin-right: auto;
-/*			background-size: auto,			auto,		cover;
-			background-position: center,	center,		top center;
-			background-repeat: no-repeat,	no-repeat,	no-repeat;
-			background-attachment: scroll,	scroll,		scroll; */
-			background: rgba(0, 0, 0, 0.7);
 			z-index: 4;
 		}
 		
@@ -4435,8 +4430,8 @@ input, select, textarea {
 			#main > .posts > article div.news-snippet {
 				max-height: 20rem;
 				overflow: hidden;
-				-webkit-mask: alpha linear-gradient(180deg, white 0 15rem, rgba(255, 255, 255, 0) 20rem) 0 0 / 20rem repeat-x;
-				mask: alpha linear-gradient(180deg, white 0 15rem, rgba(255, 255, 255, 0) 20rem) 0 0 / 20rem repeat-x;
+				-webkit-mask: alpha linear-gradient(180deg, white 0 14rem, rgba(255, 255, 255, 0) 19rem) 0 0 / 20rem repeat-x;
+				mask: alpha linear-gradient(180deg, white 0 14rem, rgba(255, 255, 255, 0) 19rem) 0 0 / 20rem repeat-x;
 			}
 
 				#main > .posts > article > :last-child {
