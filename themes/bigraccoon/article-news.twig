@@ -1,6 +1,24 @@
 {# Like a regular article, but without presenting a blurb.  For news articles, the blurb is simply just the first sentence or two of the content #}
 {% extends "_base.twig" %}
 
+{% block page_body %}
+	{{ include("_segment-pagination.twig") }}
+
+	<!-- A post -->
+	<section class="post">
+	
+		<header class="major">
+			{% if meta.date %}<span class="date">{{ meta.date_formatted }}</span>{% endif %}
+			{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+		</header>
+		
+		{{ content }}
+				
+	</section>
+			
+	{{ include("_segment-pagination.twig") }}
+{% endblock page_body %}
+
 {% block page_content %}
 	{{ include("_segment-pagination.twig") }}
 
