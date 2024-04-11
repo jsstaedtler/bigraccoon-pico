@@ -100,14 +100,16 @@
 			{% endif % #}
 			</header>
 			
-		{% if latest_article.news.image %}
+		{% if latest_news.meta.image %}
 			<a href="{{ latest_news.url }}" class="image main"><img src="{{ assets_url }}/{{ latest_news.meta.image }}"{% if latest_news.meta.imagedescription %} alt="{{ latest_news.meta.imagedescription }}"{% endif %}></a>
 		{% endif %}
 		
 			{# latest_news.raw_content|length > 200 ? latest_news.raw_content|slice(0, 200) ~ '...' : latest_news.raw_content #}
 			
-			{{ latest_news_id|content }}
-		
+			<div class="news-snippet">
+				{{ latest_news_id|content }}
+			</div>
+
 			<ul class="actions special stacked">
 				<li><a href="{{ latest_news.url }}" class="button large">Read More</a></li>
 				<li><a href="{{ pages["news/index"].url }}" class="button primary large">View All News Items</a></li>

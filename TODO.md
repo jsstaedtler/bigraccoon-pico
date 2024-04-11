@@ -1,20 +1,31 @@
-* Test site in Chrome, Safari, Edge, IE(?)
-* Fix centering of buttons on main page on mobile
+* Test site in Chrome, Safari
 * Make BG image fade in sooner
+* Add OpenGraph meta tags to all pages (pulling data programmatically)
 * Store all fonts locally
+	* Pick a better fixed-width font
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
-* On mobile, close menu after clicking back-to-top button
-	* Need to make this execute, *and* still keep scrolling to the top
-* Change lightbox view to an HTML canvas so the image can be resized and moved around
+* Maybe instead of back-to-top button linking to an ID, have it scroll up until the navbar unsticks
+* Lazy-loading of image thumbnails
+* Lightbox improvements:
+	* Display caption/alt text at bottom of lightbox
+	* Tap image to hide controls, ta again to bring them back
+	* Centre the zoom effect on the mouse cursor, or the touch/pinch point
+* Show reduced-size image thumbnails on pages, but always open full-size in the Lightbox
+	* How to programatically determine what image size is needed for thumbnails?
+	* Just use the native HTML implementation?
+* Display imgblock groups 4-in-a-row on very wide screens?
+* With JS disabled, can images link to their full-size version in a new tab?
+	* Will probably need a Pico plugin or modification to Markdown parsing
 * Add dark-mode toggle
 * Replace fontawesome icons with SVG code
 * Get rid of jQuery
 	* Figure out how that "scrolly" thing works to smoothly move between points on the page
-* Add comments section to each page?
-	* Using Mastodon?
-	* Or some other simple add-in?
-* Introduce a highlight colour, or make tinted instead of plain black?  Brownish (like a raccoon)?
+* Add comments
+	* Or just reaction buttons?
+* Introduce a highlight colour, or make tinted instead of plain black?
+	* Brownish (like a raccoon)?
+	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
 	* Background images:
 		* Same image as the page you're viewing? (Need to use a small size to preserve bandwidth)

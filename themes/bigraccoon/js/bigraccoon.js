@@ -39,14 +39,19 @@ function toggleMenu() {
 	}
 }
 
-// On click, test whether the navPanel menu is visible, and if the click was outside of it, close the navPanel
-function closeMenuOnClickOutside() {
+// A handler to test whether the mobile navPanel menu is visible, and if the click was outside of it, close the navPanel
+function closeMenuOnClickOutside(event) {
 	if (document.getElementById("navLinks").matches(".panelVisible") && !document.getElementById("nav").contains(event.target)) {
 		closeMenu();
 	}
 }
 
-document.addEventListener("click", closeMenuOnClickOutside);
+// On clicking the back-to-top menu, if the mobile navPanel menu is open, close it
+function closeMenuOnBackToTop() {
+	if (document.getElementById("navLinks").matches(".panelVisible")) {
+		closeMenu();
+	}
+}
 
 
 function resetDimensions() {
@@ -101,6 +106,7 @@ function scrollChanges() {
 	}
 }
 
+
 // Once the page has loaded to this point in the script, immediately initialize the global variables with position values, then test the scroll position.
 resetDimensions();
 
@@ -111,6 +117,10 @@ window.addEventListener("scroll", scrollChanges);
 // When the window is resized/zoomed, reset the position variables, and test the scroll position again.
 window.addEventListener("resize", resetDimensions);
 window.addEventListener("zoom", resetDimensions);
+
+// Listen for clicks to see if they should close the mobile navPanel menu, if it is open
+document.addEventListener("click", (e) => closeMenuOnClickOutside(e));
+backtotopButton.addEventListener("click", closeMenuOnBackToTop);
 
 
 // At this point, we can assume the page has been loaded (despite media still possibly downloading, which we don't want to wait for).  We can remove the "is-preload" class from body, so initial animations can start.
