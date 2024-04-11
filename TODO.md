@@ -1,4 +1,4 @@
-* Test site in Chrome, Safari, Edge, IE(?)
+* Test site in Chrome, Safari
 * Make BG image fade in sooner
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
 * Store all fonts locally
