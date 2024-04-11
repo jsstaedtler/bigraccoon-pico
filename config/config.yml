@@ -55,7 +55,13 @@ plugins_url: ~                      # Pico will try to guess the URL to the plug
                                     #     If this fails, override it here. Example: https://example.com/pico/plugins/
 DummyPlugin.enabled: false          # Force the plugin "DummyPlugin" to be disabled
 
+ImageResize:
+    folder: thumbs
+    quality: 85
+
 ##
 # Custom
 #
 my_custom_setting: Hello World!     # You can access custom settings in themes using {{ config.my_custom_setting }}
+
+segment_size: 30
