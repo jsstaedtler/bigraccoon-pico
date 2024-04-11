@@ -1,3 +1,4 @@
+* Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
 * Make BG image fade in sooner
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
