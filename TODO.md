@@ -4,6 +4,9 @@
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
 * Store all fonts locally
 	* Pick a better fixed-width font
+* Add other sites to Links section
+        * Make a new post, to appear after the existing Links content
+        * Provide a link banner/buttons
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
 * Maybe instead of back-to-top button linking to an ID, have it scroll up until the navbar unsticks
