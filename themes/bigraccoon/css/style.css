@@ -5460,7 +5460,7 @@ div.imgblock {
 	margin-bottom: 1.5rem;
 }
 
-div.imgblock p {
+div.imgblock p, div.imgblock video {
     display: inline-block;
 	width: calc(50% - 4px);
 	max-width: 100%;
@@ -5486,7 +5486,7 @@ div.imgblock.single {
         display: block;
 }
 
-div.imgblock.single p {
+div.imgblock.single p, div.imgblock.single video {
         width: 100%;
 	margin: 0;
 }
@@ -5503,7 +5503,7 @@ div.imgblock.single p {
 		margin: 0 0 1rem 0;
 	}
 	
-	div.imgblock p {
+	div.imgblock p, div.imgblock video {
 		width: 100%;
 	}
 	
