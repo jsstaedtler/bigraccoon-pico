@@ -125,8 +125,8 @@ class PicoComments extends AbstractPicoPlugin
         
         // this recursive function builds and sorts the child-pointer tree
         function insert_replies(&$array, &$comments) {
-            if (!is_array($array) || !is_object($array))
-                return;
+/*            if (!is_array($array) || !is_object($array))
+                return; */
             foreach($array as &$comment) {
                 // if this comment has children,
                 if (isset($comments[$comment['guid']])) {
