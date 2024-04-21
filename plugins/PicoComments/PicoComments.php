@@ -9,7 +9,7 @@
 class PicoComments extends AbstractPicoPlugin
 {
     protected $enabled = true;                      // whether this plugin is enabled by default sitewide
-    protected $content_path = __DIR__ . '/../blog-comments'; // content storage path
+    protected $content_path = __DIR__ . '/../../blog-comments'; // content storage path
     protected $headers;                             // current page headers ("meta", "frontmatter", NOT HTML headers)
     protected $id;                                  // current page URL ("id")
     protected $num_comments = 0;                    // number of comments on this page
