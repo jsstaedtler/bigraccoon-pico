@@ -60,12 +60,14 @@ ImageResize:
     quality: 85
 
 PicoComments:
-    # whether the comments plugin is enabled. comment data will not be available to Twig if this is false
-    enabled: true
-    # maximum character size of comments. comments larger than this will be rejected
-    comment_size_limit: 1000
-    # whether comments must be approved before displaying them to other users
-    comment_review: false
+    enabled: true                   # whether the comments plugin is enabled. comment data will not be available to Twig if this is false
+    directory: comments
+    name_size_limit: 50             # maximum character size of names. names larger than this will be rejected
+    comment_size_limit: 2000        # maximum character size of comments. comments larger than this will be rejected
+    comment_review: false           # whether comments must be approved before displaying them to other users
+    author_code: j$-$taedtler       # If the commenter's name equals this string...
+    author_name: jsstaedtler        # ...display it as this, and indicate that the commenter is the verified site author
+    invalid_names: jsstaedtler
     
     
 ##

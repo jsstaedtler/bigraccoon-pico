@@ -9,7 +9,7 @@
 class PicoComments extends AbstractPicoPlugin
 {
     protected $enabled = true;                      // whether this plugin is enabled by default sitewide
-    protected $content_path = __DIR__ . '/../../blog-comments'; // content storage path
+    protected $content_path = __DIR__ . '/../../comments';	// content storage path
     protected $headers;                             // current page headers ("meta", "frontmatter", NOT HTML headers)
     protected $id;                                  // current page URL ("id")
     protected $num_comments = 0;                    // number of comments on this page
@@ -24,9 +24,24 @@ class PicoComments extends AbstractPicoPlugin
         $content = strlen($content) != 0 ? htmlspecialchars($content, ENT_QUOTES, ini_get("default_charset")) : null;
 
         // fail if author or content is empty, or if content is larger than the comment size limit
-        if (!isset($author) || !isset($content) || strlen($content) > $this->getPluginConfig("comment_size_limit")) {
-            return false;
+        if (!isset($content)) {
+            return 'Invalid comment content';
         }
+		
+		// If author is empty, call them "Anonymous"
+		if (!isset($author)) {
+			$author = 'Anonymous';
+		}
+		
+		// Fail if author length exceeds the limit
+		if (strlen($author) > $this->getPluginConfig("name_size_limit")) {
+			return 'Name exceeds character limit: ' . strlen($author) . ' > ' . $this->getPluginConfig("name_size_limit");
+		}
+
+		// Fail if content length exceeds the limit
+		if (strlen($content) > $this->getPluginConfig("comment_size_limit")) {
+			return 'Comment exceeds character limit: ' . strlen($content) . ' > ' . $this->getPluginConfig("comment_size_limit");
+		}
         
         // path where the current page's comments are stored
         $path = $this->content_path . "/" . $this->id;
@@ -43,7 +58,7 @@ class PicoComments extends AbstractPicoPlugin
                 }
             }
             if (!$reply_exists) {   // if the comment that reply_guid points to can't be found,
-                return false;       // don't create the comment
+                return 'Unknown error when submitting reply';       // don't create the comment
             }
         }
 
@@ -63,10 +78,11 @@ class PicoComments extends AbstractPicoPlugin
         $handle = fopen($path . "/" . $guid . ".md", "w");
         if (!fwrite($handle, $file_contents)) { // if file writing fails for some reason
             fclose($handle);
-            return false;
+            return 'Unknown error when submitting comment';
         }
         fclose($handle);
-        return true;
+		
+        return null;		// Success!
     }
 
     // return a nested array of hashes
@@ -179,21 +195,21 @@ class PicoComments extends AbstractPicoPlugin
             if (isset($_POST['website']) && strlen($_POST['website']) > 0) {
                 return;
             }
-
-            if (!isset($_POST['comment_author']) || !isset($_POST['comment_content'])) {    // if we are missing comment author or content
-                $twigVariables['comments_message'] = "Please fill out all required fields.";// display error message and status 1
+            
+            $reply_guid = isset($_POST['comment_replyguid']) ? $_POST['comment_replyguid'] : null;  // set reply_guid to null if comment_replyguid is not included (i.e. if this comment is not a reply)
+            
+			
+			// Submit the supplied form data.  If an error occurs, it will return a descriptive string; otherwise, null indicates success
+			$result = $this->createComment($_POST['comment_author'], $_POST['comment_content'], $reply_guid);
+			
+			if ($result) {
+				$twigVariables['comments_message'] = $result;   // display fail message and status 1
                 $twigVariables['comments_message_status'] = 1;
-            }
-            
-            $reply_guid = isset($_POST['comment_replyguid']) ? $_POST['comment_replyguid'] : null;  // set reply_guid to null if it comment_replyguid is not included (i.e. if this comment is not a reply)
-            
-            if ($this->createComment($_POST['comment_author'], $_POST['comment_content'], $reply_guid)) {         // if CreateComment is successful
-                $twigVariables['comments_message'] = "Comment submitted";       // display success message and status 0
+			} else {
+				$twigVariables['comments_message'] = "Comment submitted";       // display success message and status 0
                 $twigVariables['comments_message_status'] = 0;
-            } else {                                                            // if createComment fails for some reason
-                $twigVariables['comments_message'] = "Comment not submitted";   // display fail message and status 1
-                $twigVariables['comments_message_status'] = 1;
-            }
+			}
+
 
             $twigVariables['comments'] = $this->getComments() ?: "Server error";// display comments or fail, since we want to display comments after a new comment has been submitted to show the user their new comment
             $twigVariables['comments_number'] = $this->num_comments ?: "0";
