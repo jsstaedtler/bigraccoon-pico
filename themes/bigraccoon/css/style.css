@@ -5758,12 +5758,14 @@ div.comment span.date {
 
 #comments-message.green {
 	color: #0a0;
-	fill: #0a0;
+}
+
+#comments-message.yellow {
+	color: #aa0;
 }
 
 #comments-message.red {
 	color: #a00;
-	fill: #a00;
 }
 
 #comments-message img {

@@ -48,57 +48,62 @@
 {% endmacro %}
 
 
-<div class="box" id="comments">
+{# If any comments exist, they will be displayed, regardless of whether commenting is disabled on this page #}
+{% if meta.comments is not defined or comments_number > 0 %}
 
-    <h4>{% if comments_number > 0 %}{{ comments_number }} comments{% else %}No comments yet{% endif %} on: {{ meta.title }}</h4>
+	<div class="box" id="comments">
 
-{% if meta.comments %}
+		<h4>{% if comments_number > 0 %}{{ comments_number }} comments{% else %}No comments yet{% endif %} on: {{ meta.title }}</h4>
 
-    <form name="comments-form" class="comments-form" action="#comments" method="post">
-        <h3>Add a comment</h3>
+		{# If the page frontmatter includes "comments: false", then there will be no form to submit new comments #}
+		{% if meta.comments is not defined or meta.comments != false %}
 
-		<div class="fields">
-			<div class="field">
-				<label for="comment_author">Name ({{ config.PicoComments.name_size_limit }} characters maximum)</label>
-				<input type="text" id="comment_author" name="comment_author">
-			</div>
+			<form name="comments-form" class="comments-form" action="#comments" method="post">
+				<h3>Add a comment</h3>
+
+				<div class="fields">
+					<div class="field">
+						<label for="comment_author">Name ({{ config.PicoComments.name_size_limit }} characters maximum)</label>
+						<input type="text" id="comment_author" name="comment_author">
+					</div>
+					
+					<div class="field">
+						<label for="comment_content">Comment ({{ config.PicoComments.comment_size_limit }} characters maximum) </label>
+						<textarea id="comment_content" name="comment_content"></textarea>
+					</div>
+					
+					<input type="hidden" name="comment_replyguid" value="{{ comment.guid }}">
+					{# honeypot field - comment will be rejected if filled out #}
+					<input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+				</div>
+				
+				<ul class="actions">
+					<li><input type="submit" value="Submit" class="primary"></li>
+				</ul>
+			</form>
 			
-			<div class="field">
-				<label for="comment_content">Comment ({{ config.PicoComments.comment_size_limit }} characters maximum) </label>
-				<textarea id="comment_content" name="comment_content"></textarea>
-			</div>
+			{% if comments_message is defined %}
+				<h4><span id="comments-message" class="{{ comments_message_status == 0 ? "green" : "red" }}">
+				
+				{% if comments_message_status == 0 %}
+					<img src="{{ assets_url }}/comment-success.svg" alt="Checkmark">
+				{% else %}
+					<img src="{{ assets_url }}/comment-failure.svg" alt="Warning">
+				{% endif %}
+					{{ comments_message }}
+				</span></h4>
+				
+			{% endif %}
 			
-			<input type="hidden" name="comment_replyguid" value="{{ comment.guid }}">
-			{# honeypot field - comment will be rejected if filled out #}
-			<input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
-		</div>
-		
-		<ul class="actions">
-			<li><input type="submit" value="Submit" class="primary"></li>
-		</ul>
-    </form>
-	
-    {% if comments_message is defined %}
-        <h4><span id="comments-message" class="{{ comments_message_status == 0 ? "green" : "red" }}">
-		
-        {% if comments_message_status == 0 %}
-			<img src="{{ assets_url }}/comment-success.svg" alt="Checkmark">
 		{% else %}
-			<img src="{{ assets_url }}/comment-failure.svg" alt="Warning">
+
+			<h4><span id="comments-message" class="yellow">Comment submission has been closed</span></h4>
+			
 		{% endif %}
-			{{ comments_message }}
-        </span></h4>
-		
-    {% endif %}
-	
-{% else %}
 
-    <span id="comments-message" class="notices yellow"><h4>Comment submission has been closed</h4></span>
-	
+
+		{{ _self.print_comments(comments, false, assets_url) }}
+
+	</div>
+
 {% endif %}
-
-
-{{ _self.print_comments(comments, false, assets_url) }}
-
-
-</div>
