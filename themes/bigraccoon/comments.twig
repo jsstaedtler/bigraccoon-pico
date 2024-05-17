@@ -1,11 +1,11 @@
 {% macro print_comments(comments, reply, assets_url) %}
-	{# I have to pass in pico's assets_url variable as a parameter, because somehow it's not available within the macro #}
+	{# I have to pass in pico's global assets_url variable as a parameter, because somehow it's not available within the macro #}
 
     {% for comment in comments %}
 	
     <div id="{{ comment.guid }}" class="comment{{ reply ? " reply" : "" }}">
 	
-		<span class="date">{{ comment.date | date('F j Y') }}</span>
+		<span class="date">{{ comment.date | date('D, j M Y') }}</span>
         <span class="comment-author">{% if comment.author == "j$-$taedtler" %}<img src="{{ assets_url }}/originalauthor-icon.svg" class="original-author">jsstaedtler{% else %}{{ comment.author }}{% endif %} {{ reply ? "replied" : "wrote" }}:</span>
         <p class="comment-content">{{ comment.content|raw }}</p>
 		
@@ -48,24 +48,23 @@
 {% endmacro %}
 
 
-<div class="box">
+<div class="box" id="comments">
+
+    <h4>{% if comments_number > 0 %}{{ comments_number }} comments{% else %}No comments yet{% endif %} on: {{ meta.title }}</h4>
 
 {% if meta.comments %}
-    {% if comments_message is defined %}
-        <span id="comments-message" class="{{ comments_message_status == 0 ? "green" : "red" }}">
-            {{ comments_message }}
-        </span>
-    {% endif %}
-    <form name="comments-form" class="comments-form" action="#comments-message" method="post">
-        <h3>Write a comment</h3>
+
+    <form name="comments-form" class="comments-form" action="#comments" method="post">
+        <h3>Add a comment</h3>
+
 		<div class="fields">
 			<div class="field">
-				<label for="comment_author">Name:</label>
+				<label for="comment_author">Name ({{ config.PicoComments.name_size_limit }} characters maximum)</label>
 				<input type="text" id="comment_author" name="comment_author">
 			</div>
 			
 			<div class="field">
-				<label for="comment_content">Comment:</label>
+				<label for="comment_content">Comment ({{ config.PicoComments.comment_size_limit }} characters maximum) </label>
 				<textarea id="comment_content" name="comment_content"></textarea>
 			</div>
 			
@@ -79,23 +78,27 @@
 		</ul>
     </form>
 	
+    {% if comments_message is defined %}
+        <h4><span id="comments-message" class="{{ comments_message_status == 0 ? "green" : "red" }}">
+		
+        {% if comments_message_status == 0 %}
+			<img src="{{ assets_url }}/comment-success.svg" alt="Checkmark">
+		{% else %}
+			<img src="{{ assets_url }}/comment-failure.svg" alt="Warning">
+		{% endif %}
+			{{ comments_message }}
+        </span></h4>
+		
+    {% endif %}
+	
 {% else %}
 
-    <span id="comments-message" class="notices yellow">Comment submission is disabled for this page</span>
+    <span id="comments-message" class="notices yellow"><h4>Comment submission has been closed</h4></span>
 	
 {% endif %}
 
 
-{% if comments is defined %}
+{{ _self.print_comments(comments, false, assets_url) }}
 
-    <h4>{{ comments_number }} comments</h4>
-	
-    {{ _self.print_comments(comments, false, assets_url) }}
-	
-{% else %}
-
-    <h3>No comments yet</h3>
-	
-{% endif %}
 
 </div>

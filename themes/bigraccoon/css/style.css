@@ -226,6 +226,10 @@ input, select, textarea {
 		text-transform: uppercase;
 		margin: 0 0 1rem 0;
 	}
+	
+	h5, h6 {
+		font-weight: 400;
+	}
 
 /* C */	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, a h1, a h2, a h3, a h4, a h5, a h6 {
 			border-bottom: 0;
@@ -255,11 +259,11 @@ input, select, textarea {
 	}
 
 	h5 {
-		font-size: 0.9rem;
+		font-size: 1rem;
 	}
 
 	h6 {
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 	}
 
 	sub {
@@ -5750,5 +5754,20 @@ div.comment form.reply-form {
 
 div.comment span.date {
 	font-style: italic;
+}
+
+#comments-message.green {
+	color: #0a0;
+	fill: #0a0;
+}
+
+#comments-message.red {
+	color: #a00;
+	fill: #a00;
+}
+
+#comments-message img {
+	vertical-align: middle;
+	height: 2rem;
 }
 
