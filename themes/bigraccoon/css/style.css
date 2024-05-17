@@ -142,7 +142,7 @@ input, select, textarea {
 
 	html {
 		font-size: 16pt;
-/* N */	letter-spacing: 0.5px;
+/* N */	letter-spacing: 0.025rem;
 	}
 
 		@media screen and (max-width: 1680px) {
@@ -373,8 +373,8 @@ input, select, textarea {
 	}
 
 	code {
-		background: rgba(225, 225, 200, 0.25);
-		border-color: #cccc99;
+		background: rgba(225, 210, 200, 0.25);
+		border-color: #e1d2c8;
 	}
 	
 
