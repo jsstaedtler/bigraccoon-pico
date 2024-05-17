@@ -142,6 +142,7 @@ input, select, textarea {
 
 	html {
 		font-size: 16pt;
+/* N */	letter-spacing: 0.5px;
 	}
 
 		@media screen and (max-width: 1680px) {
@@ -213,7 +214,7 @@ input, select, textarea {
 	}
 
 	p {
-		text-align: justify;
+/* C	text-align: justify; */
 		margin: 0 0 1.5rem 0;
 	}
 
