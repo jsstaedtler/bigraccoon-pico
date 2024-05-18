@@ -5718,7 +5718,7 @@ div.comment span.comment-author img.original-author {
 	height: 1rem;
 }
 
-div.comment p.comment-content {
+div.comment div.comment-content {
 	background-color: #eee;
 	margin: 0;
 	padding: 1rem 1.5rem;
@@ -5742,6 +5742,10 @@ div.comment div.replybutton svg {
 div.comment div.replybutton svg:hover {
 	fill: #18bfef;
 	cursor: pointer;
+}
+
+form.comments-form textarea {
+	line-height: initial;
 }
 
 form.comments-form ul.actions li, div.comment form.reply-form ul.actions li {
