@@ -8,11 +8,12 @@
 
 class PicoComments extends AbstractPicoPlugin
 {
-    protected $enabled = true;                      // whether this plugin is enabled by default sitewide
-    protected $content_path = __DIR__ . '/../../comments';	// content storage path
-    protected $headers;                             // current page headers ("meta", "frontmatter", NOT HTML headers)
-    protected $id;                                  // current page URL ("id")
-    protected $num_comments = 0;                    // number of comments on this page
+    protected $enabled = true;      // whether this plugin is enabled by default sitewide
+    protected $content_path;		// content storage path
+    protected $headers;             // current page headers ("meta", "frontmatter", NOT HTML headers)
+    protected $id;                  // current page URL ("id")
+    protected $num_comments = 0;    // number of comments on this page
+
 
     private function createComment($author, $content, $reply_guid) {
         $guid = bin2hex(random_bytes(16));      // create a GUID for this comment
@@ -84,6 +85,32 @@ class PicoComments extends AbstractPicoPlugin
 		
         return null;		// Success!
     }
+	
+	
+	
+	private function sendEmail($author, $content) {
+		
+		// User input sanitization
+        $sanitized_author = strlen($author) != 0 ? filter_var($author, FILTER_SANITIZE_STRING) : null;
+        $sanitized_content = strlen($content) != 0 ? htmlspecialchars($content, ENT_QUOTES, ini_get("default_charset")) : null;
+
+		$to = $this->getPluginConfig('email_to');
+		$from = $this->getPluginConfig('email_from');
+		$subject = 'bigraccoon.ca - New Comment on: ' . $this->pico->getCurrentPage()['title'];
+		$message = 'New comment by ' . $sanitized_author . ":\r\n\r\n" . $sanitized_content . "\r\n";
+		$headers = array('From' => $from);		// PHP mail function needs the From value to be in the additional headers
+					
+		$success = mail($to, $subject, $message, $headers);		// Returns true on success, false on failure
+		
+		if (!$success) {
+			return error_get_last()['message'];	// Roundabout way to find out what went wrong
+		} else {
+			return null;
+		}
+		
+	}
+	
+	
 
     // return a nested array of hashes
     // [{"author":"me", "content":"hello", "replies":[{"author":"him", "content":"hi there"}]}]
@@ -92,9 +119,11 @@ class PicoComments extends AbstractPicoPlugin
         $comments = []; // this is the dictionary where comment dictionaries will be stored
 
         $dir = glob($this->content_path . "/" . $this->id . "/*.md");
+
         // this loop reads comments from disk into memory as a dictionary
         // for each file in the content page dir:
         foreach ($dir as $file) {
+
             // read in the file
             try {
                 // IP address left out to prevent leaks to users. it's for administrative use only i.e. blocking spam
@@ -137,6 +166,7 @@ class PicoComments extends AbstractPicoPlugin
                 // increment the comments counter
                 $this->num_comments++;
             }
+			
         }
         
         // this recursive function builds and sorts the child-pointer tree
@@ -173,19 +203,26 @@ class PicoComments extends AbstractPicoPlugin
         return $comments;
     }
 
+
+
     public function onMetaParsed(array &$headers) {
         $this->headers = $headers;  // store the headers of the current page
     }
 
+
+
     public function onPageRendering(&$templateName, array &$twigVariables) {
-        if (!isset($this->headers['comments'])) {   // in this case, we assume that this page does not support comments 
-            return;                                 // do nothing
-        }
 
         $this->id = $this->pico->getCurrentPage()['id'];
+		
+		if ($this->getPluginConfig("directory") !== null) {					// Set the path to the comments files if it's specified in pico's config
+			$this->content_path = __DIR__ . '/../../' . $this->getPluginConfig("directory");
+		} else {
+			$this->content_path = __DIR__ . '/../../blog-comments';			// If it's not specified, use ths default
+		}
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {        // if a comment is submitted
-            if ($this->headers['comments'] != "enabled") {  // if comment submission is disabled on this page, do nothing
+            if (isset($this->headers['comments']) && $this->headers['comments'] != 'true') {		// if comment submission is disabled on this page
                 $twigVariables['comments_message'] = "Comment submission is disabled on this page"; // display error message and status 1
                 $twigVariables['comments_message_status'] = 1;
                 return;
@@ -198,16 +235,26 @@ class PicoComments extends AbstractPicoPlugin
             
             $reply_guid = isset($_POST['comment_replyguid']) ? $_POST['comment_replyguid'] : null;  // set reply_guid to null if comment_replyguid is not included (i.e. if this comment is not a reply)
             
-			
 			// Submit the supplied form data.  If an error occurs, it will return a descriptive string; otherwise, null indicates success
 			$result = $this->createComment($_POST['comment_author'], $_POST['comment_content'], $reply_guid);
 			
 			if ($result) {
-				$twigVariables['comments_message'] = $result;   // display fail message and status 1
+				
+				$twigVariables['comments_message'] = $result;				// display fail message and status 1
                 $twigVariables['comments_message_status'] = 1;
+				
 			} else {
-				$twigVariables['comments_message'] = "Comment submitted";       // display success message and status 0
+				
+				$twigVariables['comments_message'] = "Comment submitted";	// display success message and status 0
                 $twigVariables['comments_message_status'] = 0;
+				
+				// Send a mail notification about the new comment
+				$mail_result = $this->sendEmail($_POST['comment_author'], $_POST['comment_content']);
+				
+				if ($mail_result) {
+					error_log('Error submitting email notification for new comment: ' . $mail_result);
+				}
+				
 			}
 
 

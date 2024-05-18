@@ -49,14 +49,21 @@
 
 
 {# If any comments exist, they will be displayed, regardless of whether commenting is disabled on this page #}
-{% if meta.comments is not defined or comments_number > 0 %}
+{% if (meta.comments is not defined) or (meta.comments == "true") or (comments_number > 0) %}
 
 	<div class="box" id="comments">
 
-		<h4>{% if comments_number > 0 %}{{ comments_number }} comments{% else %}No comments yet{% endif %} on: {{ meta.title }}</h4>
+		<h4>
+			{% if comments_number > 0 %}
+				{{ comments_number }} comment{% if comments_number != 1 %}s{% endif %}
+			{% else %}
+				No comments yet
+			{% endif %}
+			on: {{ meta.title }}
+		</h4>
 
 		{# If the page frontmatter includes "comments: false", then there will be no form to submit new comments #}
-		{% if meta.comments is not defined or meta.comments != false %}
+		{% if (meta.comments is not defined) or (meta.comments == "true") %}
 
 			<form name="comments-form" class="comments-form" action="#comments" method="post">
 				<h3>Add a comment</h3>
