@@ -7,7 +7,7 @@
 	
 		<span class="date">{{ comment.date | date('D, j M Y') }}</span>
         <span class="comment-author">{% if comment.author == "j$-$taedtler" %}<img src="{{ assets_url }}/originalauthor-icon.svg" class="original-author">jsstaedtler{% else %}{{ comment.author }}{% endif %} {{ reply ? "replied" : "wrote" }}:</span>
-        <p class="comment-content">{{ comment.content|raw }}</p>
+        <div class="comment-content">{{ comment.content|markdown }}</div>
 		
 {# Disabling replies to comments
 		<div class="replybutton" onclick="e = document.getElementById('{{ comment.guid }}').getElementsByTagName('form')[0]; if(window.getComputedStyle(e).display === 'none') { e.style.display = 'block' } else { e.style.display = 'none' };">
