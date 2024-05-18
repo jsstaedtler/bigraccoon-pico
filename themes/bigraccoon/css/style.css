@@ -5714,6 +5714,10 @@ div.comment.reply {
 	padding: 0 0 0 1.5rem;
 }
 
+div.comment {
+	overflow-wrap: break-word;
+}
+
 div.comment span.comment-author img.original-author {
 	height: 1rem;
 }
@@ -5723,6 +5727,10 @@ div.comment div.comment-content {
 	margin: 0;
 	padding: 1rem 1.5rem;
 }
+
+div.comment div.comment-content p:last-of-type {
+		margin-bottom: 0;
+	}
 
 div.comment div.replybutton {
 	width: 100%;
@@ -5744,7 +5752,14 @@ div.comment div.replybutton svg:hover {
 	cursor: pointer;
 }
 
+form.comments-form label h6 {
+	float: right;
+	text-align: right;
+	margin: 0;
+}
+
 form.comments-form textarea {
+	resize: none;
 	line-height: initial;
 }
 

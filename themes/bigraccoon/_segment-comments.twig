@@ -6,7 +6,7 @@
     <div id="{{ comment.guid }}" class="comment{{ reply ? " reply" : "" }}">
 	
 		<span class="date">{{ comment.date | date('D, j M Y') }}</span>
-        <span class="comment-author">{% if comment.author == "j$-$taedtler" %}<img src="{{ assets_url }}/originalauthor-icon.svg" class="original-author">jsstaedtler{% else %}{{ comment.author }}{% endif %} {{ reply ? "replied" : "wrote" }}:</span>
+        <h5><span class="comment-author">{% if comment.author == "j$-$taedtler" %}<img src="{{ assets_url }}/originalauthor-icon.svg" class="original-author">jsstaedtler{% else %}{{ comment.author|raw }}{% endif %}</span> {{ reply ? "replied" : "wrote" }}:</h5>
         <div class="comment-content">{{ comment.content|markdown }}</div>
 		
 {# Disabling replies to comments
@@ -70,13 +70,13 @@
 
 				<div class="fields">
 					<div class="field">
-						<label for="comment_author">Name ({{ config.PicoComments.name_size_limit }} characters maximum)</label>
+						<label for="comment_author">Name <h6>({{ config.PicoComments.name_size_limit }} characters maximum)</h6></label>
 						<input type="text" id="comment_author" name="comment_author" maxlength="{{ config.PicoComments.name_size_limit }}">
 					</div>
 					
 					<div class="field">
-						<label for="comment_content">Comment ({{ config.PicoComments.comment_size_limit }} characters maximum) </label>
-						<textarea id="comment_content" name="comment_content" maxlength="{{ config.PicoComments.comment_size_limit }}"></textarea>
+						<label for="comment_content">Comment <h6>({{ config.PicoComments.comment_size_limit }} characters maximum, Markdown supported) </h6></label>
+						<textarea id="comment_content" name="comment_content" maxlength="{{ config.PicoComments.comment_size_limit }}" rows="3"></textarea>
 					</div>
 					
 					<input type="hidden" name="comment_replyguid" value="{{ comment.guid }}">
