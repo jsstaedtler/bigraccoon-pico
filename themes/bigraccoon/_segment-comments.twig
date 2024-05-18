@@ -71,12 +71,12 @@
 				<div class="fields">
 					<div class="field">
 						<label for="comment_author">Name ({{ config.PicoComments.name_size_limit }} characters maximum)</label>
-						<input type="text" id="comment_author" name="comment_author">
+						<input type="text" id="comment_author" name="comment_author" maxlength="{{ config.PicoComments.name_size_limit }}">
 					</div>
 					
 					<div class="field">
 						<label for="comment_content">Comment ({{ config.PicoComments.comment_size_limit }} characters maximum) </label>
-						<textarea id="comment_content" name="comment_content"></textarea>
+						<textarea id="comment_content" name="comment_content" maxlength="{{ config.PicoComments.comment_size_limit }}"></textarea>
 					</div>
 					
 					<input type="hidden" name="comment_replyguid" value="{{ comment.guid }}">
