@@ -25,7 +25,7 @@ class PicoComments extends AbstractPicoPlugin
         $content = strlen($content) != 0 ? htmlspecialchars($content, ENT_QUOTES, ini_get("default_charset")) : null;
 
         // fail if author or content is empty, or if content is larger than the comment size limit
-        if (!isset($content)) {
+        if (!isset($content) or strlen($content) == 0) {
             return 'Invalid comment content';
         }
 		
@@ -225,11 +225,13 @@ class PicoComments extends AbstractPicoPlugin
             if (isset($this->headers['comments']) && $this->headers['comments'] != 'true') {		// if comment submission is disabled on this page
                 $twigVariables['comments_message'] = "Comment submission is disabled on this page"; // display error message and status 1
                 $twigVariables['comments_message_status'] = 1;
+				error_log('Someone tried a POST submission when comments are disabled');
                 return;
             }
             
             // check if antispam honeypot is filled out
             if (isset($_POST['website']) && strlen($_POST['website']) > 0) {
+				error_log('Website field was filled in - IP: ' . $_SERVER['REMOTE_ADDR'] . ' - Value: ' . $_POST['website']);
                 return;
             }
             
@@ -242,6 +244,7 @@ class PicoComments extends AbstractPicoPlugin
 				
 				$twigVariables['comments_message'] = $result;				// display fail message and status 1
                 $twigVariables['comments_message_status'] = 1;
+				error_log('Comment submission failed - IP: ' . $_SERVER['REMOTE_ADDR'] . ' - Result: ' . $result);
 				
 			} else {
 				
@@ -261,9 +264,11 @@ class PicoComments extends AbstractPicoPlugin
             $twigVariables['comments'] = $this->getComments() ?: "Server error";// display comments or fail, since we want to display comments after a new comment has been submitted to show the user their new comment
             $twigVariables['comments_number'] = $this->num_comments ?: "0";
 
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {                      // if this is a GET request
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {                      // if this is a GET request (ie. a normal page load)
+		
             $twigVariables['comments'] = $this->getComments() ?: "Server error";// display comments or fail
             $twigVariables['comments_number'] = $this->num_comments ?: "0";
+			
         }
     }
 }
