@@ -29,7 +29,7 @@ class PicoComments extends AbstractPicoPlugin
 			
 			// If comment review is enabled, append this link that can be used to quickly approve it
 			if ($this->getPluginConfig('comment_review')) {
-				$message .= "\r\n\r\n---\r\n\r\nVisit this URL to approve: {$this->pico->getCurrentPage()['url']}?approval_guid={$guid}$comments";
+				$message .= "\r\n\r\n---\r\n\r\nVisit this URL to approve: {$this->pico->getCurrentPage()['url']}?approval_guid={$guid}#comments";
 			}
 
 			$success = mail($to, $subject, $message, $headers);		// Returns true on success, false on failure
@@ -318,7 +318,7 @@ class PicoComments extends AbstractPicoPlugin
 				
 				$twigVariables['comments_message'] = "Comment submitted";	// display success message and status 0
 				if ($this->getPluginConfig('comment_review') == 'true') {
-					$twigVariables['comments_message'] .= " for review";
+					$twigVariables['comments_message'] .= " - It will be published below after passing review";
 				}
                 $twigVariables['comments_message_status'] = 0;
 								
@@ -340,7 +340,7 @@ class PicoComments extends AbstractPicoPlugin
 					
 				} else {
 					
-					$twigVariables['comments_message'] = "Comment approved";	// display success message and status 0
+					$twigVariables['comments_message'] = 'Comment approved';	// display success message and status 0
 					$twigVariables['comments_message_status'] = 0;
 									
 				}

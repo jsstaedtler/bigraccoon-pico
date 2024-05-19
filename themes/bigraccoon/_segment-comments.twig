@@ -70,12 +70,12 @@
 
 				<div class="fields">
 					<div class="field">
-						<label for="comment_author">Name <h6>({{ config.PicoComments.name_size_limit }} characters maximum)</h6></label>
+						<label for="comment_author">Name <h6>({{ config.PicoComments.name_size_limit }} characters max)</h6></label>
 						<input type="text" id="comment_author" name="comment_author" maxlength="{{ config.PicoComments.name_size_limit }}">
 					</div>
 					
 					<div class="field">
-						<label for="comment_content">Comment <h6>({{ config.PicoComments.comment_size_limit }} characters maximum, Markdown supported) </h6></label>
+						<label for="comment_content">Comment <h6>({{ config.PicoComments.comment_size_limit }} characters max, Markdown supported) </h6></label>
 						<textarea id="comment_content" name="comment_content" maxlength="{{ config.PicoComments.comment_size_limit }}" rows="3"></textarea>
 					</div>
 					
@@ -83,6 +83,8 @@
 					{# honeypot field - comment will be rejected if filled out #}
 					<input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
 				</div>
+				
+				{% if config.PicoComments.comment_review %}<h6>Submitted comments will be reviewed before publishing</h6>{% endif %}
 				
 				<ul class="actions">
 					<li><input type="submit" value="Submit" class="primary"></li>
