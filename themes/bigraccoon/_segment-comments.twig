@@ -65,7 +65,7 @@
 		{# If the page frontmatter includes "comments: false", then there will be no form to submit new comments #}
 		{% if (meta.comments is not defined) or (meta.comments == "true") %}
 
-			<form name="comments-form" class="comments-form" action="#comments" method="post">
+			<form name="comments-form" class="comments-form" action="{{ current_page.url }}#comments" method="post">
 				<h3>Add a comment</h3>
 
 				<div class="fields">
