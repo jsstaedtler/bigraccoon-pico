@@ -15,6 +15,40 @@ class PicoComments extends AbstractPicoPlugin
     protected $num_comments = 0;    // number of comments on this page
 
 
+	private function sendEmail($author, $content, $id, $guid) {
+		
+		// Proceed only if To and From addresses are provided in the pico config
+		if ($this->getPluginConfig('email_to') && $this->getPluginConfig('email_from')) {
+		
+			$to = $this->getPluginConfig('email_to');
+			$from = $this->getPluginConfig('email_from');
+			$subject = 'bigraccoon.ca - New Comment on: ' . $this->pico->getCurrentPage()['title'];
+			$headers = array();
+			$headers['From'] = $from;		// PHP mail function needs the From value to be in the additional headers
+			$message = "New comment by {$author}:\r\n\r\n{$content}";
+			
+			// If comment review is enabled, append this link that can be used to quickly approve it
+			if ($this->getPluginConfig('comment_review')) {
+				$message .= "\r\n\r\nClick here to approve: {$this->pico->getCurrentPage()['url']}?approval_guid={$guid}";
+			}
+
+			$success = mail($to, $subject, $message, $headers);		// Returns true on success, false on failure
+			
+			if (!$success) {
+				return error_get_last()['message'];	// Roundabout way to find out what went wrong
+			} else {
+				return null;
+			}
+			
+		} else {
+			
+			return null;
+			
+		}
+	}
+	
+	
+
     private function createComment($author, $content, $reply_guid) {
         $guid = bin2hex(random_bytes(16));      // create a GUID for this comment
         $date = time();                         // get the current time
@@ -63,6 +97,7 @@ class PicoComments extends AbstractPicoPlugin
             }
         }
 
+
         // build the comment file
         // this is hacky
         $file_contents = "---\n";
@@ -83,35 +118,20 @@ class PicoComments extends AbstractPicoPlugin
         }
         fclose($handle);
 		
+		
+		// Send a mail notification about the new comment
+		$mail_result = $this->sendEmail($author, $content, $this->id, $guid);
+		
+		if ($mail_result) {
+			error_log('Error submitting email notification for new comment: ' . $mail_result);
+		}
+
+		
         return null;		// Success!
     }
 	
 	
 	
-	private function sendEmail($author, $content) {
-		
-		// User input sanitization
-        $sanitized_author = strlen($author) != 0 ? filter_var($author, FILTER_SANITIZE_STRING) : null;
-        $sanitized_content = strlen($content) != 0 ? htmlspecialchars($content, ENT_QUOTES, ini_get("default_charset")) : null;
-
-		$to = $this->getPluginConfig('email_to');
-		$from = $this->getPluginConfig('email_from');
-		$subject = 'bigraccoon.ca - New Comment on: ' . $this->pico->getCurrentPage()['title'];
-		$message = 'New comment by ' . $sanitized_author . ":\r\n\r\n" . $sanitized_content . "\r\n";
-		$headers = array('From' => $from);		// PHP mail function needs the From value to be in the additional headers
-					
-		$success = mail($to, $subject, $message, $headers);		// Returns true on success, false on failure
-		
-		if (!$success) {
-			return error_get_last()['message'];	// Roundabout way to find out what went wrong
-		} else {
-			return null;
-		}
-		
-	}
-	
-	
-
     // return a nested array of hashes
     // [{"author":"me", "content":"hello", "replies":[{"author":"him", "content":"hi there"}]}]
     // replies to each comment are stored as a sub-array which can be recursed through in twig
@@ -202,6 +222,53 @@ class PicoComments extends AbstractPicoPlugin
         usort($comments, function($a, $b) { return $b['date'] <=> $a['date']; });
         return $comments;
     }
+	
+	
+	
+	private function approveComment($guid) {
+		
+		// Define the path where we expect the comment file with this guid resides
+		$filepath = $this->content_path . "/" . $this->id . "/" . $guid . ".md";
+		
+		if (file_exists($filepath)) {
+			
+			$file_contents = file_get_contents($filepath);
+			
+			// Only continue if we got data from the file
+			if ($file_contents) {
+				
+				// No need to parse the file, just change the single frontmatter line for comment review
+				$count = 0;
+				$new_file_contents = str_replace("pending: true", "pending: false", $file_contents, $count);
+
+				if ($count == 0) {
+					
+					return '"pending: true" not found in file: ' . $count;
+					
+				} else if ($count > 1){
+					
+					return 'More than one "pending: true" found in file, manual editing is needed: ' . $count;
+					
+				} else {
+					
+					$success = file_put_contents($filepath, $new_file_contents);
+				
+					if (!$success) {
+						return 'Error writing to file: ' . $filepath;
+					} else {
+						return null;
+					}
+				}
+				
+			} else {
+				return 'Comment file exists but could not read contents: ' . $filepath;
+			}
+			
+		} else {
+			return 'Comment file not found: ' . $filepath;
+		}
+		
+	}
 
 
 
@@ -221,7 +288,8 @@ class PicoComments extends AbstractPicoPlugin
 			$this->content_path = __DIR__ . '/../../blog-comments';			// If it's not specified, use ths default
 		}
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {        // if a comment is submitted
+		// Check if the page is responding to a POST request
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($this->headers['comments']) && $this->headers['comments'] != 'true') {		// if comment submission is disabled on this page
                 $twigVariables['comments_message'] = "Comment submission is disabled on this page"; // display error message and status 1
                 $twigVariables['comments_message_status'] = 1;
@@ -231,7 +299,7 @@ class PicoComments extends AbstractPicoPlugin
             
             // check if antispam honeypot is filled out
             if (isset($_POST['website']) && strlen($_POST['website']) > 0) {
-				error_log('Website field was filled in - IP: ' . $_SERVER['REMOTE_ADDR'] . ' - Value: ' . $_POST['website']);
+				error_log('Honeypot website field was filled in - IP: ' . $_SERVER['REMOTE_ADDR'] . ' - Value: ' . $_POST['website']);
                 return;
             }
             
@@ -249,26 +317,45 @@ class PicoComments extends AbstractPicoPlugin
 			} else {
 				
 				$twigVariables['comments_message'] = "Comment submitted";	// display success message and status 0
-                $twigVariables['comments_message_status'] = 0;
-				
-				// Send a mail notification about the new comment
-				$mail_result = $this->sendEmail($_POST['comment_author'], $_POST['comment_content']);
-				
-				if ($mail_result) {
-					error_log('Error submitting email notification for new comment: ' . $mail_result);
+				if ($this->getPluginConfig('comment_review') == 'true') {
+					$twigVariables['comments_message'] .= " for review";
 				}
-				
+                $twigVariables['comments_message_status'] = 0;
+								
 			}
 
 
             $twigVariables['comments'] = $this->getComments() ?: "Server error";// display comments or fail, since we want to display comments after a new comment has been submitted to show the user their new comment
             $twigVariables['comments_number'] = $this->num_comments ?: "0";
 
-        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {                      // if this is a GET request (ie. a normal page load)
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {                      // if this is a GET request
 		
-            $twigVariables['comments'] = $this->getComments() ?: "Server error";// display comments or fail
-            $twigVariables['comments_number'] = $this->num_comments ?: "0";
+			// If the GET request includes an "approval_guid" argument, it will have come from a link in a notification email.
+			// It means comment_review is enabled, and the comment with that guid must be approved.
+			if ($_GET['approval_guid']) {
+				
+				$result = $this->approveComment($_GET['approval_guid']);
+
+				if ($result) {
+				
+					$twigVariables['comments_message'] = $result;				// display fail message and status 1
+					$twigVariables['comments_message_status'] = 1;
+					error_log('Comment approval failed - IP: ' . $_SERVER['REMOTE_ADDR'] . ' - Result: ' . $result);
+					
+				} else {
+					
+					$twigVariables['comments_message'] = "Comment approved";	// display success message and status 0
+					$twigVariables['comments_message_status'] = 0;
+									
+				}
+			}
+			
+			// It's possible that other arguments are provided in the URL for this GET request, but they're irrelevant to us
 			
         }
+		
+		$twigVariables['comments'] = $this->getComments() ?: "Server error";	// Populate twig variables with existing comments
+        $twigVariables['comments_number'] = $this->num_comments ?: "0";
+			
     }
 }
