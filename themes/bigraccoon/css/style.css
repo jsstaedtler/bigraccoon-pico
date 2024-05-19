@@ -31,7 +31,7 @@ html: {
 }
 
 html.noscroll {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 body {
@@ -60,7 +60,8 @@ section, summary, time, mark, audio, video {
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
-	display: block;}
+	display: block;
+}
 
 ol, ul {
 	list-style: none;
@@ -70,10 +71,10 @@ blockquote, q {
 	quotes: none;
 }
 
-	blockquote:before, blockquote:after, q:before, q:after {
-		content: '';
-		content: none;
-	}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
 
 table {
 	border-collapse: collapse;
@@ -218,13 +219,17 @@ input, select, textarea {
 		margin: 0 0 1.5rem 0;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h4, h5, h6, span.comment-author {
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-weight: 900;
 		line-height: 1.5;
 		letter-spacing: 0.075em;
 		text-transform: uppercase;
 		margin: 0 0 1rem 0;
+	}
+	
+	h5, h6 {
+		font-weight: 400;
 	}
 
 /* C */	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, a h1, a h2, a h3, a h4, a h5, a h6 {
@@ -250,16 +255,16 @@ input, select, textarea {
 		margin: 0 0 1rem 0;
 	}
 
-	h4 {
+	h4, span.comment-author {
 		font-size: 1rem;
 	}
 
 	h5 {
-		font-size: 0.9rem;
+		font-size: 1rem;
 	}
 
 	h6 {
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 	}
 
 	sub {
@@ -364,7 +369,7 @@ input, select, textarea {
 		color: #212931;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h4, h5, h6, span.comment-author {
 		color: #212931;
 	}
 
@@ -5374,6 +5379,10 @@ span.logo_icon img {
   padding-left: 1rem;
 }
 
+.post ul.actions {
+  padding-left: 0;
+}
+
 .post ul > li {
 	position: relative;
 	padding-left: 1.5rem;
@@ -5407,13 +5416,13 @@ ul.pageslist > li {
 	background: none;
 }
 
-ul.pageslist > li .date {
+ul.pageslist > li .date, div.comment .date {
 	display: block;
 	margin: 0 0 0 0;
 	position: relative;
 }
 
-ul.pageslist > li .date:after {
+ul.pageslist > li .date:after, div.comment .date:after {
 	content: '';
 	display: block;
 	position: absolute;
@@ -5696,3 +5705,95 @@ div#thumbnails a:hover {
 	}
 
 }
+
+
+/* Commenting */
+
+div.comment {
+	margin: 2rem 0;
+}
+
+div.comment.reply {
+	border-left: solid 2px #eee;
+	margin: 0;
+	padding: 0 0 0 1.5rem;
+}
+
+div.comment {
+	overflow-wrap: break-word;
+}
+
+div.comment span.comment-author img.original-author {
+	height: 1rem;
+}
+
+div.comment div.comment-content {
+	background-color: #eee;
+	margin: 0;
+	padding: 1rem 1.5rem;
+}
+
+div.comment div.comment-content p:last-of-type {
+		margin-bottom: 0;
+	}
+
+div.comment div.replybutton {
+	width: 100%;
+	margin-top: 0.5rem;
+	text-align: right;
+}
+
+div.comment div.replybutton svg {
+	height: 1.8rem;
+	fill: black;
+	-moz-transition: fill 0.2s ease-in-out;
+	-webkit-transition: fill 0.2s ease-in-out;
+	-ms-transition: fill 0.2s ease-in-out;
+	transition: fill 0.2s ease-in-out;
+}
+
+div.comment div.replybutton svg:hover {
+	fill: #18bfef;
+	cursor: pointer;
+}
+
+form.comments-form label h6 {
+	float: right;
+	text-align: right;
+	margin: 0;
+}
+
+form.comments-form textarea {
+	resize: none;
+	line-height: initial;
+}
+
+form.comments-form ul.actions li, div.comment form.reply-form ul.actions li {
+	margin: 0 0 0 auto;
+}
+
+div.comment form.reply-form {
+	display: none;
+}
+
+div.comment span.date {
+	font-style: italic;
+}
+
+#comments-message.green {
+	color: #0a0;
+}
+
+#comments-message.yellow {
+	color: #aa0;
+}
+
+#comments-message.red {
+	color: #a00;
+}
+
+#comments-message img {
+	vertical-align: middle;
+	height: 2rem;
+}
+

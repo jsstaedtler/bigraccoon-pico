@@ -13,8 +13,9 @@ desktop.ini
 
 *.bak
 
-### Content of assets and content folders (but the empty folders are necessary)
+### Content of folders not needed for the software framework (but the empty folders must be present)
 /assets/**
+/comments/**
 /content/**
 
 ### Old Piwigo gallery (not part of this project)

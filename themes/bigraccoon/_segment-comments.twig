@@ -1,0 +1,118 @@
+{% macro print_comments(comments, reply, assets_url) %}
+	{# I have to pass in pico's global assets_url variable as a parameter, because somehow it's not available within the macro #}
+
+    {% for comment in comments %}
+	
+    <div id="{{ comment.guid }}" class="comment{{ reply ? " reply" : "" }}">
+	
+		<span class="date">{{ comment.date | date('D, j M Y') }}</span>
+        <h5><span class="comment-author">{% if comment.author == "j$-$taedtler" %}<img src="{{ assets_url }}/originalauthor-icon.svg" class="original-author">jsstaedtler{% else %}{{ comment.author|raw }}{% endif %}</span> {{ reply ? "replied" : "wrote" }}:</h5>
+        <div class="comment-content">{{ comment.content|markdown }}</div>
+		
+{# Disabling replies to comments
+		<div class="replybutton" onclick="e = document.getElementById('{{ comment.guid }}').getElementsByTagName('form')[0]; if(window.getComputedStyle(e).display === 'none') { e.style.display = 'block' } else { e.style.display = 'none' };">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 256 256"><title>Reply to this comment</title><path d="M236.34,187.09A84,84,0,0,0,172.29,68.9,84,84,0,0,0,19.66,139.09l-6.84,23.26a20,20,0,0,0,24.83,24.83l23.26-6.84a83.94,83.94,0,0,0,22.76,6.74,84.06,84.06,0,0,0,111.42,41.26l23.26,6.84a20,20,0,0,0,24.83-24.83ZM62,155.5a11.88,11.88,0,0,0-3.39.49l-20.72,6.09L44,141.35a12,12,0,0,0-.93-9A60,60,0,1,1,67.7,156.92,12,12,0,0,0,62,155.5Zm150.89,24.8a12,12,0,0,0-.93,9l6.09,20.73L197.36,204a12,12,0,0,0-9.06.93A60,60,0,0,1,111,186.63a83.93,83.93,0,0,0,68.55-91.37,60,60,0,0,1,33.38,85Z"></path></svg>
+		</div>
+
+        <form name="comments-form" class="reply-form" action="#{{ comment.guid }}" method="post">
+			<div class="fields">
+				<div class="field">
+					<label for="comment_author">Name:</label>
+					<input type="text" id="comment_author" name="comment_author">
+				</div>
+				
+				<div class="field">
+					<label for="comment_content">Comment:</label>
+					<textarea id="comment_content" name="comment_content"></textarea>
+				</div>
+				
+				<input type="hidden" name="comment_replyguid" value="{{ comment.guid }}">
+				{# honeypot field - comment will be rejected if filled out #}
+{#				<input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+			</div>
+		
+			<ul class="actions">
+				<li><input type="submit" value="Submit" class="primary"></li>
+			</ul>
+        </form>
+#}
+
+        {% if comment.replies is not empty %}
+            {{ _self.print_comments(comment.replies, true) }}
+        {% endif %}
+		
+    </div>
+	
+    {% endfor %}
+	
+{% endmacro %}
+
+
+{# If any comments exist, they will be displayed, regardless of whether commenting is disabled on this page #}
+{% if (meta.comments is not defined) or (meta.comments == "true") or (comments_number > 0) %}
+
+	<div class="box" id="comments">
+
+		<h4>
+			{% if comments_number > 0 %}
+				{{ comments_number }} comment{{ comments_number != 1 ? "s" }}
+			{% else %}
+				No comments yet
+			{% endif %}
+			on: {{ meta.title }}
+		</h4>
+
+		{# If the page frontmatter includes "comments: false", then there will be no form to submit new comments #}
+		{% if (meta.comments is not defined) or (meta.comments == "true") %}
+
+			<form name="comments-form" class="comments-form" action="{{ current_page.url }}#comments" method="post">
+				<h3>Add a comment</h3>
+
+				<div class="fields">
+					<div class="field">
+						<label for="comment_author">Name <h6>({{ config.PicoComments.name_size_limit }} characters max)</h6></label>
+						<input type="text" id="comment_author" name="comment_author" maxlength="{{ config.PicoComments.name_size_limit }}">
+					</div>
+					
+					<div class="field">
+						<label for="comment_content">Comment <h6>({{ config.PicoComments.comment_size_limit }} characters max, Markdown supported) </h6></label>
+						<textarea id="comment_content" name="comment_content" maxlength="{{ config.PicoComments.comment_size_limit }}" rows="3"></textarea>
+					</div>
+					
+					<input type="hidden" name="comment_replyguid" value="{{ comment.guid }}">
+					{# honeypot field - comment will be rejected if filled out #}
+					<input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+				</div>
+				
+				{% if config.PicoComments.comment_review %}<h6>Submitted comments will be reviewed before publishing</h6>{% endif %}
+				
+				<ul class="actions">
+					<li><input type="submit" value="Submit" class="primary"></li>
+				</ul>
+			</form>
+			
+			{% if comments_message is defined %}
+				<h4><span id="comments-message" class="{{ comments_message_status == 0 ? "green" : "red" }}">
+				
+				{% if comments_message_status == 0 %}
+					<img src="{{ assets_url }}/comment-success.svg" alt="Checkmark">
+				{% else %}
+					<img src="{{ assets_url }}/comment-failure.svg" alt="Warning">
+				{% endif %}
+					{{ comments_message }}
+				</span></h4>
+				
+			{% endif %}
+			
+		{% else %}
+
+			<h4><span id="comments-message" class="yellow">Comment submission has been closed</span></h4>
+			
+		{% endif %}
+
+
+		{{ _self.print_comments(comments, false, assets_url) }}
+
+	</div>
+
+{% endif %}
