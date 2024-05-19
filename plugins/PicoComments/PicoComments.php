@@ -29,7 +29,7 @@ class PicoComments extends AbstractPicoPlugin
 			
 			// If comment review is enabled, append this link that can be used to quickly approve it
 			if ($this->getPluginConfig('comment_review')) {
-				$message .= "\r\n\r\nClick here to approve: {$this->pico->getCurrentPage()['url']}?approval_guid={$guid}";
+				$message .= "\r\n\r\nClick here to approve: {$this->pico->getCurrentPage()['url']}?approval_guid={$guid}$comments";
 			}
 
 			$success = mail($to, $subject, $message, $headers);		// Returns true on success, false on failure
