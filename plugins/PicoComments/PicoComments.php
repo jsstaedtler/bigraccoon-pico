@@ -25,11 +25,11 @@ class PicoComments extends AbstractPicoPlugin
 			$subject = 'bigraccoon.ca - New Comment on: ' . $this->pico->getCurrentPage()['title'];
 			$headers = array();
 			$headers['From'] = $from;		// PHP mail function needs the From value to be in the additional headers
-			$message = "New comment by {$author}:\r\n\r\n{$content}";
+			$message = "New comment by {$author}:\r\n\r\n---\r\n\r\n{$content}";
 			
 			// If comment review is enabled, append this link that can be used to quickly approve it
 			if ($this->getPluginConfig('comment_review')) {
-				$message .= "\r\n\r\nClick here to approve: {$this->pico->getCurrentPage()['url']}?approval_guid={$guid}$comments";
+				$message .= "\r\n\r\n---\r\n\r\nVisit this URL to approve: {$this->pico->getCurrentPage()['url']}?approval_guid={$guid}$comments";
 			}
 
 			$success = mail($to, $subject, $message, $headers);		// Returns true on success, false on failure
@@ -324,10 +324,6 @@ class PicoComments extends AbstractPicoPlugin
 								
 			}
 
-
-            $twigVariables['comments'] = $this->getComments() ?: "Server error";// display comments or fail, since we want to display comments after a new comment has been submitted to show the user their new comment
-            $twigVariables['comments_number'] = $this->num_comments ?: "0";
-
         } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {                      // if this is a GET request
 		
 			// If the GET request includes an "approval_guid" argument, it will have come from a link in a notification email.
@@ -354,7 +350,9 @@ class PicoComments extends AbstractPicoPlugin
 			
         }
 		
-		$twigVariables['comments'] = $this->getComments() ?: "Server error";	// Populate twig variables with existing comments
+		
+		// Populate twig variables with existing comments
+		$twigVariables['comments'] = $this->getComments() ?: "Server error";
         $twigVariables['comments_number'] = $this->num_comments ?: "0";
 			
     }
