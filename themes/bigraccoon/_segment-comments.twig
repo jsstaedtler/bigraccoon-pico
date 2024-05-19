@@ -55,7 +55,7 @@
 
 		<h4>
 			{% if comments_number > 0 %}
-				{{ comments_number }} comment{% if comments_number != 1 %}s{% endif %}
+				{{ comments_number }} comment{{ comments_number != 1 ? "s" }}
 			{% else %}
 				No comments yet
 			{% endif %}
