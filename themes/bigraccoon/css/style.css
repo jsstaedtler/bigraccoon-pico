@@ -5716,6 +5716,10 @@ div#thumbnails a:hover {
 
 /* Commenting */
 
+div#comments {
+	margin-top: 4rem;
+}
+
 div.comment {
 	margin: 2rem 0;
 }
