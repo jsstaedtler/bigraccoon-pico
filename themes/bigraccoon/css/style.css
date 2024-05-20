@@ -4320,6 +4320,13 @@ input, select, textarea {
 /* N */	#main .post p img, #main .post p video {
 			max-width: 100%;
 		}
+		
+		#main .post > p > img {
+			object-fit: contain;
+			max-width: 100%;
+			max-height: 80vh;
+			width: 100%;
+		}
 
 		
 		#main > .pagination {
@@ -5734,8 +5741,12 @@ div.comment div.comment-content {
 }
 
 div.comment div.comment-content p:last-of-type {
-		margin-bottom: 0;
-	}
+	margin-bottom: 0;
+}
+	
+div.comment div.comment-content img {
+	max-width: 100%;
+}
 
 div.comment div.replybutton {
 	width: 100%;
