@@ -328,7 +328,7 @@ class PicoComments extends AbstractPicoPlugin
 		
 			// If the GET request includes an "approval_guid" argument, it will have come from a link in a notification email.
 			// It means comment_review is enabled, and the comment with that guid must be approved.
-			if ($_GET['approval_guid']) {
+			if (isset($_GET['approval_guid'])) {
 				
 				$result = $this->approveComment($_GET['approval_guid']);
 
