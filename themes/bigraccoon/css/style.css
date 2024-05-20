@@ -4318,7 +4318,7 @@ input, select, textarea {
 		}
 		
 /* N */	#main .post p img, #main .post p video {
-			max-width: 100%;
+			width: 100%;
 		}
 		
 		#main .post > p > img {
