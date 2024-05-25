@@ -191,8 +191,8 @@ class PicoComments extends AbstractPicoPlugin
         
         // this recursive function builds and sorts the child-pointer tree
         function insert_replies(&$array, &$comments) {
-/*            if (!is_array($array) || !is_object($array))
-                return; */
+            if (!is_array($array) || !is_object($array))
+                return;
             foreach($array as &$comment) {
                 // if this comment has children,
                 if (isset($comments[$comment['guid']])) {
@@ -280,6 +280,12 @@ class PicoComments extends AbstractPicoPlugin
 
     public function onPageRendering(&$templateName, array &$twigVariables) {
 
+        // If there's no Pico page ID for the current URL, it's because the client is requesting a page that doesn't exist, and they'll get a 404 response.  No need for this plugin to continue.
+        if (!isset($this->pico->getCurrentPage()['id'])) {
+            error_log('(PicoComments) No pico page id for requested URI: ' . $_SERVER['REQUEST_URI'] . ' - Referrer: ' . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'None') . ' - Client IP: ' . $_SERVER['REMOTE_ADDR']);
+            return;
+        }
+        
         $this->id = $this->pico->getCurrentPage()['id'];
 		
 		if ($this->getPluginConfig("directory") !== null) {					// Set the path to the comments files if it's specified in pico's config
