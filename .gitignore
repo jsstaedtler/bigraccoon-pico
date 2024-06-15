@@ -19,6 +19,7 @@ desktop.ini
 /content/**
 
 /editor.md/
+/editor.html
 
 ### Old Piwigo gallery (not part of this project)
 /gallery/
