@@ -18,6 +18,8 @@ desktop.ini
 /comments/**
 /content/**
 
+/editor.md/
+
 ### Old Piwigo gallery (not part of this project)
 /gallery/
 /testing/
