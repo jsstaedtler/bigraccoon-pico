@@ -37,15 +37,30 @@
 						{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
 					</header>
 					
-					<div id="gallery-image">
+					
+					{# Display the primary image #}
+					<div class="gallery-image" id="main-image">
 						{# Clicking the image will simply open the original, full-size image file (which could be huge) #}
 						<a href="{{ assets_url }}/{{ meta.image }}">
 						
 							{# The image displayed here is resized, so that browsing isn't slowed down by very large images #}
-							<img src="/{{ resize( 'assets/' ~ meta.image, null, 800 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
+							<img src="/{{ resize( 'assets/' ~ meta.image, null, 800 ) }}"{% if meta.imagedescription %} alt="{{ meta.imagedescription }}"{% endif %}>
 							
 						</a>
 					</div>
+
+					{# If there are more images in this group, display them next #}
+					{% if meta.moreimages %}
+						{% for image in meta.moreimages %}
+						
+					<div class="gallery-image">
+						<a href="{{ assets_url }}/{{ image.file }}">
+							<img src="/{{ resize( 'assets/' ~ image.file, null, 800 ) }}"{% if image.description %} alt="{{ image.description }}"{% endif %}>
+						</a>
+					</div>
+	
+						{% endfor %}
+					{% endif %}
 					
 					<p>{{ content }}</p>
 					
