@@ -1,6 +1,13 @@
-{# A standard article.  It will have a date, H2 title, a blurb, and prev/next buttons #}
+{#
+ # A template to present a single gallery image, or a grouping of multiple images.  It will have a date, H2 title,
+ # and prev/next buttons.  Metadata will be provided with each main image.  Finally, other related images can be
+ # displayed as thumbnails (just like in the main gallery listing).
+ #}
+ 
 {% extends "_base.twig" %}
 
+
+{# Need to use Twig to put the main image into the background, overriding the external CSS style file #}
 {% block head_style %}
 	{{ parent() }}
 	<style>
@@ -18,7 +25,9 @@
 		
 
 {% block page_body %}
-	{{ include("_segment-pagination.twig") }}
+
+	{# Use prev/next browsing buttons that include thumbnail images #}
+	{{ include("_segment-gallery-pagination.twig") }}
 
 				<!-- A post -->
 				<section class="post">
@@ -29,8 +38,12 @@
 					</header>
 					
 					<div id="gallery-image">
+						{# Clicking the image will simply open the original, full-size image file (which could be huge) #}
 						<a href="{{ assets_url }}/{{ meta.image }}">
+						
+							{# The image displayed here is resized, so that browsing isn't slowed down by very large images #}
 							<img src="/{{ resize( 'assets/' ~ meta.image, null, 800 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
+							
 						</a>
 					</div>
 					
@@ -40,7 +53,7 @@
 					
 				</section>
 
-	{{ include("_segment-pagination.twig") }}
+	{{ include("_segment-gallery-pagination.twig") }}
 {% endblock page_body %}
 
 {% block scripts %}
