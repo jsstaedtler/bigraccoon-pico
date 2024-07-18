@@ -61,10 +61,21 @@
 	{% for page in current_segment %}
 		<a href="{{ page.url }}">
 			{# The resize() function comes from the Pico plugin ImageResize #}
-			{{ page.meta.adultonly }} <img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
+			<img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
 		</a>
 	{% endfor %}
 	</div>
+	
+
+{% if total_segments > 1 %}
+	<div class="pagination">
+		<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}" class="previous">Prev</a>
+	{% for seg in 1..total_segments %}
+		<a href="{{ current_page.url }}?page={{ seg }}" class="page{% if seg == current_segment_number %} active{% endif %}">{{ seg }}</a>
+	{% endfor %}
+		<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}" class="next">Next</a>
+	</div>
+{% endif %}
 
 
 {% endblock page_content %}
