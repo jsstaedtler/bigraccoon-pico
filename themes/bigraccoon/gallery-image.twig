@@ -49,9 +49,10 @@
 						</a>
 					</div>
 
-					{# If there are more images in this group, display them next #}
-					{% if meta.moreimages %}
-						{% for image in meta.moreimages %}
+
+			{# If there are more images in this group, display them next #}
+			{% if meta.moreimages %}
+				{% for image in meta.moreimages %}
 						
 					<div class="gallery-image">
 						<a href="{{ assets_url }}/{{ image.file }}">
@@ -59,8 +60,25 @@
 						</a>
 					</div>
 	
-						{% endfor %}
-					{% endif %}
+				{% endfor %}
+			{% endif %}
+			
+			
+			{# If there are related images, display them as thumbnails #}
+			{% if meta.related %}
+					<h3>Related Images</h3>
+					<div id="thumbnails">
+					{% for image in meta.related %}
+						{% set imagepage = pages['gallery/' ~ image] %}
+						<a href="{{ imagepage.url }}">
+							{# The resize() function comes from the Pico plugin ImageResize #}
+							<img src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, 300 ) }}"{% if imagepage.meta.imagedescription %} alt="{{ imagepage.meta.imagedescription }}"{% endif %}>
+						</a>
+					{% endfor %}
+					</div>
+						
+			{% endif %}
+
 					
 					<p>{{ content }}</p>
 					
@@ -76,4 +94,9 @@
 	{{ include("_segment-lightbox.twig") }}
 	
 	{{ parent() }}
+	
+	{# Include thumbnail scripting if related images exist for this image #}
+	{% if meta.related %}
+		<script src="{{ theme_url }}/js/bigraccoon-gallery.js"></script>
+	{% endif %}
 {% endblock scripts %}
