@@ -11,31 +11,26 @@
 					</header>
 					
 				{% if user %}
-					Logged as {{ username }} ({{ usergroup }})
+					Logged in as {{ username }}
 				{% else %}
 					Not logged in
 				{% endif %}
 
-{#
 				<form method="post" action="">
 				
 				{% if user %}
-					Logged as {{ username }} ({{ usergroup }})
-					(<input type="submit" name="logout" value="logout" />)
+					<input type="submit" name="logout" value="Disable" />
 				{% else %}
 					
 					{{ content }}
 					
 					<input type="hidden" name="login" value="eighteen" />
 					<input type="hidden" name="pass" value="eighteen" />
-					<input type="submit" name="login" value="Agree and continue" />
+					<input type="submit" name="agree" value="Agree and continue" />
 					
 				{% endif %}
 				
 				</form>
-#}
-
-				{{ login_form }}
 
 				</section>
 
