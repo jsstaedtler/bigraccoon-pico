@@ -282,7 +282,7 @@ class PicoComments extends AbstractPicoPlugin
 
         // If there's no Pico page ID for the current URL, it's because the client is requesting a page that doesn't exist, and they'll get a 404 response.  No need for this plugin to continue.
         if (!isset($this->pico->getCurrentPage()['id'])) {
-            error_log('(PicoComments) No pico page id for requested URI: ' . $_SERVER['REQUEST_URI'] . ' - Referrer: ' . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'None') . ' - Client IP: ' . $_SERVER['REMOTE_ADDR']);
+            //error_log('(PicoComments) No pico page id for requested URI: ' . $_SERVER['REQUEST_URI'] . ' - Referrer: ' . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'None') . ' - Client IP: ' . $_SERVER['REMOTE_ADDR']);
             return;
         }
         
@@ -294,8 +294,8 @@ class PicoComments extends AbstractPicoPlugin
 			$this->content_path = __DIR__ . '/../../blog-comments';			// If it's not specified, use ths default
 		}
 
-		// Check if the page is responding to a POST request
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		// Check if the page is responding to a POST request from a PicoComments form
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_name']) && $_POST['form_name'] == 'PicoComments') {
             if (isset($this->headers['comments']) && $this->headers['comments'] != 'true') {		// if comment submission is disabled on this page
                 $twigVariables['comments_message'] = "Comment submission is disabled on this page"; // display error message and status 1
                 $twigVariables['comments_message_status'] = 1;
