@@ -10,8 +10,8 @@
 						{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
 					</header>
 					
-				{% if user %}
-					Logged in as {{ username }}
+				{% if user and username == "eighteen" %}
+					You're eighteen
 				{% else %}
 					Not logged in
 				{% endif %}
