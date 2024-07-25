@@ -1,0 +1,42 @@
+{# A standard article.  It will have a date, H2 title, a blurb, and prev/next buttons #}
+{% extends "_base.twig" %}
+
+{% block page_body %}
+
+				<!-- A post -->
+				<section class="post">
+				
+					<header class="major">
+						{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+					</header>
+					
+				{% if user %}
+					Logged as {{ username }} ({{ usergroup }})
+				{% else %}
+					Not logged in
+				{% endif %}
+
+{#
+				<form method="post" action="">
+				
+				{% if user %}
+					Logged as {{ username }} ({{ usergroup }})
+					(<input type="submit" name="logout" value="logout" />)
+				{% else %}
+					
+					{{ content }}
+					
+					<input type="hidden" name="login" value="eighteen" />
+					<input type="hidden" name="pass" value="eighteen" />
+					<input type="submit" name="login" value="Agree and continue" />
+					
+				{% endif %}
+				
+				</form>
+#}
+
+				{{ login_form }}
+
+				</section>
+
+{% endblock page_body %}
