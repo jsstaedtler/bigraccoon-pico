@@ -92,13 +92,26 @@
 			{% if meta.related %}
 					<h3>Related Images</h3>
 					<div id="thumbnails">
+					
 					{% for image in meta.related %}
 						{% set imagepage = pages['gallery/' ~ image] %}
+						
+						{% if imagepage.meta.adultonly and username != "eighteen" %}
+		
+						<a href="/adult-content?dest={{ imagepage.id }}">
+							 <img class="placeholder" src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, 30 ) }}" alt="Adult-only content hidden">
+						</a>
+							
+						{% else %}
+
 						<a href="{{ imagepage.url }}">
 							{# The resize() function comes from the Pico plugin ImageResize #}
 							<img src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, 300 ) }}"{% if imagepage.meta.imagedescription %} alt="{{ imagepage.meta.imagedescription }}"{% endif %}>
 						</a>
+						{% endif %}
+						
 					{% endfor %}
+					
 					</div>
 						
 			{% endif %}
