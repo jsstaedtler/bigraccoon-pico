@@ -3,11 +3,8 @@
 {% block page_content %}
 	<header class="major">
 		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
-<!--		{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
 	</header>
-	
-	{{ content }}
--->
+
 <!--
 	<p>OMG TAGS</p>
 	{% set tags = get_all_tags() %}
@@ -19,9 +16,14 @@
 -->
 
 
-	{% set all_pages = pages(current_page.id)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %}
+{#	{% set all_pages = pages(current_page.id)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %} #}
+	{% set all_pages = pages(current_page.id)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %}
 
-	{% set segment_size = config.segment_size %}
+	{# Set a default segment size.  Override that with any value set in the site config.  And override that with any value set on this page. #}
+	{% set segment_size = 25 %}
+	{% if config.segment_size %}{% set segment_size = config.segment_size %}{% endif %}
+	{% if meta.segment_size %}{% set segment_size = meta.segment_size %}{% endif %}
+	
 	{% set total_segments = ((all_pages|length) / segment_size)|round(0, 'ceil') %}
 {#	
 	<p>all_pages|length = {{ all_pages|length }}</p>
@@ -58,12 +60,22 @@
 
 
 	<div id="thumbnails">
-	{% for page in current_segment %}
+{% for page in current_segment %}
+	{% if page.meta.adultonly and username != "eighteen" %}
+	
+		<a href="/adult-content?dest={{ page.id }}">
+			 <img class="placeholder" src="/assets/placeholder.png" alt="Adult-only content hidden">
+		</a>
+		
+	{% else %}
+		
 		<a href="{{ page.url }}">
 			{# The resize() function comes from the Pico plugin ImageResize #}
 			<img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
 		</a>
-	{% endfor %}
+		
+	{% endif %}
+{% endfor %}
 	</div>
 	
 

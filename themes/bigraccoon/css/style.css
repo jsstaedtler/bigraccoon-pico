@@ -5745,6 +5745,14 @@ div#thumbnails img {
 	display: block;
 }
 
+div#thumbnails img.placeholder {
+	background-color: #eee;
+	background-image: url(../img/prohibit-bold.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 4rem;
+}
+
 div#thumbnails img.cropped {
 	object-fit: cover
 }
