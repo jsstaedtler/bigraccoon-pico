@@ -7,6 +7,30 @@
 {% extends "_base.twig" %}
 
 
+{% block html_head %}
+
+	{# If, when this page loads, the user is logged in, the page should immdiately redirect to an actual destination page #}
+	{% if meta.adultonly and username != "eighteen" %}
+
+		{# The HTML head will consist only of redirect code #}
+		<script>
+			window.location.href = "{{ pages[destination_id].url }}"
+		</script>
+		<noscript>
+			<meta http-equiv="refresh" content="0; url={{ pages[destination_id].url }}">
+		</noscript>
+
+	{% else %}
+
+		{# The user is logged out, so this page should load like a normal one #}
+		{{ parent() }}
+		
+	{% endif %}
+
+{% endblock html_head %}
+
+
+
 {# Need to use Twig to put the main image into the background, overriding the external CSS style file #}
 {% block head_style %}
 	{{ parent() }}
