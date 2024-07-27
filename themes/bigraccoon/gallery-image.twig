@@ -14,10 +14,10 @@
 
 		{# The HTML head will consist only of redirect code #}
 		<script>
-			window.location.href = "{{ pages[destination_id].url }}"
+			window.location.href = "{{ pages['adult-content'].url }}?dest={{ current_page.id }}"
 		</script>
 		<noscript>
-			<meta http-equiv="refresh" content="0; url={{ pages[destination_id].url }}">
+			<meta http-equiv="refresh" content="0; url={{ pages['adult-content'].url }}?dest={{ current_page.id }}">
 		</noscript>
 
 	{% else %}
