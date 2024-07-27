@@ -1,0 +1,89 @@
+{# This is a warning/declaration page for viewing adult-only ("18+") content on this site.
+ #
+ # It relies on the PicoUsers plugin.  By default, all visitors are "logged out."  Page templates that might serve 18+ content
+ # will contain logic that checks the visitor's login status.  18+ content will not be displayed, unless the viewer is logged in to
+ # the user account named "eighteen".
+ # 
+ # But the viewer does not need to type in any username or password to log in; instead they will read the declaration message on this page
+ # (contained in the content file adult-content.md).  Then they will click a button to agree with the declaration.  Within this
+ # page is a hidden form, containing the username and password of the "eighteen" user.  Clicking the button submits the form, and logs in
+ # the viewer.
+ #
+ # The login form directs back to this very same page, but the PicoUsers plugin handles the POST data from the form and sets up a PHP
+ # user session.  On this page, we will test whether the user is already logged in.  If not, they will see the declaration and button.
+ # And if they are logged in, this page will redirect to some other page.
+ #
+ # The redirection relies on a "dest" parameter in the URL.  If the visitor is not logged in, clicking on any 18+ links should lead to this
+ # login page, with a "?dest=[pico_page_id]" parameter at the end of the URL.  Once the user consents and is logged in, this page
+ # will redirect them to that page ID, so they may see the content that they could not before.  If that parameter is missing or invalid,
+ # this page will instead redirect to the gallery index.
+ #}
+{% extends "_base.twig" %}
+
+
+{# Get the value of any "?dest=x" parameter in the URL, and if it's not a valid string, set it to 'gallery/index' (the gallery's page ID) #}
+{% set destination_id = url_param('dest', 'string', 'gallery/index') %}
+
+{# If we get a page ID, but that page doesn't actually exist in the site, just go to the gallery index #}
+{% if not pages[destination_id] %}
+	{% set destination_id = 'gallery/index' %}
+{% endif %}
+
+
+{% block html_head %}
+
+	{# If, when this page loads, the user is logged in, the page should immdiately redirect to an actual destination page #}
+	{% if user and username == "eighteen" %}
+
+		{# The HTML head will consist only of redirect code #}
+		<script>
+			window.location.href = "{{ pages[destination_id].url }}"
+		</script>
+		<noscript>
+			<meta http-equiv="refresh" content="0; url={{ pages[destination_id].url }}">
+		</noscript>
+
+	{% else %}
+
+		{# The user is logged out, so this page should load like a normal one #}
+		{{ parent() }}
+		
+	{% endif %}
+
+{% endblock html_head %}
+
+
+{% block page_body %}
+
+		<!-- A post -->
+		<section class="post">
+				
+	{# If the user is logged in, this body content shouldn't even appear.  But if the redirection failed, we provide a link to move on manually #}
+	{% if user and username == "eighteen" %}
+	
+		<a href="{{ pages[destination_id].url }}">Use this link if you are not redirected automatically</a>
+
+	{% else %}
+	
+		<header class="major">
+			{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+
+				{{ content }}
+				
+				<form method="post" action="">
+					<input type="hidden" name="login" value="eighteen" />
+					<input type="hidden" name="pass" value="eighteen" />
+					<input type="submit" name="agree" value="Agree and continue" />
+				</form>
+			
+			</header>
+			
+	{% endif %}
+
+			<p>Next page: {{ destination_id }} - {{ pages[destination_id].url }}</p>
+			
+			<form method="post" action=""><input type="submit" name="logout" value="logout" /></form>
+
+		</section>
+
+{% endblock page_body %}
