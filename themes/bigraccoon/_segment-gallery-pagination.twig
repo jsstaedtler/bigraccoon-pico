@@ -18,7 +18,11 @@
 
 {# Get all child pages of that parent (ie. the siblings of this page), as long as they aren't hidden #}
 {# Nearly the same as the original pagination method, except here we control for whether adult-only content is being hidden #}
-	{% set siblingid_array = pages(current_parent.id)|sort((a, b) => b.date <=> a.date)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|keys %}
+	{% if username == "eighteen" %}
+		{% set siblingid_array = pages(current_parent.id)|sort((a, b) => b.date <=> a.date)|filter(p => not p.hidden)|keys %}
+	{% else %}
+		{% set siblingid_array = pages(current_parent.id)|sort((a, b) => b.date <=> a.date)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|keys %}
+	{% endif %}
 
 {# Initialize these variables so they exist outside the scope of the following loops #}
 	{% set next_page = NULL %}
