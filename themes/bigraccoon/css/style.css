@@ -5725,6 +5725,7 @@ div#thumbnails a {
 	padding: 0;
 	margin: 2px;
 	line-height: initial;
+	overflow: hidden;
 }
 
 div.gallery-image a {
@@ -5746,6 +5747,7 @@ div#thumbnails img {
 }
 
 div#thumbnails img.placeholder {
+	filter: opacity(50%) blur(10px);
 	background-color: #eee;
 	background-image: url(../img/prohibit-bold.svg);
 	background-position: center;

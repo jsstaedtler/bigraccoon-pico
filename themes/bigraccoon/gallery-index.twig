@@ -69,7 +69,7 @@
 		{% if page.meta.adultonly and username != "eighteen" %}
 		
 			<a href="/adult-content?dest={{ page.id }}">
-				 <img class="placeholder" src="/assets/placeholder.png" alt="Adult-only content hidden">
+				 <img class="placeholder" src="/{{ resize( 'assets/' ~ page.meta.image, null, 30 ) }}" alt="Adult-only content hidden">
 			</a>
 			
 		{% else %}
