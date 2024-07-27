@@ -33,7 +33,7 @@
 {% block html_head %}
 
 	{# If, when this page loads, the user is logged in, the page should immdiately redirect to an actual destination page #}
-	{% if user and username == "eighteen" %}
+	{% if username == "eighteen" %}
 
 		{# The HTML head will consist only of redirect code #}
 		<script>
