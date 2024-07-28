@@ -34,11 +34,20 @@
 	<h4>Viewing images with tag <h5>{{ dump(requested_tags) }}</h5></h4>
 
 
-	{### Tag cloud for the user to choose from #}
+	{### Tag cloud for the user to choose from.  If a tag is currently active, it gets the "active" class, and clicking it will remove it from the active tags. #}
 	<h4>Filter by tag</h4>
 	<ul class="tags">
 	{% for tag in all_site_tags|sort %}
-		<li><a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}"{% if tag in requested_tags%} class="active"{% endif %}>{{ tag|raw }}</a></li>
+		<li>
+		{% if tag in requested_tags %}
+			{### We need to remove this tag from the requested_tags array, and put it into the target URL #}
+			{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
+			<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
+		{% else %}
+			{### Simply tack this new tag onto the target URL, after any existing "?tag=" parameter #}
+			<a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}"{% if tag in requested_tags%} class="active"{% endif %}>{{ tag|raw }}</a>
+		{% endif %}
+		</li>
 	{% endfor %}
 	</ul>
 	
