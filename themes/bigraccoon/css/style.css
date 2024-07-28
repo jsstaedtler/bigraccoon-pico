@@ -5788,6 +5788,42 @@ div#thumbnails a:hover, div.gallery-image a:hover {
 }
 
 
+
+/***** Tags *****/
+
+ul.tags {
+	list-style: none;
+}
+
+ul.tags li {
+	display: inline-block;
+	background-image: none;
+	padding: 0;
+	margin: 0 0.25rem 1rem;
+}
+
+ul.tags li a {
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
+	font-weight: 600;
+	letter-spacing: 0.075em;
+	text-transform: uppercase;
+	color: white;
+	background-color: #212931;
+	padding: 0.5rem 1rem;
+	border: none;
+}
+
+ul.tags li a.active {
+	background-color: #18bfef;
+}
+
+ul.tags li a.active:hover {
+	color: white;
+	background-color: #212931;
+}
+
+
+
 /***** Commenting *****/
 
 div#comments {
