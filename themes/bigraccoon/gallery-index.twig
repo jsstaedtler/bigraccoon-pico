@@ -9,48 +9,80 @@
 			<input type="submit" name="logout" value="Hide Adult-Only Content" />
 		</form>
 	</header>
-
-	<!--
-		<p>OMG TAGS</p>
-		{% set tags = get_all_tags() %}
-		<ul>
-		{% for tag in tags|sort %}
-			<li>{{ tag }}</li>
-		{% endfor %}
-		</ul>
-	-->
+	
+	
+	{### Collect all tags currently in use in the entire site (PicoTags plugin) #}
+	{% set all_site_tags = get_all_tags() %}
 
 
-	{#	{% set all_pages = pages(current_page.id)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %} #}
-		{% set all_pages = pages(current_page.id)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %}
-
-		{# Set a default segment size.  Override that with any value set in the site config.  And override that with any value set on this page. #}
-		{% set segment_size = 25 %}
-		{% if config.segment_size %}{% set segment_size = config.segment_size %}{% endif %}
-		{% if meta.segment_size %}{% set segment_size = meta.segment_size %}{% endif %}
-		
-		{% set total_segments = ((all_pages|length) / segment_size)|round(0, 'ceil') %}
-	{#	
-		<p>all_pages|length = {{ all_pages|length }}</p>
-		<p>segment_size = {{ segment_size }}</p>
-		<p>total_segments = {{ total_segments }}</p>
-	#}
-		{# Get the value of any "?page=n" parameter in the URL, and if it's not an int, set it to 1 #}
-		{% set current_segment_number = url_param('page', 'int', 1) %}
-
-		{% if current_segment_number < 1 %}
-			{% set current_segment_number = 1 %}
+	{### Get any selected tags that have been supplied in the "?tag=" URL parameter, then validate that each one actually exists in the site #}
+	{% set requested_tags = [] %}														{# Start a new, empty array #}
+	{% for tag in url_param('tag', 'string')|replace({'&#39;': '\''})|split(',') %}		{# For some reason, Twig won't unescape a URL-encoded apostrophe, so we use the replace() filter for that #}
+		{% if tag|trim in all_site_tags %}
+			{% set requested_tags = requested_tags|merge([tag|trim]) %}					{# Add this valid tag to the array #}
 		{% endif %}
+	{% endfor %}
+	
+	{### Make a string out of the valid tag(s), to be put back in the URL as a parameter #}
+	{% set requested_tags_string = requested_tags|join(',') %}
+	
+{#
+	<p>tag parameter: {{ url_param('tag', 'string')|replace({'&#39;': '\''}) }}</p>
+	<p>requested_tags: {{ dump(requested_tags) }}
+#}
+	
+	<h4>Viewing images with tag <h5>{{ dump(requested_tags) }}</h5></h4>
 
-		{% if current_segment_number > total_segments %}
-			{% set current_segment_number = total_segments %}
-		{% endif %}
-		
-	{#
-		<p>current_segment_number = {{ current_segment_number }}</p>
-		<p>current_segment_start = {{ (current_segment_number - 1) * segment_size }}</p>
-	#}
-		{% set current_segment = all_pages|slice((current_segment_number - 1) * segment_size, segment_size) %}
+
+	{### Tag cloud for the user to choose from #}
+	<h4>Filter by tag</h4>
+	<ul class="tags">
+	{% for tag in all_site_tags|sort %}
+		<li><a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}">{{ tag|raw }}</a></li>
+	{% endfor %}
+	</ul>
+	
+
+
+{#	{% set all_pages = pages(current_page.id)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %} #}
+
+	{### Save the list of all pages subordinate to this index page, except hidden ones, sorting by descending date #}
+	{% set all_pages = pages(current_page.id)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %}
+	
+	{### Now filter based on any selected tags #}
+	{% for tag in requested_tags %}
+		{% set all_pages = all_pages|filter(p => tag in p.meta.tags) %}
+	{% endfor %}
+	
+
+	{### Set a default segment size.  Override that with any value set in the site config.  And override that with any meta value set on this page. #}
+	{% set segment_size = 25 %}
+	{% if config.segment_size %}{% set segment_size = config.segment_size %}{% endif %}
+	{% if meta.segment_size %}{% set segment_size = meta.segment_size %}{% endif %}
+	
+	{% set total_segments = ((all_pages|length) / segment_size)|round(0, 'ceil') %}
+{#	
+	<p>all_pages|length = {{ all_pages|length }}</p>
+	<p>segment_size = {{ segment_size }}</p>
+	<p>total_segments = {{ total_segments }}</p>
+#}
+
+	{### Get the value of any "?page=n" parameter in the URL, and if there's no valid number, set it to 1 #}
+	{% set current_segment_number = url_param('page', 'int', 1) %}
+
+	{% if current_segment_number < 1 %}
+		{% set current_segment_number = 1 %}
+	{% endif %}
+
+	{% if current_segment_number > total_segments %}
+		{% set current_segment_number = total_segments %}
+	{% endif %}
+	
+{#
+	<p>current_segment_number = {{ current_segment_number }}</p>
+	<p>current_segment_start = {{ (current_segment_number - 1) * segment_size }}</p>
+#}
+	{% set current_segment = all_pages|slice((current_segment_number - 1) * segment_size, segment_size) %}
 		
 
 	{% if total_segments > 1 %}
