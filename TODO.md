@@ -37,14 +37,10 @@
 	* Add metadata box (size, tags, etc.) below image (collapsible?)
 	* Any good way to count pageviews?
 	* Pre-cache next and previous images
+	* When clicking up/index button in gallery-image, return to the gallery-index segment it resides in
 	* Figure out 18+ images
 		* Include placeholders in the default view?  That requires a static image file, eg. a blurred copy (CSS filtering is easily bypassed)
 		* Or make a very obvious 18+ toggle?
-		* Once opted-in to 18+ images, how to store that to last between pages?
-			* Cookie
-			* PHP session
-			* HTTP GET parameter in URL
-			* Pico user accounts plugin
 		* If someone opens a link to an 18+ image, how to redirect them to the opt-in method?
 	* Background images:
 		* Same image as the page you're viewing? (Need to use a small size to preserve bandwidth)
