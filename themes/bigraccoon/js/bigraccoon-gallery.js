@@ -32,7 +32,7 @@ function br_adjustThumbnailSizes() {
 	
 		// This will run on every page resize, so we need to get the page width anew
 		const pageRect = document.getElementById("thumbnails").getBoundingClientRect();
-		const pageWidth = pageRect.width - 4;	// Subtract 4 pixels because this value is somehow too wide on my phone browser
+		const pageWidth = pageRect.width - 7;	// Subtract 7 pixels because this value is somehow too wide on my phone browser??
 		
 		//document.getElementById("debug").innerHTML += `<p>pageWidth: ${pageWidth}</p>`;
 		
