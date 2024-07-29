@@ -231,6 +231,10 @@ input, select, textarea {
 	h5, h6 {
 		font-weight: 400;
 	}
+	
+	h1.inline, h2.inline, h3.inline, h4.inline, h5.inline, h6.inline {
+		display: inline;
+	}
 
 /* C */	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, a h1, a h2, a h3, a h4, a h5, a h6 {
 			border-bottom: 0;
@@ -3236,10 +3240,7 @@ input, select, textarea {
 /* Pagination */
 
 	.pagination {
-		display: -moz-inline-flex;
-		display: -webkit-inline-flex;
-		display: -ms-inline-flex;
-		display: inline-flex;
+		display: flex;
 		-moz-user-select: none;
 		-webkit-user-select: none;
 		-ms-user-select: none;
@@ -3247,10 +3248,8 @@ input, select, textarea {
 		cursor: default;
 		list-style: none;
 		width: 100%;
-		margin: 0 0 2rem 2px;
-/* C */	padding: 2rem 4rem 2rem 4rem;
-/* N */	padding-top: 2rem;
-/* N */	padding-bottom: 2rem;
+		margin: 2rem 0;
+/* C */	padding: 0;
 /* N */	border-width: 0 !important;
 	}
 
@@ -5711,6 +5710,7 @@ div#thumbnails {
 	flex-wrap: wrap;
 	justify-content: center;
 	width: 100%;
+	margin-bottom: 2rem;
 }
 
 div.gallery-image {
@@ -5793,13 +5793,21 @@ div#thumbnails a:hover, div.gallery-image a:hover {
 
 ul.tags {
 	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	padding: 0;
+}
+
+ul.tags.inline {
+	display: inline;
 }
 
 ul.tags li {
 	display: inline-block;
 	background-image: none;
 	padding: 0;
-	margin: 0 0.25rem 1rem;
+	margin: 0 0.25rem 0.35rem;
 }
 
 ul.tags li a {
@@ -5809,7 +5817,7 @@ ul.tags li a {
 	text-transform: uppercase;
 	color: white;
 	background-color: #212931;
-	padding: 0.5rem 1rem;
+	padding: 0.35rem 0.7rem;
 	border: none;
 }
 

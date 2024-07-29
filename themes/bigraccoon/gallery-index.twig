@@ -1,17 +1,7 @@
 {% extends "_base.twig" %}
 
-{% block page_content %}
-
-	<header class="major">
-		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
-		
-		<form method="post" action="">
-			<input type="submit" name="logout" value="Hide Adult-Only Content" />
-		</form>
-	</header>
 	
-	
-	{### Collect all tags currently in use in the entire site (PicoTags plugin) #}
+	{### Collect all tags currently in use in the entire site (via PicoTags plugin).  Sadly can not just get tags within this section of the site #}
 	{% set all_site_tags = get_all_tags() %}
 
 
@@ -26,36 +16,8 @@
 	{### Make a string out of the valid tag(s), to be put back in the URL as a parameter #}
 	{% set requested_tags_string = requested_tags|join(',') %}
 	
-{#
-	<p>tag parameter: {{ url_param('tag', 'string')|replace({'&#39;': '\''}) }}</p>
-	<p>requested_tags: {{ dump(requested_tags) }}
-#}
 	
-	<h4>Viewing images with tag <h5>{{ dump(requested_tags) }}</h5></h4>
-
-
-	{### Tag cloud for the user to choose from.  If a tag is currently active, it gets the "active" class, and clicking it will remove it from the active tags. #}
-	<h4>Filter by tag</h4>
-	<ul class="tags">
-	{% for tag in all_site_tags|sort %}
-		<li>
-		{% if tag in requested_tags %}
-			{### We need to remove this tag from the requested_tags array, and put it into the target URL #}
-			{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
-			<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
-		{% else %}
-			{### Simply tack this new tag onto the target URL, after any existing "?tag=" parameter #}
-			<a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}"{% if tag in requested_tags%} class="active"{% endif %}>{{ tag|raw }}</a>
-		{% endif %}
-		</li>
-	{% endfor %}
-	</ul>
-	
-
-
-{#	{% set all_pages = pages(current_page.id)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %} #}
-
-	{### Save the list of all pages subordinate to this index page, except hidden ones, sorting by descending date #}
+	{### Save a list of all pages subordinate to this index page, except hidden ones, sorting by descending date #}
 	{% set all_pages = pages(current_page.id)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %}
 	
 	{### Now filter based on any selected tags #}
@@ -64,6 +26,12 @@
 	{% endfor %}
 	
 
+{#
+	<p>tag parameter: {{ url_param('tag', 'string')|replace({'&#39;': '\''}) }}</p>
+	<p>requested_tags: {{ dump(requested_tags) }}
+#}
+
+	
 	{### Set a default segment size.  Override that with any value set in the site config.  And override that with any meta value set on this page. #}
 	{% set segment_size = 25 %}
 	{% if config.segment_size %}{% set segment_size = config.segment_size %}{% endif %}
@@ -92,7 +60,34 @@
 	<p>current_segment_start = {{ (current_segment_number - 1) * segment_size }}</p>
 #}
 	{% set current_segment = all_pages|slice((current_segment_number - 1) * segment_size, segment_size) %}
+
+
+{% block page_content %}
+
+	<header class="major">
+		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
 		
+		<h4 class="inline">Viewing {{ all_pages|length }} images{% if requested_tags %} tagged:{% endif %}</h4>
+	{% if requested_tags %}
+		<ul class="tags inline">
+			{% for tag in requested_tags|sort %}
+			<li>
+				{### We need to remove this tag from the requested_tags array, and put the remaining tags into the target URL #}
+				{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
+				<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+		
+	{% if username == "eighteen" %}
+		<form method="post" action="">
+			<input type="submit" name="logout" value="Hide Adult-Only Content" />
+		</form>
+	{% endif %}
+	</header>
+
 
 	{% if total_segments > 1 %}
 		<div class="pagination">
@@ -123,6 +118,26 @@
 		{% endif %}
 	{% endfor %}
 		</div>
+		
+		
+		
+	{### Tag cloud for the user to choose from.  If a tag is currently active, it gets the "active" class, and clicking it will remove it from the active tags. #}
+		<h4 class="align-center">Filter by tag</h4>
+		<ul class="tags">
+		{% for tag in all_site_tags|sort %}
+			<li>
+			{% if tag in requested_tags %}
+				{### We need to remove this tag from the requested_tags array, and put the remaining tags into the target URL #}
+				{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
+				<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
+			{% else %}
+				{### Simply tack this new tag onto the target URL, after any existing "?tag=" parameter #}
+				<a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}"{% if tag in requested_tags%} class="active"{% endif %}>{{ tag|raw }}</a>
+			{% endif %}
+			</li>
+		{% endfor %}
+		</ul>
+
 		
 
 	{% if total_segments > 1 %}
