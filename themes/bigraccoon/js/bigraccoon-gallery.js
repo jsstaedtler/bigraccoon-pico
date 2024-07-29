@@ -32,7 +32,9 @@ function br_adjustThumbnailSizes() {
 	
 		// This will run on every page resize, so we need to get the page width anew
 		const pageRect = document.getElementById("thumbnails").getBoundingClientRect();
-		const pageWidth = pageRect.width;
+		const pageWidth = pageRect.width - 4;	// Subtract 4 pixels because this value is somehow too wide on my phone browser
+		
+		//document.getElementById("debug").innerHTML += `<p>pageWidth: ${pageWidth}</p>`;
 		
 		// We need to know the default height of the thumbnails, based on the page CSS.  It's possible that
 		// value could change as the page is resized, so we can't just save it on page load and assume it will
@@ -63,9 +65,7 @@ function br_adjustThumbnailSizes() {
 		// Add them all together to get the size of the gap between images.  parseInt() is here because these variables are all strings
 		const gapWidth = parseInt(marginLeft) + parseInt(marginRight) + parseInt(borderLeft) + parseInt(borderRight);
 		
-		//console.log(`originalHeight: ${originalHeight}`)
-		//console.log(`gapWidth: ${gapWidth}`)
-		
+		//document.getElementById("debug").innerHTML += `<p>gapWidth: ${gapWidth}</p>`;
 		
 		// Initialize our rows of thumbnails
 		var rowArray = [[],];		// Each row of thumbnails on the screen (and the first row is a new array)
@@ -96,8 +96,7 @@ function br_adjustThumbnailSizes() {
 			
 			// Add this image's width (and margins) to the current row's total width
 			rowWidthArray[rowIndex] += imageWidth + gapWidth;
-			
-			//console.log(`Image: ${i} | Current row: ${rowIndex} | imageWidth: ${imageWidth} | Current rowWidth: ${rowWidthArray[rowIndex]} | Current row length: ${rowArray[rowIndex].length}`);
+
 		}
 		
 		
@@ -110,10 +109,10 @@ function br_adjustThumbnailSizes() {
 			const numGaps = rowArray[r].length;
 			const ratio = (pageWidth - numGaps * gapWidth) / (rowWidthArray[r] - numGaps * gapWidth);
 
-			//console.log(`Row: ${r} | rowWidth: ${rowWidthArray[r]} | numGaps: ${numGaps} | ratio: ${ratio} | new width: ${(rowWidthArray[r] - numGaps * gapWidth) * ratio + numGaps * gapWidth}`);
-
 			// Calculate the new height for each image in this row
 			const newHeight = Math.floor(originalHeight * ratio);	// Round the height down to ensure the row isn't too wide by a fraction of a pixel
+
+			//document.getElementById("debug").innerHTML += `<p>Row: ${r} | rowWidth: ${rowWidthArray[r]} | numGaps: ${numGaps} | ratio: ${ratio} | new width: ${(rowWidthArray[r] - numGaps * gapWidth) * ratio + numGaps * gapWidth} | new height: ${newHeight}</p>`;
 
 			// Now apply that height to each image in this row
 			for (var i = 0; i < rowArray[r].length; i++) {
