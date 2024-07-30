@@ -26,12 +26,6 @@
 	{% endfor %}
 	
 
-{#
-	<p>tag parameter: {{ url_param('tag', 'string')|replace({'&#39;': '\''}) }}</p>
-	<p>requested_tags: {{ dump(requested_tags) }}
-#}
-
-	
 	{### Set a default segment size.  Override that with any value set in the site config.  And override that with any meta value set on this page. #}
 	{% set segment_size = 25 %}
 	{% if config.segment_size %}{% set segment_size = config.segment_size %}{% endif %}
@@ -62,11 +56,14 @@
 	{% set current_segment = all_pages|slice((current_segment_number - 1) * segment_size, segment_size) %}
 
 
+
 {% block page_content %}
 
 	<header class="major">
 		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
-		
+
+
+{### DISPLAY CURRENT TAGS/IMAGE COUNT ###}
 		<h4 class="inline">Viewing {{ all_pages|length }} images{% if requested_tags %} tagged:{% endif %}</h4>
 	{% if requested_tags %}
 		<ul class="tags inline">
@@ -80,7 +77,9 @@
 		</ul>
 	{% endif %}
 
-		
+	
+{### HIDE ADULT-ONLY CONTENT ###}
+	{### If user is logged in as "eighteen", give them a button with which to log out #}
 	{% if username == "eighteen" %}
 		<form method="post" action="">
 			<input type="submit" name="logout" value="Hide Adult-Only Content" />
@@ -89,17 +88,26 @@
 	</header>
 
 
+{### PAGINATION (UPPER) ###}
+	{### If there's more than one segment full of images, we need navigation to move between them.  The links on these buttons must preserve any existing tag filters. #}
 	{% if total_segments > 1 %}
 		<div class="pagination">
-			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}" class="previous">Prev</a>
+		
+		{### "Previous" button - disabled if we're on segment 1 #}
+			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="previous{% if current_segment_number - 1 < 1 %} disabled{% endif %}">Prev</a>
+			
+		{### A list of segment numbers, to go to any specific number #}
 		{% for seg in 1..total_segments %}
-			<a href="{{ current_page.url }}?page={{ seg }}" class="page{% if seg == current_segment_number %} active{% endif %}">{{ seg }}</a>
+			<a href="{{ current_page.url }}?page={{ seg }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="page{% if seg == current_segment_number %} active{% endif %}">{{ seg }}</a>
 		{% endfor %}
-			<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}" class="next">Next</a>
+
+		{### "Next" button - disabled if we're on the last segment #}
+			<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="next{% if current_segment_number + 1 > total_segments %} disabled{% endif %}">Next</a>
 		</div>
 	{% endif %}
 
 
+{### IMAGE THUMBNAILS ###}
 		<div id="thumbnails">
 	{% for page in current_segment %}
 		{% if page.meta.adultonly and username != "eighteen" %}
@@ -110,9 +118,12 @@
 			
 		{% else %}
 			
-			<a href="{{ page.url }}">
-				{# The resize() function comes from the Pico plugin ImageResize #}
+			{### Pass the current tags filter to in the URL to the image page, so it can use the same filter for navigating prev/next image #}
+			<a href="{{ page.url }}{% if requested_tags %}?tag={{ requested_tags_string|url_encode }}{% endif %}">
+			
+				{### The resize() function comes from the Pico plugin ImageResize #}
 				<img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
+				
 			</a>
 			
 		{% endif %}
@@ -120,8 +131,8 @@
 		</div>
 		
 		
-		
-	{### Tag cloud for the user to choose from.  If a tag is currently active, it gets the "active" class, and clicking it will remove it from the active tags. #}
+{### TAG CLOUD ###}
+	{### Tag cloud for the user to choose from.  If a tag is currently active, it gets the "active" class, and clicking it will remove it from the active tags.  No need for the "page=" URL parameter on these, changing the tags will always send the user to segment 1. #}
 		<h4 class="align-center">Filter by tag</h4>
 		<ul class="tags">
 		{% for tag in all_site_tags|sort %}
@@ -139,7 +150,7 @@
 		</ul>
 
 		
-
+{### PAGINATION (LOWER) ###}
 	{% if total_segments > 1 %}
 		<div class="pagination">
 			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}" class="previous">Prev</a>
@@ -154,9 +165,10 @@
 {% endblock page_content %}
 
 
+{### Insert JavaScript specifically for this gallery index page #}
 {% block scripts %}
 
-	{{ parent() }}
 	<script src="{{ theme_url }}/js/bigraccoon-gallery.js"></script>
+	{{ parent() }}
 	
 {% endblock scripts %}
