@@ -1,5 +1,9 @@
 {% extends "_base.twig" %}
 
+
+{% block page_content %}
+
+
 	{### Collect all tags currently in use in the entire site (via PicoTags plugin).  Sadly can not just get tags within this Gallery section #}
 	{% set all_site_tags = get_all_tags() %}
 
@@ -37,9 +41,28 @@
 	<p>total_segments = {{ total_segments }}</p>
 #}
 
-	{### Get the value of any "?page=n" parameter in the URL, and if there's no valid number, set it to 1 #}
-	{% set current_segment_number = url_param('page', 'int', 1) %}
 
+	{% set current_segment_number = 0 %}
+	
+	{### If a "?from=" prameter was given, we need to find which page that ID belongs to, and navigate to it #}
+	{% set from_id = url_param('from', 'string') %}
+	{% if from_id %}
+	
+		{% for s in 1..total_segments %}
+			{% if pages[from_id] in all_pages|slice((s - 1) * segment_size, segment_size) %}
+				{% set current_segment_number = s %}
+			{% endif %}
+		{% endfor %}
+	
+	{% else %}
+
+		{### Get the value of any "?page=n" parameter in the URL, and if there's no valid number, set it to 0 #}
+		{% set current_segment_number = url_param('page', 'int', 0) %}
+		
+	{% endif %}
+
+
+	{### Correct the segment number if it's not within the proper bounds #}
 	{% if current_segment_number < 1 %}
 		{% set current_segment_number = 1 %}
 	{% endif %}
@@ -48,15 +71,12 @@
 		{% set current_segment_number = total_segments %}
 	{% endif %}
 	
-{#
-	<p>current_segment_number = {{ current_segment_number }}</p>
-	<p>current_segment_start = {{ (current_segment_number - 1) * segment_size }}</p>
-#}
+	
+	{### Get the segment, which is an array of all image pages to appear on this screen #}
 	{% set current_segment = all_pages|slice((current_segment_number - 1) * segment_size, segment_size) %}
 
 
-
-{% block page_content %}
+{#% block page_content %#}
 
 	<header class="major">
 		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
