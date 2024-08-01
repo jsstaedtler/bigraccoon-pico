@@ -21,31 +21,39 @@
 {% extends "_base.twig" %}
 
 
-{# Get the value of any "?dest=x" parameter in the URL, and if it's not a valid string, set it to 'gallery/index' (the gallery's page ID) #}
+{### Get the value of any "?dest=x" parameter in the URL, and if it's not a valid string, set it to 'gallery/index' (the gallery's page ID) #}
 {% set destination_id = url_param('dest', 'string', 'gallery/index') %}
 
-{# If we get a page ID, but that page doesn't actually exist in the site, just go to the gallery index #}
+{### If we get a page ID, but that page doesn't actually exist in the site, just go to the gallery index #}
 {% if not pages[destination_id] %}
 	{% set destination_id = 'gallery/index' %}
 {% endif %}
 
 
+{### Get any pagination segment number specified in the "page=x" parameter #}
+{% set destination_segment = url_param('page', 'int') %}		{# Should equal null if no valid number was provided #}
+
+
+{### Get any tags for filtering, specified in the "tag=x" parameter #}
+{% set destination_tag = url_param('tag', 'string') %}			{# No splitting or decoding, we're going to pass it verbatim to the next destination #}
+
+
 {% block html_head %}
 
-	{# If, when this page loads, the user is logged in, the page should immdiately redirect to an actual destination page #}
+	{### If, when this page loads, the user is logged in, the page should immdiately redirect to an actual destination page #}
 	{% if username == "eighteen" %}
 
-		{# The HTML head will consist only of redirect code #}
+		{### The HTML head will consist only of redirect code #}
 		<script>
-			window.location.href = "{{ pages[destination_id].url }}"
+			window.location.href = "{{ pages[destination_id].url }}?{% if destination_segment %}page={{ destination_segment }}&{% endif %}{% if destination_tag %}tag={{ destination_tag|url_encode }}{% endif %}";
 		</script>
 		<noscript>
-			<meta http-equiv="refresh" content="0; url={{ pages[destination_id].url }}">
+			<meta http-equiv="refresh" content="0; url={{ pages[destination_id].url }}?{% if destination_segment %}page={{ destination_segment }}&{% endif %}{% if destination_tag %}tag={{ destination_tag|url_encode }}{% endif %}">
 		</noscript>
 
 	{% else %}
 
-		{# The user is logged out, so this page should load like a normal one #}
+		{### The user is logged out, so this page should load like a normal one #}
 		{{ parent() }}
 		
 	{% endif %}
@@ -80,7 +88,8 @@
 			
 	{% endif %}
 
-			<p>Next page: {{ destination_id }} - {{ pages[destination_id].url }}</p>
+			<p>Next page ID: {{ destination_id }}</p>
+			<p>URL: {{ pages[destination_id].url }}?{% if destination_segment %}page={{ destination_segment }}&{% endif %}{% if destination_tag %}tag={{ destination_tag|url_encode }}{% endif %}</p>
 			
 			<form method="post" action=""><input type="submit" name="logout" value="logout" /></form>
 
