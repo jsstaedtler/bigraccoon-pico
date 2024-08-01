@@ -1,7 +1,6 @@
 {% extends "_base.twig" %}
 
-	
-	{### Collect all tags currently in use in the entire site (via PicoTags plugin).  Sadly can not just get tags within this section of the site #}
+	{### Collect all tags currently in use in the entire site (via PicoTags plugin).  Sadly can not just get tags within this Gallery section #}
 	{% set all_site_tags = get_all_tags() %}
 
 
@@ -78,17 +77,9 @@
 	{% endif %}
 
 	
-{### HIDE ADULT-ONLY CONTENT ###}
-	{### If user is logged in as "eighteen", give them a button with which to log out #}
-	{% if username == "eighteen" %}
-		<form method="post" action="">
-			<input type="submit" name="logout" value="Hide Adult-Only Content" />
-		</form>
-	{% else %}
-		<ul class="actions special stacked">
-				<li><a href="/adult-content?dest={{ current_page.id }}&page={{ current_segment_number }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="button large">Display Adult-Only Content</a></li>
-		</ul>
-	{% endif %}
+{### SHOW/HIDE ADULT-ONLY CONTENT ###}
+	{{ include("_segment-adult-toggle.twig") }}
+	
 	</header>
 
 
@@ -114,23 +105,26 @@
 {### IMAGE THUMBNAILS ###}
 		<div id="thumbnails">
 	{% for page in current_segment %}
+
+		{### Pass the current tags filter in the URL to the image page, so it can use the same filter for navigating prev/next images #}
+			<a href="{{ page.url }}{% if requested_tags %}?tag={{ requested_tags_string|url_encode }}{% endif %}">
+
 		{% if page.meta.adultonly and username != "eighteen" %}
-		
-			<a href="/adult-content?dest={{ page.id }}">
-				 <img class="placeholder" src="/{{ resize( 'assets/' ~ page.meta.image, null, 30 ) }}" alt="Adult-only content hidden">
-			</a>
+
+			{### To obscure this thumbnail, resize it to an extremely low resolution, then use CSS to apply a blur #}
+			{### The resize() function comes from the Pico plugin ImageResize #}
+				<img class="placeholder" src="/{{ resize( 'assets/' ~ page.meta.image, null, 30 ) }}" alt="Adult-only content hidden">
 			
 		{% else %}
 			
-			{### Pass the current tags filter to in the URL to the image page, so it can use the same filter for navigating prev/next image #}
-			<a href="{{ page.url }}{% if requested_tags %}?tag={{ requested_tags_string|url_encode }}{% endif %}">
-			
-				{### The resize() function comes from the Pico plugin ImageResize #}
+			{### Resize to a reasonable thumbnail resolution #}
 				<img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
 				
-			</a>
 			
 		{% endif %}
+		
+			</a>
+		
 	{% endfor %}
 		</div>
 		
