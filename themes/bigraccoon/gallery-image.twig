@@ -7,31 +7,7 @@
 {% extends "_base.twig" %}
 
 
-{% block html_head %}
-
-	{# If, when this page loads, the user is logged in, the page should immdiately redirect to an actual destination page #}
-	{% if meta.adultonly and username != "eighteen" %}
-
-		{# The HTML head will consist only of redirect code #}
-		<script>
-			window.location.href = "{{ pages['adult-content'].url }}?dest={{ current_page.id }}"
-		</script>
-		<noscript>
-			<meta http-equiv="refresh" content="0; url={{ pages['adult-content'].url }}?dest={{ current_page.id }}">
-		</noscript>
-
-	{% else %}
-
-		{# The user is logged out, so this page should load like a normal one #}
-		{{ parent() }}
-		
-	{% endif %}
-
-{% endblock html_head %}
-
-
-
-{# Need to use Twig to put the main image into the background, overriding the external CSS style file #}
+{### Put the main image into the background, overriding the external CSS style file #}
 {% block head_style %}
 	{{ parent() }}
 	<style>
@@ -39,17 +15,19 @@
 	</style>
 {% endblock head_style %}
 
-
 {% block head_style_noscript %}
-		{{ parent() }}
-		<style>
-			#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 800 ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
-		</style>
+	{{ parent() }}
+	<style>
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 800 ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
+	</style>
 {% endblock head_style_noscript %}
 		
 
+
 {% block page_body %}
 
+
+{### PAGINATION (UPPER) ###}
 	{# Use prev/next browsing buttons that include thumbnail images #}
 	{{ include("_segment-gallery-pagination.twig") }}
 
@@ -59,22 +37,44 @@
 					<header class="major">
 						{% if meta.date %}<span class="date">{{ meta.date_formatted }}</span>{% endif %}
 						{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+
+
+{### SHOW/HIDE ADULT-ONLY CONTENT ###}
+	{{ include("_segment-adult-toggle.twig") }}
+
+<p>adultonly: {{ meta.adultonly }}</p>
+<p>username: {{ username }}</p>
+
 					</header>
 					
-					
-					{# Display the primary image #}
+
+
+{### DISPLAY PRIMARY IMAGE #}
 					<div class="gallery-image" id="main-image">
-						{# Clicking the image will simply open the original, full-size image file (which could be huge) #}
+					
+	{% if meta.adultonly and username != "eighteen" %}
+	{### Clicking the image directs user to the adult-only consent page, with a reference back to this page #}
+<p>This should be blurred!</p>
+						<a href="/adult-content?dest={{ current_page.id }}">
+							 <img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, 30 ) }}" alt="Adult-only content hidden">
+						</a>
+	{% else %}
+	{### Clicking the image will simply open the original, full-size image file (which could be huge) #}
+	
 						<a href="{{ assets_url }}/{{ meta.image }}">
 						
 							{# The image displayed here is resized, so that browsing isn't slowed down by very large images #}
 							<img src="/{{ resize( 'assets/' ~ meta.image, null, 800 ) }}"{% if meta.imagedescription %} alt="{{ meta.imagedescription }}"{% endif %}>
 							
 						</a>
+	{% endif %}
+
 					</div>
 
 
-			{# If there are more images in this group, display them next #}
+
+{### DISPLAY ADDITIONAL IMAGES #}
+			{###  If there are more images in this group, display them next #}
 			{% if meta.moreimages %}
 				{% for image in meta.moreimages %}
 						
@@ -87,7 +87,8 @@
 				{% endfor %}
 			{% endif %}
 			
-			
+
+{### DISPLAY RELATED IMAGES #}
 			{# If there are related images, display them as thumbnails #}
 			{% if meta.related %}
 					<h3>Related Images</h3>
@@ -123,8 +124,14 @@
 					
 				</section>
 
+
+{### PAGINATION (LOWER) ###}
 	{{ include("_segment-gallery-pagination.twig") }}
+	
+	
 {% endblock page_body %}
+
+
 
 {% block scripts %}
 	{# Add lightbox elements and script #}
