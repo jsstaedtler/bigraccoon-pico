@@ -5734,6 +5734,13 @@ div.gallery-image a {
 	margin: 0 auto;
 	padding: 0;
 	width: fit-content;
+	overflow: hidden;
+}
+
+div.gallery-image img.placeholder {
+	filter: opacity(50%) blur(10px);
+	background-color: #eee;
+	height: 85vh;
 }
 
 div#thumbnails img {
@@ -5749,10 +5756,10 @@ div#thumbnails img {
 div#thumbnails img.placeholder {
 	filter: opacity(50%) blur(10px);
 	background-color: #eee;
-	background-image: url(../img/prohibit-bold.svg);
+/*	background-image: url(../img/prohibit-bold.svg);
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: 4rem;
+	background-size: 4rem; */
 }
 
 div#thumbnails img.cropped {
