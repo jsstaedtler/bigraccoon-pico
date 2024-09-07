@@ -58,10 +58,11 @@
 
 
 {### SHOW/HIDE ADULT-ONLY CONTENT ###}
-	{{ include("_segment-adult-toggle.twig") }}
 
-<p>adultonly: {{ meta.adultonly }}</p>
-<p>username: {{ username }}</p>
+	{# Only if this page is tagged "18+", since it may be a group of images with a mix of adult-only and all-ages #}
+	{% if "18+" in meta.tags %}
+		{{ include("_segment-adult-toggle.twig") }}
+	{% endif %}
 
 					</header>
 					
@@ -72,7 +73,7 @@
 					
 	{% if meta.adultonly and username != "eighteen" %}
 	{### Clicking the image directs user to the adult-only consent page, with a reference back to this page #}
-<p>This should be blurred!</p>
+
 						<a href="/adult-content?dest={{ current_page.id }}">
 							 <img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, 30 ) }}" alt="Adult-only content hidden">
 						</a>
