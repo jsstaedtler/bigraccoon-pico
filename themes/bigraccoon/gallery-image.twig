@@ -7,19 +7,37 @@
 {% extends "_base.twig" %}
 
 
-{### Put the main image into the background, overriding the external CSS style file #}
+{### Put the main image into the background, overriding the external CSS style file, as well as blurring an adult-only image #}
 {% block head_style %}
 	{{ parent() }}
+	
 	<style>
+	
+	{% if meta.adultonly and username != "eighteen" %}
+		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 30 ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+	{% else %}
 		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 800 ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); }
+	{% endif %}
+	
 	</style>
+	
 {% endblock head_style %}
 
+
 {% block head_style_noscript %}
+
 	{{ parent() }}
+	
 	<style>
-		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 800 ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
+	
+	{% if meta.adultonly and username != "eighteen" %}
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 30 ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+	{% else %}
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, thumbnail_size ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
+	{% endif %}
+	
 	</style>
+	
 {% endblock head_style_noscript %}
 		
 
