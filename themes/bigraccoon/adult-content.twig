@@ -69,7 +69,7 @@
 	{# If the user is logged in, this body content shouldn't even appear.  But if the redirection failed, we provide a link to move on manually #}
 	{% if user and username == "eighteen" %}
 	
-		<a href="{{ pages[destination_id].url }}">Use this link if you are not redirected automatically</a>
+		<a href="{{ pages[destination_id].url }}?{% if destination_segment %}page={{ destination_segment }}&{% endif %}{% if destination_tag %}tag={{ destination_tag|url_encode }}{% endif %}">Use this link if you are not redirected automatically</a>
 
 	{% else %}
 	
@@ -81,8 +81,9 @@
 				<form method="post" action="">
 					<input type="hidden" name="login" value="eighteen" />
 					<input type="hidden" name="pass" value="eighteen" />
-					<input type="submit" name="agree" value="Agree and continue" />
+					<input type="submit" name="agree" class="primary" value="Agree and continue" />
 				</form>
+				<a class="button" href="{{ pages[destination_id].url }}?{% if destination_segment %}page={{ destination_segment }}&{% endif %}{% if destination_tag %}tag={{ destination_tag|url_encode }}{% endif %}">Cancel and go back</a>
 			
 			</header>
 			
