@@ -37,8 +37,10 @@
 	{% if previous_page.meta.image %}
 		{% if previous_page.meta.adultonly and username != "eighteen" %}
 			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, 30) %}
+			{% set previous_placeholder = ' placeholder' %}
 		{% else %}
 			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, 800) %}
+			{% set previous_placeholder = '' %}
 		{% endif %}
 	{% endif %}
 
@@ -46,8 +48,10 @@
 	{% if next_page.meta.image %}
 		{% if next_page.meta.adultonly and username != "eighteen" %}
 			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, 30) %}
+			{% set next_placeholder = ' placeholder' %}
 		{% else %}
 			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, 800) %}
+			{% set next_placeholder = '' %}
 		{% endif %}
 	{% endif %}
 
@@ -57,14 +61,16 @@
 	{# Assuming the sort order is descending date, then the "next" page in the list would the next oldest page. #}
 	{# We're linking to the "#main" ID/anchor so the viewer doesn't have to scroll every time they switch pages #}
 	
-	<a href="{{ previous_page.url }}#main" class="thumbnail previous{% if not previous_page.id %} disabled{% endif %}"{% if previous_thumb %} style="background-image: url({{ previous_thumb }});"{% endif %}>
-		<svg role="img" viewBox="-128 -128 512 512" fill="black" xmlns="http://www.w3.org/2000/svg"><title>Previous</title><path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"></path></svg>
+	<a href="{{ previous_page.url }}#main" class="thumbnail previous{% if not previous_page.id %} disabled{% endif %}{{ previous_placeholder }}">
+		<svg role="img" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><title>Previous</title><path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"></path></svg>
+		<div{% if previous_thumb %} style="background-image: url({{ previous_thumb }});"{% endif %}></div>
 	</a>
 	
 	<a href="{{ current_parent.url }}?from={{ current_page.id|url_encode }}" class="up">Index</a>
 	
-	<a href="{{ next_page.url }}#main" class="thumbnail next{% if not next_page.id %} disabled{% endif %}"{% if next_thumb %} style="background-image: url({{ next_thumb }});"{% endif %}>
-		<svg role="img" viewBox="-128 -128 512 512" fill="black" xmlns="http://www.w3.org/2000/svg"><title>Next</title><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg>
+	<a href="{{ next_page.url }}#main" class="thumbnail next{% if not next_page.id %} disabled{% endif %}{{ next_placeholder }}">
+		<div{% if next_thumb %} style="background-image: url({{ next_thumb }});"{% endif %}></div>
+		<svg role="img" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><title>Next</title><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg>
 	</a>
 	
 </div>
