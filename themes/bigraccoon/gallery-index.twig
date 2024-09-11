@@ -161,7 +161,7 @@
 				<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
 			{% else %}
 				{### Simply tack this new tag onto the target URL, after any existing "?tag=" parameter #}
-				<a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}"{% if tag in requested_tags%} class="active"{% endif %}>{{ tag|raw }}</a>
+				<a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}">{{ tag|raw }}</a>
 			{% endif %}
 			</li>
 		{% endfor %}
