@@ -98,7 +98,9 @@
 
 	
 {### SHOW/HIDE ADULT-ONLY CONTENT ###}
-	{{ include("_segment-adult-toggle.twig") }}
+	{% if all_pages|length > 0 %}
+		{{ include("_segment-adult-toggle.twig") }}
+	{% endif %}
 	
 	</header>
 
@@ -129,6 +131,7 @@
 		{### Pass the current tags filter in the URL to the image page, so it can use the same filter for navigating prev/next images #}
 			<a href="{{ page.url }}{% if requested_tags %}?tag={{ requested_tags_string|url_encode }}{% endif %}">
 
+
 		{% if page.meta.adultonly and username != "eighteen" %}
 
 			{### To obscure this thumbnail, resize it to an extremely low resolution, then use CSS to apply a blur #}
@@ -140,8 +143,16 @@
 			{### Resize to a reasonable thumbnail resolution #}
 				<img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
 				
-			
 		{% endif %}
+
+
+		{% if "18+" in page.meta.tags %}
+			{### Overlay an 18+ warning icon atop this thumbnail (based on tags, meaning at least one image in the group is adult-only) #}
+				<div class="adultonly-warning">
+					<img src="{{ theme_url }}/img/warning.svg">
+				</div>
+		{% endif %}
+		
 		
 			</a>
 		

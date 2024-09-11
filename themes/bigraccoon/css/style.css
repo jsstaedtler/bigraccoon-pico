@@ -5732,6 +5732,7 @@ div.gallery-image {
 }
 
 div#thumbnails a {
+	position: relative;		/* Necessary so we can overlay icons that have "position: absolute" */
 	border: solid 2px #eeeeee;
 	padding: 0;
 	margin: 2px;
@@ -5800,6 +5801,23 @@ div.gallery-image img {
 div#thumbnails a:hover, div.gallery-image a:hover {
 	border-color: #18bfef;
 }
+
+div#thumbnails div.adultonly-warning {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin: 0.5rem;
+	padding: 0.2rem;
+	border: 2px solid rgba(0,0,0,0.2);
+	border-radius: 5px;
+	background-color: rgba(0,0,0,0.3);
+}
+
+div#thumbnails div.adultonly-warning img {
+	height: 2rem;
+	fill: white;
+}
+
 
 @media screen and (max-width: 736px) {
 
