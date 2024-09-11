@@ -3398,7 +3398,7 @@ input, select, textarea {
 		}
 
 		
-	@media screen and (max-width: 980px) {
+	@media screen and (max-width: /*980px*/ 736px) {
 
 /*		.pagination a, .pagination span {
 			font-size: 0.9rem;
@@ -3426,6 +3426,17 @@ input, select, textarea {
 		    border-width: 0;
 		}
 		
+		.pagination a.thumbnail div {
+			width: 4rem;
+			height: 4rem;
+		}
+		
+		.pagination a.thumbnail svg {
+			width: 2rem;
+			height: 2rem;
+			margin: 1rem 0;
+		}
+
 	}
 
 	@media screen and (max-width: 480px) {
@@ -5808,6 +5819,7 @@ div#thumbnails div.icons {
 	bottom: 0;
 	margin: 0.5rem;
 	padding: 0.2rem;
+	line-height: 0;
 	border: 2px solid rgba(0,0,0,0.2);
 	border-radius: 5px;
 	background-color: rgba(0,0,0,0.3);
@@ -5825,6 +5837,15 @@ div#thumbnails div.icons img {
 	div#thumbnails img {
 		height: 8rem;
 	}
+	
+	div#thumbnails div.icons {
+		padding: 0.1rem;
+		margin: 0.2rem;
+	}
+	
+	div#thumbnails div.icons img {
+		height: 1.5rem;
+	}
 
 }
 
@@ -5834,6 +5855,9 @@ div#thumbnails div.icons img {
 		height: 6rem;
 	}
 
+	div#thumbnails div.icons img {
+		height: 1rem;
+	}
 }
 
 
