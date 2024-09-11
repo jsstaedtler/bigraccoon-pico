@@ -146,11 +146,21 @@
 		{% endif %}
 
 
-		{% if "18+" in page.meta.tags %}
-			{### Overlay an 18+ warning icon atop this thumbnail (based on tags, meaning at least one image in the group is adult-only) #}
-				<div class="adultonly-warning">
+		{% if ("18+" in page.meta.tags) or (page.meta.moreimages) %}
+			{### Create a div to overlay on the image, which will contain one or more icons #}
+				<div class="icons">
+				
+			{% if "18+" in page.meta.tags %}
+				{### An 18+ warning icon (based on tags, meaning at least one image in the group is adult-only) #}
 					<img src="{{ theme_url }}/img/warning.svg">
-				</div>
+			{% endif %}
+
+			{% if page.meta.moreimages %}
+				{### A "group" icon, indicating there's more than one image here #}
+					<img src="{{ theme_url }}/img/cards.svg">
+			{% endif %}
+
+				</div>		
 		{% endif %}
 		
 		

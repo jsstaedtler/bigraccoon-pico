@@ -5802,7 +5802,7 @@ div#thumbnails a:hover, div.gallery-image a:hover {
 	border-color: #18bfef;
 }
 
-div#thumbnails div.adultonly-warning {
+div#thumbnails div.icons {
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -5813,7 +5813,8 @@ div#thumbnails div.adultonly-warning {
 	background-color: rgba(0,0,0,0.3);
 }
 
-div#thumbnails div.adultonly-warning img {
+div#thumbnails div.icons img {
+	display: inline-block;
 	height: 2rem;
 	fill: white;
 }
