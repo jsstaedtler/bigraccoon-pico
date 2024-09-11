@@ -118,6 +118,21 @@
 				{% endfor %}
 			{% endif %}
 			
+			
+{### DISPLAY ASSOCIATED TAGS #}
+			{% if meta.tags %}
+			
+				<h4 class="align-center">Tagged</h4>
+				<ul class="tags">
+				{% for tag in meta.tags|sort %}
+					<li>
+						<a href="/gallery?tag={{ tag|url_encode }}">{{ tag|raw }}</a>
+					</li>
+				{% endfor %}
+				</ul>
+
+			{% endif %}
+			
 
 {### DISPLAY RELATED IMAGES #}
 			{# If there are related images, display them as thumbnails #}
