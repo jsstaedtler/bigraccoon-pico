@@ -6,7 +6,7 @@
 	</form>
 {% else %}
 	<ul class="actions special stacked">
-			<li><a href="/adult-content?dest={{ current_page.id }}&page={{ current_segment_number }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="button large primary">Display Adult-Only Content</a></li>
+			<li><a href="/adult-content?dest={{ current_page.id }}&page={{ current_segment_number }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="button primary">Display Adult-Only Content</a></li>
 	</ul>
 {% endif %}
 <!-- ------------------------- -->

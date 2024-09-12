@@ -81,10 +81,10 @@
 
 
 {### DISPLAY CURRENT TAGS/IMAGE COUNT ###}
-		<h4>Viewing {{ all_pages|length }} images{% if requested_tags %} tagged:{% endif %}</h4>
+		<h4 class="inline">Viewing {{ all_pages|length }} images{% if requested_tags %} tagged:{% endif %}</h4>
 		
 	{% if requested_tags %}
-		<ul class="tags inline">
+		<ul class="tags">
 			{% for tag in requested_tags|sort %}
 			<li>
 				{### We need to remove this tag from the requested_tags array, and put the remaining tags into the target URL #}
