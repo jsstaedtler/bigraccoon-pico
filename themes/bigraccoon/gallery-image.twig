@@ -44,15 +44,105 @@
 
 {% block page_body %}
 
+{### To determine the previous and next pages, we must find the siblings of the current page.
+   # Pico natively provides previous_page and next_page variables, but those are based on *all* pages at the current level of the page
+   # hierarchy--even if they belng to different parent pages.
+   # The following code will look only at children of *this page's parent*, and determine the previous and next pages based on those.
+   # Once we have those values, we can produce the HTML that makes "prev" and "next" buttons.
+   #}
+
+
+{### Collect all tags currently in use in the entire site (via PicoTags plugin).  Sadly can not just get tags within this Gallery section #}
+	{% set all_site_tags = get_all_tags() %}
+
+{### Get any selected tags that have been supplied in the "?tag=" URL parameter, then validate that each one actually exists in the site #}
+	{% set requested_tags = [] %}														{# Start a new, empty array #}
+	{% for tag in url_param('tag', 'string')|replace({'&#39;': '\''})|split(',') %}		{# For some reason, Twig won't unescape a URL-encoded apostrophe, so we use the replace() filter for that #}
+		{% if tag|trim in all_site_tags %}
+			{% set requested_tags = requested_tags|merge([tag|trim]) %}					{# Add this valid tag to the array #}
+		{% endif %}
+	{% endfor %}
+	
+{### Make a string out of the valid tag(s), to be put back in the URL as a parameter #}
+	{% set requested_tags_string = requested_tags|join(',') %}
+
+	
+{# Find out what our parent page is #}
+	{% set parents_array = pages(current_page.id, offset=-1) %}		{# Returns an array with a single element #}
+	{% set current_parent = parents_array | first %}				{# ...so just save the first one #}
+
+{# Get all child pages of that parent (ie. the siblings of this page), as long as they aren't hidden #}
+	{% set siblingpage_array = pages(current_parent.id)|sort((a, b) => b.date <=> a.date)|filter(p => not p.hidden) %}
+
+{### Now filter based on any selected tags #}
+	{% for tag in requested_tags %}
+		{% set siblingpage_array = siblingpage_array|filter(p => tag in p.meta.tags) %}
+	{% endfor %}
+	
+	{% set siblingid_array = siblingpage_array|keys %}
+	
+{# Initialize these variables so they exist outside the scope of the following loops #}
+	{% set next_page = NULL %}
+	{% set previous_page = NULL %}
+	
+{# Find the current page within the list of all pages, and when we do, save the previous and next pages #}
+	{% for siblingid in siblingid_array %}
+		{% if siblingid == current_page.id %}
+			{% set previous_page = pages[siblingid_array[loop.index0-1]] %}
+			{% set next_page = pages[siblingid_array[loop.index0+1]] %}
+		{% endif %}
+	{% endfor %}
+	
+{# Get the gallery image for the previous and next pages, for use as preview thumbnails as well as for pre-caching #}
+	{% set previous_thumb = NULL %}
+	{% if previous_page.meta.image %}
+		{% if previous_page.meta.adultonly and username != "eighteen" %}
+			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, 30) %}
+			{% set previous_placeholder = ' placeholder' %}
+		{% else %}
+			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, 800) %}
+			{% set previous_placeholder = '' %}
+		{% endif %}
+	{% endif %}
+
+	{% set next_thumb = NULL %}
+	{% if next_page.meta.image %}
+		{% if next_page.meta.adultonly and username != "eighteen" %}
+			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, 30) %}
+			{% set next_placeholder = ' placeholder' %}
+		{% else %}
+			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, 800) %}
+			{% set next_placeholder = '' %}
+		{% endif %}
+	{% endif %}
+
 
 {### PAGINATION (UPPER) ###}
-	{# Use prev/next browsing buttons that include thumbnail images #}
-	{{ include("_segment-gallery-pagination.twig") }}
+	{# Insert prev/next browsing buttons that include thumbnail images #}
+
+	{{ include("_segment-gallery-image-pagination.twig") }}
+
 
 				<!-- A post -->
 				<section class="post">
-				
 					<header class="major">
+					
+				
+{### DISPLAY CURRENT TAGS/IMAGE COUNT ###}
+	{% if requested_tags %}
+		<h4 class="inline">Viewing images tagged:</h4>
+		<ul class="tags">
+			{% for tag in requested_tags|sort %}
+			<li>
+				{### We need to remove this tag from the requested_tags array, and put the remaining tags into the target URL #}
+				{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
+				<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+
 						{% if meta.date %}<span class="date">{{ meta.date_formatted }}</span>{% endif %}
 						{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
 
@@ -117,7 +207,11 @@
 	
 				{% endfor %}
 			{% endif %}
-			
+
+
+{### TEXT CONTENT #}			
+					<p>{{ content }}</p>
+
 			
 {### DISPLAY ASSOCIATED TAGS #}
 			{% if meta.tags %}
@@ -164,16 +258,15 @@
 						
 			{% endif %}
 
-					
-					<p>{{ content }}</p>
-					
+
+{### COMMENTS #}
 					{{ include("_segment-comments.twig") }}
 					
 				</section>
 
 
 {### PAGINATION (LOWER) ###}
-	{{ include("_segment-gallery-pagination.twig") }}
+	{{ include("_segment-gallery-image-pagination.twig") }}
 	
 	
 {% endblock page_body %}
