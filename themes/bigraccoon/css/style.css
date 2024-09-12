@@ -3302,6 +3302,11 @@ input, select, textarea {
 /* N */	.pagination .next {
 			margin-left: auto;
 		}
+		
+		.pagination .active {
+			color: #212931;
+			background-color: #eeeeee;
+		}
 
 /* C */	.pagination .next:before, .pagination .previous:before, .pagination .up:before {
 				-moz-osx-font-smoothing: grayscale;
@@ -3325,18 +3330,18 @@ input, select, textarea {
 
 		.pagination .previous:before {
 			content: '\f104';
-			margin-right: 0.9375em;
+			margin: 0 0.7rem 0 0;
 		}
 
 		.pagination .next:before {
 			content: '\f105';
 			float: right;
-			margin-left: 0.9375em;
+			margin: 0 0 0 0.7rem;
 		}
 
 /* N */ .pagination .up:before {
 			content: '\f106';
-			margin-right: 0.9375em;
+			margin-right: 1rem;
 		}
 		
 /* N */ .pagination .next.disabled, .pagination .previous.disabled, .pagination .next.disabled:before, .pagination .previous.disabled:before {
@@ -3352,6 +3357,10 @@ input, select, textarea {
 		    display: none;
 		}
 		
+/* N */ .pagination span.shrunk {
+		    display: none;
+		}
+
 		.pagination a.thumbnail {
 			display: block;
 			height: 100%;
@@ -3416,6 +3425,12 @@ input, select, textarea {
 
 /* N */ .pagination .previous:before, .pagination .next:before {
 			font-size: 0.9rem;
+			margin: 0;
+			float: none;
+		}
+		
+		.pagination .omittable {
+			display: none;
 		}
 
 /* N */ .pagination span.title {
@@ -3425,6 +3440,10 @@ input, select, textarea {
 /* N */ .pagination span.abbrev {
 		    display: inline;
 		    border-width: 0;
+		}
+		
+/* N */ .pagination span.shrunk {
+		    display: inline;
 		}
 		
 		.pagination a.thumbnail div {
@@ -3440,14 +3459,6 @@ input, select, textarea {
 
 	}
 
-	@media screen and (max-width: 480px) {
-
-		.pagination .page, .pagination .extra {
-			display: none;
-		}
-		
-	}
-
 	.pagination a, .pagination span {
 		border-color: #eeeeee;
 	}
@@ -3456,22 +3467,22 @@ input, select, textarea {
 		color: #212931 !important;
 	}
 
-		.pagination a:hover {
-			color: #18bfef !important;
-			border-color: #18bfef;
-			z-index: 1;
-		}
+	.pagination a:hover {
+		color: #18bfef !important;
+		border-color: #18bfef;
+		z-index: 1;
+	}
 
 /*			.pagination a:hover + a,
-			.pagination a:hover + span {
-				border-left-color: #18bfef;
-			} */
+		.pagination a:hover + span {
+			border-left-color: #18bfef;
+		} */
 
-		.pagination a.active {
-			background-color: #eeeeee;
-		}
+	.pagination a.active {
+		background-color: #eeeeee;
+	}
 
-	.pagination span.inactive {
+	.pagination span {
 		color: #eeeeee;
 	}
 

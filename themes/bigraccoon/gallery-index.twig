@@ -111,18 +111,58 @@
 		<div class="pagination">
 		
 		{### "Previous" button - disabled if we're on segment 1 #}
-			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="previous{% if current_segment_number - 1 < 1 %} disabled{% endif %}">Prev</a>
+			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="previous{% if current_segment_number - 1 < 1 %} disabled{% endif %}">Prev</a>
 			
-		{### A list of segment numbers, to go to any specific number #}
-		{% for seg in 1..total_segments %}
-			<a href="{{ current_page.url }}?page={{ seg }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="page{% if seg == current_segment_number %} active{% endif %}">{{ seg }}</a>
-		{% endfor %}
+		{### A list of segment numbers, to go to any specific number. #}
+		{#   More than 9 will be too wide for many displays, so some will be omitted with ellipses. #}
+		{#   The first and last page will always be available, as well as the current page.  Others will be assigned a class that can be hidden with CSS based on screen width. #}
+		
+		{# 1st page #}
+			<a href="{{ current_page.url }}?page=1{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page{% if current_segment_number == 1 %} active{% endif %}">1</a>
+					
+
+		{% if total_segments > 2 %}
+			
+			{% if current_segment_number != 1 %}
+				<span{% if total_segments <= 9 %} class="shrunk"{% endif %}>...</span>
+			{% endif %}
+		
+			{% if total_segments > 9 %}
+				{% set start = total_segments - 7 %}
+				{% set end = total_segments - 2 %}
+			{% else %}
+				{% set start = 2 %}
+				{% set end = total_segments - 1 %}
+			{% endif %}
+			
+			{% for seg in start..end %}
+				{% if seg == current_segment_number %}
+					<span class="active">{{ seg }}</span>
+				{% else %}
+					<a href="{{ current_page.url }}?page={{ seg }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page omittable">{{ seg }}</a>
+				{% endif %}
+			{% endfor %}
+			
+			{% if current_segment_number != total_segments %}
+				<span{% if total_segments <= 9 %} class="shrunk"{% endif %}>...</span>
+			{% endif %}
+			
+		{% endif %}
+
+
+		{# Last page #}
+			<a href="{{ current_page.url }}?page={{ total_segments }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page{% if current_segment_number == total_segments %} active{% endif %}">{{ total_segments }}</a>
 
 		{### "Next" button - disabled if we're on the last segment #}
-			<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="next{% if current_segment_number + 1 > total_segments %} disabled{% endif %}">Next</a>
+			<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="next{% if current_segment_number + 1 > total_segments %} disabled{% endif %}">Next</a>
 		</div>
 	{% endif %}
-
+	
+{# Troubleshooting
+<p>total_segments: {{ total_segments }}</p>
+<p>start: {{ start }}</p>
+<p>end: {{ end }}</p>
+#}
 
 {### IMAGE THUMBNAILS ###}
 		<div id="thumbnails">
