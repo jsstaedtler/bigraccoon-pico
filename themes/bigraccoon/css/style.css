@@ -26,8 +26,9 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-html: {
+html {
 	height: 100%;
+	scroll-behavior: smooth;
 }
 
 html.noscroll {
