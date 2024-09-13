@@ -5767,8 +5767,17 @@ div#thumbnails a {
 	overflow: hidden;
 }
 
+@media screen and (max-width: 480px) {
+	
+	div#thumbnails a {
+		margin: 1px;
+	}
+	
+}
+
 div.gallery-image a {
 	display: block;
+	position: relative;		/* Necessary so we can overlay icons that have "position: absolute" */
 	border: solid 2px #eeeeee;
 	margin: 0 auto;
 	padding: 0;
@@ -5829,7 +5838,7 @@ div#thumbnails a:hover, div.gallery-image a:hover {
 	border-color: #18bfef;
 }
 
-div#thumbnails div.icons {
+div#thumbnails div.icons, div.gallery-image div.icons  {
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -5841,10 +5850,21 @@ div#thumbnails div.icons {
 	background-color: rgba(0,0,0,0.3);
 }
 
-div#thumbnails div.icons img {
+div.gallery-image div.icons.centered {
+	left: calc(50% - 3rem);
+	top: calc(50% - 3rem);
+	right: calc(50% - 3rem);
+	bottom: calc(50% - 3rem);
+}
+
+div#thumbnails div.icons img, div.gallery-image div.icons img {
 	display: inline-block;
 	height: 2rem;
 	fill: white;
+}
+
+div.gallery-image div.icons.centered img {
+	height: 4.5rem;
 }
 
 

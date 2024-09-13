@@ -165,8 +165,16 @@
 	{### Clicking the image directs user to the adult-only consent page, with a reference back to this page #}
 
 						<a href="/adult-content?dest={{ current_page.id }}">
+						
 							 <img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
+
+							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
+							<div class="icons centered">
+								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
+							</div>		
+
 						</a>
+						
 	{% else %}
 	{### Clicking the image will simply open the original, full-size image file (which could be huge) #}
 	
