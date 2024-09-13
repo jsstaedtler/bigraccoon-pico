@@ -33,7 +33,6 @@
 	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
 	* Find out how piwigo can resize images so cleanly
-	* Pop-up titles when hovering over thumbnails?
 	* Any good way to count pageviews?
 	* Make better 18+ icon for thumbnails
 	* Add number of images to the "group" icon
