@@ -114,7 +114,7 @@
 
 		{### Pass the current tags filter in the URL to the image page, so it can use the same filter for navigating prev/next images #}
 			<a href="{{ page.url }}{% if requested_tags %}?tag={{ requested_tags_string|url_encode }}{% endif %}">
-
+			<abbr title="{{ page.title }}">
 
 		{% if page.meta.adultonly and username != "eighteen" %}
 
@@ -136,18 +136,18 @@
 				
 			{% if "18+" in page.meta.tags %}
 				{### An 18+ warning icon (based on tags, meaning at least one image in the group is adult-only) #}
-					<img src="{{ theme_url }}/img/warning.svg">
+					<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
 			{% endif %}
 
 			{% if page.meta.moreimages %}
 				{### A "group" icon, indicating there's more than one image here #}
-					<img src="{{ theme_url }}/img/cards.svg">
+					<abbr title="Multiple images"><img src="{{ theme_url }}/img/cards.svg"></abbr>
 			{% endif %}
 
 				</div>		
 		{% endif %}
 		
-		
+			</abbr>
 			</a>
 		
 	{% endfor %}
