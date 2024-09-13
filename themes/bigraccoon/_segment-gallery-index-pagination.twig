@@ -19,14 +19,15 @@
 		{% endif %}
 		
 					
-		{# If there are more than 2 pages (which are first and last), we need to start listing them #}
+		{# If there are more than 2 pages (which are the first and last pages), we need to start listing them all #}
 		{% if total_segments > 2 %}
 			
 			{# This is where an ellipsis may appear, but not if the current page is one of the first 4. #}
-			{# If there are 9 or fewer pages, it is not needed on desktop, but is needed when "shrunk" on mobile. #}
+			{# If there are 9 or fewer total pages, it is not needed on desktop, but is needed when "shrunk" on mobile. #}
+			{# If there are 4 or fewer total pages, then no ellipses are needed on mobile either. #}
 			{% if current_segment_number > 4 %}
 				<span{% if total_segments <= 9 %} class="shrunk"{% endif %}>...</span>
-			{% elseif current_segment_number > 2 %}
+			{% elseif (total_segments > 4) and (current_segment_number > 3) %}
 				<span class="shrunk">...</span>
 			{% endif %}
 
@@ -38,7 +39,6 @@
 				{# If we're currently on one of the first 4 pages, we should only omit from the end of the list. #}
 				{% set start = 2 %}
 				{% set end = 7 %}
-				
 			{% elseif current_segment_number >= total_segments - 3 %}
 				{# Similarly, if we're on one of the last 4 pages, we should only omit from the beginning of the list #}
 				{% set start = total_segments - 6 %}
@@ -51,17 +51,23 @@
 			
 			{% for seg in start..end %}
 				{% if seg == current_segment_number %}
+					{# The current page number is not a link, just a simple number #}
 					<span class="active">{{ seg }}</span>
+				{% elseif (seg == 2 and current_segment_number == 3) or (seg == total_segments - 1 and current_segment_number == total_segments - 2) or total_segments <= 4%}
+					{# A page link must always remain visible if there are 4 or fewer total pages, or if it's within 2 pages of the first or last page #}
+					<a href="{{ current_page.url }}?page={{ seg }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page">{{ seg }}</a>
 				{% else %}
+					{# This page can be "omitted" on mobile to save space #}
 					<a href="{{ current_page.url }}?page={{ seg }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page omittable">{{ seg }}</a>
 				{% endif %}
 			{% endfor %}
 			
 			{# This is where an ellipsis may appear, but not if the current page is one of the last 4. #}
 			{# If there are 9 or fewer pages, it is not needed on desktop, but is needed when "shrunk" on mobile. #}
+			{# If there are 4 or fewer total pages, then no ellipses are needed on mobile either. #}
 			{% if current_segment_number < total_segments - 3 %}
 				<span{% if total_segments <= 9 %} class="shrunk"{% endif %}>...</span>
-			{% elseif current_segment_number < total_segments - 1 %}
+			{% elseif (total_segments > 4) and (current_segment_number < total_segments - 2) %}
 				<span class="shrunk">...</span>
 			{% endif %}
 			
