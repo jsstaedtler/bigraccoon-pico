@@ -15,6 +15,8 @@
 
 
 // Lets start by saving an array of all thumbnail images, to refer back to whenever this page resizes.
+// Note that images will be wrapped in tags like <a>, <abbr>, and possibly more.  So use ".getElementsByTagName('img')[0]"
+// on each element of this array to get the actual image object.
 const br_imageArray = document.getElementById("thumbnails").children;
 
 // The max ratio can be adjusted arbitrarily to set a maximum for how much taller images can be made.  There may
@@ -41,20 +43,20 @@ function br_adjustThumbnailSizes() {
 		// stay true.  So we need to quickly remove our custom width and height from a thumbnail, measure its
 		// height under normal styling, then revert back to the modified dimensions which are about to be recalculated.
 		// Kinda clunky!  But way faster than hunting through the CSS and converting whatever units it uses to px.
-		const currentImgRect = br_imageArray[0].children[0].getBoundingClientRect();
+		const currentImgRect = br_imageArray[0].getElementsByTagName('img')[0].getBoundingClientRect();
 		const currentWidth = currentImgRect.width;
 		const currentHeight = currentImgRect.height;
 		
-		br_imageArray[0].children[0].style.width = "";
-		br_imageArray[0].children[0].style.height = "";
+		br_imageArray[0].getElementsByTagName('img')[0].style.width = "";
+		br_imageArray[0].getElementsByTagName('img')[0].style.height = "";
 		
-		const originalHeight = br_imageArray[0].children[0].getBoundingClientRect().height;
+		const originalHeight = br_imageArray[0].getElementsByTagName('img')[0].getBoundingClientRect().height;
 		
-		br_imageArray[0].children[0].style.width = currentWidth;
-		br_imageArray[0].children[0].style.height = currentHeight;
+		br_imageArray[0].getElementsByTagName('img')[0].style.width = currentWidth;
+		br_imageArray[0].getElementsByTagName('img')[0].style.height = currentHeight;
 
 
-		// Although we're deaing with the size of <img> elements, they are within <a> tags,
+		// Although we're dealing with the size of <img> elements, they are within <a> tags,
 		// and the <a> tags have margins and borders which will create a gap between images.
 		// Get the current style values of the side margins and side borders of the <a> tags
 		const marginLeft = window.getComputedStyle(br_imageArray[0]).marginLeft.match(/\d+/);	// Returns a string like "2px",
@@ -76,11 +78,11 @@ function br_adjustThumbnailSizes() {
 		for (var i = 0; i < br_imageArray.length; i++) {
 			
 			// Undo any cropping, which would mess up measurements of the image dimensions
-			br_imageArray[i].children[0].classList.remove("cropped");
-			br_imageArray[i].children[0].style.width = "auto";
+			br_imageArray[i].getElementsByTagName('img')[0].classList.remove("cropped");
+			br_imageArray[i].getElementsByTagName('img')[0].style.width = "auto";
 
-			const currentRect = br_imageArray[i].children[0].getBoundingClientRect();		// Current size of the image
-			const imageWidth = currentRect.width * (originalHeight / currentRect.height);	// Original width of this image
+			const currentRect = br_imageArray[i].getElementsByTagName('img')[0].getBoundingClientRect();	// Current size of the image
+			const imageWidth = currentRect.width * (originalHeight / currentRect.height);					// Original width of this image
 
 			// Check if this image's width will fit in the current row
 			if (rowWidthArray[rowIndex] + imageWidth + gapWidth > pageWidth) {
@@ -116,7 +118,7 @@ function br_adjustThumbnailSizes() {
 
 			// Now apply that height to each image in this row
 			for (var i = 0; i < rowArray[r].length; i++) {
-					rowArray[r][i].children[0].style.height = newHeight + "px";
+					rowArray[r][i].getElementsByTagName('img')[0].style.height = newHeight + "px";
 			}
 
 			// If that ratio was above the chosen maximum, crop the top and bottom of each newly-sized image so their
@@ -125,7 +127,7 @@ function br_adjustThumbnailSizes() {
 				if (r == rowArray.length - 1) {
 					
 					for (var i = 0; i < rowArray[r].length; i++) {
-						rowArray[r][i].children[0].style.height = originalHeight + "px";
+						rowArray[r][i].getElementsByTagName('img')[0].style.height = originalHeight + "px";
 					}
 
 				} else {
@@ -133,11 +135,11 @@ function br_adjustThumbnailSizes() {
 					const maxHeight = Math.floor(originalHeight * br_maxRatio);
 					
 					for (var i = 0; i < rowArray[r].length; i++) {
-						rowArray[r][i].children[0].classList.add("cropped");
+						rowArray[r][i].getElementsByTagName('img')[0].classList.add("cropped");
 						
 						// It seems silly to set an image's width to it current width, but this overrides the existing "width: auto" style
-						rowArray[r][i].children[0].style.width = rowArray[r][i].children[0].getBoundingClientRect().width + "px";
-						rowArray[r][i].children[0].style.height = maxHeight + "px";
+						rowArray[r][i].getElementsByTagName('img')[0].style.width = rowArray[r][i].getElementsByTagName('img')[0].getBoundingClientRect().width + "px";
+						rowArray[r][i].getElementsByTagName('img')[0].style.height = maxHeight + "px";
 					}
 					
 				}
