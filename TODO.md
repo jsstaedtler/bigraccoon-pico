@@ -32,12 +32,9 @@
 	* Brownish (like a raccoon)?
 	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
-	* Link latest all-ages image on the front page
 	* Find out how piwigo can resize images so cleanly
 	* Pop-up titles when hovering over thumbnails?
-	* Centre the text on image pages
 	* Any good way to count pageviews?
-	* Pre-cache next and previous images
 	* Make better 18+ icon for thumbnails
 	* Add number of images to the "group" icon
 	* Fix padding of gallery index page bar (when squished on mobile)
