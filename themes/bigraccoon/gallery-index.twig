@@ -120,12 +120,12 @@
 
 			{### To obscure this thumbnail, resize it to an extremely low resolution, then use CSS to apply a blur #}
 			{### The resize() function comes from the Pico plugin ImageResize #}
-				<img class="placeholder" src="/{{ resize( 'assets/' ~ page.meta.image, null, 30 ) }}" alt="Adult-only content hidden">
+				<img class="placeholder" src="/{{ resize( 'assets/' ~ page.meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
 			
 		{% else %}
 			
 			{### Resize to a reasonable thumbnail resolution #}
-				<img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
+				<img src="/{{ resize( 'assets/' ~ page.meta.image, null, config.gallery.thumbnail_size ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
 				
 		{% endif %}
 

@@ -14,9 +14,9 @@
 	<style>
 	
 	{% if meta.adultonly and username != "eighteen" %}
-		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 30 ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
 	{% else %}
-		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 800 ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); }
+		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); }
 	{% endif %}
 	
 	</style>
@@ -31,9 +31,9 @@
 	<style>
 	
 	{% if meta.adultonly and username != "eighteen" %}
-		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, 30 ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
 	{% else %}
-		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, thumbnail_size ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
 	{% endif %}
 	
 	</style>
@@ -97,10 +97,10 @@
 	{% set previous_thumb = NULL %}
 	{% if previous_page.meta.image %}
 		{% if previous_page.meta.adultonly and username != "eighteen" %}
-			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, 30) %}
+			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.blurred_image_size) %}
 			{% set previous_placeholder = ' placeholder' %}
 		{% else %}
-			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, 800) %}
+			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.image_size) %}
 			{% set previous_placeholder = '' %}
 		{% endif %}
 	{% endif %}
@@ -108,10 +108,10 @@
 	{% set next_thumb = NULL %}
 	{% if next_page.meta.image %}
 		{% if next_page.meta.adultonly and username != "eighteen" %}
-			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, 30) %}
+			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.blurred_image_size) %}
 			{% set next_placeholder = ' placeholder' %}
 		{% else %}
-			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, 800) %}
+			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.image_size) %}
 			{% set next_placeholder = '' %}
 		{% endif %}
 	{% endif %}
@@ -165,7 +165,7 @@
 	{### Clicking the image directs user to the adult-only consent page, with a reference back to this page #}
 
 						<a href="/adult-content?dest={{ current_page.id }}">
-							 <img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, 30 ) }}" alt="Adult-only content hidden">
+							 <img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
 						</a>
 	{% else %}
 	{### Clicking the image will simply open the original, full-size image file (which could be huge) #}
@@ -173,7 +173,7 @@
 						<a href="{{ assets_url }}/{{ meta.image }}">
 						
 							{# The image displayed here is resized, so that browsing isn't slowed down by very large images #}
-							<img src="/{{ resize( 'assets/' ~ meta.image, null, 800 ) }}"{% if meta.imagedescription %} alt="{{ meta.imagedescription }}"{% endif %}>
+							<img src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}"{% if meta.imagedescription %} alt="{{ meta.imagedescription }}"{% endif %}>
 							
 						</a>
 	{% endif %}
