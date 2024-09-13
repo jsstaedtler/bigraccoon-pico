@@ -1,4 +1,4 @@
-* <ol> numbering resets to "1" regardless of what number you put in the md file - see the dryer article
+* "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
 * Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
 * Make BG image fade in sooner
