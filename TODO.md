@@ -32,6 +32,8 @@
 	* Brownish (like a raccoon)?
 	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
+	* Submitting a comment shuld preserve the URL parameters
+	* Make "Medium: Pencil/Digital" tags
 	* Find out how piwigo can resize images so cleanly
 	* Any good way to count pageviews?
 	* Make better 18+ icon for thumbnails
