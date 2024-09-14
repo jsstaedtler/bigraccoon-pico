@@ -37,4 +37,5 @@
 	* Make better 18+ icon for thumbnails
 	* Add number of images to the "group" icon
 	* Fix padding of gallery index page bar (when squished on mobile)
+	* "moreimages" YAML key ought to be renamed to "variants"
 * Clean up/refactor CSS because it's probably 50% unused cruft
