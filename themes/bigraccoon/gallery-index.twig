@@ -109,6 +109,12 @@
 
 
 {### IMAGE THUMBNAILS ###}
+	{% if all_pages|length <= 0 %}
+	
+		<p><img src="{{ assets_url }}/dotdotdot.jpg" class="align-center"></p>
+		
+	{% else %}
+	
 		<div id="thumbnails">
 	{% for page in current_segment %}
 
@@ -152,7 +158,8 @@
 		
 	{% endfor %}
 		</div>
-		
+	{% endif %}
+	
 		
 {### TAG CLOUD ###}
 	{### Tag cloud for the user to choose from.  If a tag is currently active, it gets the "active" class, and clicking it will remove it from the active tags.  No need for the "page=" URL parameter on these, changing the tags will always send the user to segment 1. #}
