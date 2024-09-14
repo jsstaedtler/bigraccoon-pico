@@ -32,6 +32,7 @@
 	* Brownish (like a raccoon)?
 	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
+    * style.css line 1717 is for gallery-index pagination, but it's messing up article/news pagination
 	* Submitting a comment shuld preserve the URL parameters
 	* Make "Medium: Pencil/Digital" tags
 	* Find out how piwigo can resize images so cleanly
