@@ -225,13 +225,13 @@
 
 
 {### TEXT CONTENT #}			
-					<span class="align-center">{{ content }}</span>
+				<span class="align-center">{{ content }}</span>
 
 			
 {### DISPLAY ASSOCIATED TAGS #}
 			{% if meta.tags %}
 			
-				<h4 class="align-center">Tagged</h4>
+				<h3 class="align-center">Tagged</h4>
 				<ul class="tags">
 				{% for tag in meta.tags|sort %}
 					<li>
@@ -246,7 +246,7 @@
 {### DISPLAY RELATED IMAGES #}
 			{# If there are related images, display them as thumbnails #}
 			{% if meta.related %}
-					<h3>Related Images</h3>
+					<h3 class="align-center">Related Images</h3>
 					<div id="thumbnails">
 					
 					{% for image in meta.related %}
@@ -277,7 +277,7 @@
 
 							{% if imagepage.meta.moreimages %}
 								{### A "group" icon, indicating there's more than one image here #}
-								<abbr title="Multiple images"><img src="{{ theme_url }}/img/cards.svg"></abbr>
+								<abbr title="Multiple variants"><img src="{{ theme_url }}/img/cards.svg"></abbr>
 							{% endif %}
 
 							</div>		
