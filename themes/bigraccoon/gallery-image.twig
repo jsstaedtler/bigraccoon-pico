@@ -166,7 +166,7 @@
 
 						<a href="/adult-content?dest={{ current_page.id }}">
 						
-							 <img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
 
 							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
 							<div class="icons centered">
@@ -200,9 +200,16 @@
 					{% if thisimage.adultonly and username != "eighteen" %}
 
 						<a href="/adult-content?dest={{ current_page.id }}">
-							 <img class="placeholder" src="/{{ resize( 'assets/' ~ thisimage.image, null, 30 ) }}" alt="Adult-only content hidden">
-						</a>
 						
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ thisimage.image, null, 30 ) }}" alt="Adult-only content hidden">
+						
+							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
+							<div class="icons centered">
+								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
+							</div>
+							
+						</a>
+
 					{% else %}
 	
 						<a href="{{ assets_url }}/{{ thisimage.image }}">
@@ -246,6 +253,7 @@
 						{% set imagepage = pages['gallery/' ~ image] %}
 						
 						<a href="{{ imagepage.url }}">
+						<abbr title="{{ imagepage.title }}">
 						
 						{% if imagepage.meta.adultonly and username != "eighteen" %}
 						
@@ -258,6 +266,24 @@
 							
 						{% endif %}
 						
+						{% if ("18+" in imagepage.meta.tags) or (imagepage.meta.moreimages) %}
+							{### Create a div to overlay on the image, which will contain one or more icons #}
+							<div class="icons">
+								
+							{% if "18+" in imagepage.meta.tags %}
+								{### An 18+ warning icon (based on tags, meaning at least one image in the group is adult-only) #}
+								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
+							{% endif %}
+
+							{% if imagepage.meta.moreimages %}
+								{### A "group" icon, indicating there's more than one image here #}
+								<abbr title="Multiple images"><img src="{{ theme_url }}/img/cards.svg"></abbr>
+							{% endif %}
+
+							</div>		
+						{% endif %}
+						
+						</abbr>
 						</a>
 							
 					{% endfor %}

@@ -32,7 +32,6 @@
 	* Brownish (like a raccoon)?
 	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
-	* "More images" and "Related images" thumbnails need icons
 	* Find out how piwigo can resize images so cleanly
 	* Any good way to count pageviews?
 	* Make better 18+ icon for thumbnails
