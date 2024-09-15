@@ -39,27 +39,7 @@ class PicoPageViews extends AbstractPicoPlugin
 
         }
     }
-   
-   /*
-    public function onPagesDiscovered(array &$pages)
-    {
-        $pages['_stats'] = [
-            'id' => &$this->statsPageMeta['id'], // or 'id' => '_stats', fix 2
-            'url' => &$this->statsPageMeta['url'],
-            'title' => &$this->statsPageMeta['title'],
-            'description' => &$this->statsPageMeta['description'],
-            'author' => &$this->statsPageMeta['author'],
-            'time' => &$this->statsPageMeta['time'],
-            'hidden' => 'true', // fix 2
-            'tags' => &$this->statsPageMeta['tags'], // fix 1
-            'date' => &$this->statsPageMeta['date'],
-            'date_formatted' => &$this->statsPageMeta['date_formatted'],
-            'raw_content' => &$rawContent,
-            'meta' => &$this->statsPageMeta
-        ];
-    }
-*/
-                  
+
     private function loadStats($file)
     {
         $currentPageId = $this->pico->getCurrentPage()['id'];
@@ -88,4 +68,5 @@ class PicoPageViews extends AbstractPicoPlugin
         fwrite($file, $yaml);
     } 
 }
+
 ?>
