@@ -1566,8 +1566,13 @@ input, select, textarea {
 			text-decoration: none;
 			text-transform: uppercase;
 		}
+		
+		.pagination abbr {
+			text-decoration: none;
+		}
 
 /* C */	.pagination .next, .pagination .previous, .pagination .up {
+			display: flex;
 			text-decoration: none;
 			padding: 0 0.75rem;
 		}
@@ -1576,14 +1581,25 @@ input, select, textarea {
 			max-width: 40%;
 			overflow: hidden;
 			white-space: nowrap;
+		}
+		
+/* N */ .pagination .previous span, .pagination .next span {
+			flex: 0 1 auto;
+			margin: 0;
+			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-				
+		
 /* N */ .pagination .up {
 			position: absolute;
 			width: 6rem;
 			left: 50%;
 			transform: translateX(-50%);
+		}
+		
+		.pagination .up span {
+			margin: 0;
+			border: none;
 		}
 		
 /* N */	.pagination .previous {
@@ -1599,7 +1615,7 @@ input, select, textarea {
 			background-color: #eeeeee;
 		}
 
-/* C */	.pagination .next:before, .pagination .previous:before, .pagination .up:before {
+/* C 	.pagination .next:before, .pagination .previous:before, .pagination .up:before {
 				-moz-osx-font-smoothing: grayscale;
 				-webkit-font-smoothing: antialiased;
 				display: inline-block;
@@ -1612,7 +1628,7 @@ input, select, textarea {
 				font-weight: 900;
 			}
 
-/* C */	.pagination .next:before, .pagination .previous:before, .pagination .up:before {
+		.pagination .next:before, .pagination .previous:before, .pagination .up:before {
 				display: inline-block;
 				color: inherit !important;
 				line-height: inherit;
@@ -1630,18 +1646,19 @@ input, select, textarea {
 			margin: 0 0 0 0.7rem;
 		}
 
-/* N */ .pagination .up:before {
+		.pagination .up:before {
 			content: '\f106';
 			margin-right: 1rem;
 		}
-		
+*/
 /* N */ .pagination .next.disabled, .pagination .previous.disabled, .pagination .next.disabled:before, .pagination .previous.disabled:before {
             visibility: hidden;
 }
 
 /* N */ .pagination span.title {
 		    display: inline;
-		    border-width: 0;
+			padding: 0 0.4rem;
+		    border: none;
 		}
 		
 /* N */ .pagination span.abbrev {
@@ -1652,6 +1669,32 @@ input, select, textarea {
 		    display: none;
 		}
 
+
+		.pagination .arrow {
+			flex: 0 0 auto;
+			height: 1.5rem;
+			margin: auto;
+		}
+		
+		.pagination a .arrow {
+			-moz-transition: fill 0.2s ease-in-out;
+			-webkit-transition: fill 0.2s ease-in-out;
+			-ms-transition: fill 0.2s ease-in-out;
+			transition: fill 0.2s ease-in-out;
+		}
+		
+/*		.pagination .previous .arrow {
+			margin: auto 0.4rem auto -0.4rem;
+		}
+*/
+/*		.pagination .next .arrow {
+			margin: auto -0.4rem auto 0.4rem;
+		}
+*/
+		.pagination .up .arrow {
+			margin: auto 0.2rem auto -0.2rem;
+		}
+		
 		.pagination a.thumbnail {
 			display: block;
 			height: 100%;
@@ -1666,29 +1709,24 @@ input, select, textarea {
 			fill: #18bfef;
 		}
 		
-		.pagination a.thumbnail div {
+		.pagination a.thumbnail img, .pagination a.thumbnail div {
 			display: inline-block;
 			width: 6rem;
 			height: 6rem;
 			margin: 0;
 			border: none;
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
+			object-fit: cover;
 		}
 		
-		.pagination a.thumbnail.placeholder div {
+		.pagination a.thumbnail .placeholder {
 			filter: opacity(50%) blur(5px);
+			overflow: clip;
 		}
 
-		.pagination a.thumbnail svg {
-			-moz-transition: fill 0.2s ease-in-out;
-			-webkit-transition: fill 0.2s ease-in-out;
-			-ms-transition: fill 0.2s ease-in-out;
-			transition: fill 0.2s ease-in-out;
-			width: 3rem;
-			height: 3rem;
-			margin: 1.5rem 0;
+		.pagination a.thumbnail .arrow {
+			width: 2rem;
+			height: 2rem;
+			margin: 2rem 0;
 			border: 0;
 		}
 		
@@ -1697,8 +1735,8 @@ input, select, textarea {
 			border: none;
 			line-height: 0;
 		}
-
 		
+
 	@media screen and (max-width: /*980px*/ 736px) {
 
 /*		.pagination a, .pagination span {
@@ -1720,6 +1758,10 @@ input, select, textarea {
 			float: none;
 		}
 		
+		.pagination .previous .arrow, .pagination .next .arrow {
+			margin: auto;
+		}
+		
 		.pagination .omittable {
 			display: none;
 		}
@@ -1737,12 +1779,12 @@ input, select, textarea {
 		    display: inline;
 		}
 		
-		.pagination a.thumbnail div {
+		.pagination a.thumbnail div, .pagination a.thumbnail img {
 			width: 4rem;
 			height: 4rem;
 		}
 		
-		.pagination a.thumbnail svg {
+		.pagination a.thumbnail .arrow {
 			width: 2rem;
 			height: 2rem;
 			margin: 1rem 0;
@@ -1754,12 +1796,14 @@ input, select, textarea {
 		border-color: #eeeeee;
 	}
 
-	.pagination a {
+	.pagination a, .pagination a span {
 		color: #212931 !important;
+		fill: #212931 !important;
 	}
 
-	.pagination a:hover {
+	.pagination a:hover, .pagination a:hover span, .pagination a:hover img {
 		color: #18bfef !important;
+		fill: #18bfef !important;
 		border-color: #18bfef;
 		z-index: 1;
 	}

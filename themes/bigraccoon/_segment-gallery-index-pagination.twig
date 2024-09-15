@@ -4,7 +4,10 @@
 		<div class="pagination">
 		
 		{### "Previous" button - disabled if we're on segment 1 #}
-			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="previous{% if current_segment_number - 1 < 1 %} disabled{% endif %}">Prev</a>
+			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="previous{% if current_segment_number - 1 < 1 %} disabled{% endif %}">
+				<svg role="img" class="arrow" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"></path></svg>
+				<span class="title">Prev</span>
+			</a>
 			
 		{### Now for a list of segment/page numbers, to go to any specific number. #}
 		{#   More than 9 will be too wide for many displays, so some will be omitted with ellipses. #}
@@ -82,7 +85,10 @@
 		{% endif %}
 		
 		{### "Next" button - disabled if we're on the last segment #}
-			<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="next{% if current_segment_number + 1 > total_segments %} disabled{% endif %}">Next</a>
+			<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="next{% if current_segment_number + 1 > total_segments %} disabled{% endif %}">
+				<span class="title">Next</span>
+				<svg role="img" class="arrow" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg>
+			</a>
 		</div>
 	{% endif %}
 	

@@ -98,10 +98,10 @@
 	{% if previous_page.meta.image %}
 		{% if previous_page.meta.adultonly and username != "eighteen" %}
 			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.blurred_image_size) %}
-			{% set previous_placeholder = ' placeholder' %}
+			{% set previous_placeholder = true %}
 		{% else %}
 			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.image_size) %}
-			{% set previous_placeholder = '' %}
+			{% set previous_placeholder = false %}
 		{% endif %}
 	{% endif %}
 
@@ -109,10 +109,10 @@
 	{% if next_page.meta.image %}
 		{% if next_page.meta.adultonly and username != "eighteen" %}
 			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.blurred_image_size) %}
-			{% set next_placeholder = ' placeholder' %}
+			{% set next_placeholder = true %}
 		{% else %}
 			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.image_size) %}
-			{% set next_placeholder = '' %}
+			{% set next_placeholder = false %}
 		{% endif %}
 	{% endif %}
 
