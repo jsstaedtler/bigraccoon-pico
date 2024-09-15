@@ -68,6 +68,11 @@ class PicoComments extends AbstractPicoPlugin
 			$author = 'Anonymous';
 		}
 		
+		// If the site author's name has been specified in the config, prevent anyone from spoofing it
+		if ($this->getPluginConfig("author_name") and $author == $this->getPluginConfig("author_name")) {
+			return 'Invalid author name';
+		}
+		
 		// Fail if author length exceeds the limit
 		if (strlen($author) > $this->getPluginConfig("name_size_limit")) {
 			return 'Name exceeds character limit: ' . strlen($author) . ' > ' . $this->getPluginConfig("name_size_limit");
