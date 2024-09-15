@@ -53,31 +53,35 @@
 {% block page_header %}
 		<!-- Intro-style page header-->
 		<div id="intro">
-			<a href="#nav" class="scrolly"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
-			<a href="#nav" class="scrolly"><h3>{{ meta.description }}</h3></a>
+			<a href="#main"><img src="{{ assets_url }}/bigraccoon_logo_white.png" alt="bigraccoon.ca logo" id="headerlogo"></a>
+			<a href="#main"><h3>{{ meta.description }}</h3></a>
 			<ul class="actions">
-				<li><a href="#main" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+				<li><a href="#main" class="button icon solid solo fa-arrow-down">Continue</a></li>
 			</ul>
 		</div>
 {% endblock page_header %}
 
 {% block page_body %}
 		<!-- Artwork section -->
+
+		{# Get all child pages of the News section (which aren't hidden, adult-only, or a subsection index), then pick the newest one #}
+		{% set latest_art_id = pages("gallery", depth=null)|filter(a => not (a.hidden or a.meta.adultonly or a.id ends with "index"))|keys|first %}
+		{% set latest_art = pages[latest_art_id] %}
 		
 		<article class="post featured">
 			<header class="major">
 				<h3>Latest Artwork</h3>
-				<span class="date">{{ meta.gallerydate | date(config.php_date_format) }}</span>
+				<span class="date">{{ latest_art.date_formatted }}</span>
 			{% if meta.gallerytitle %}
-				<a href="{{ meta.gallerylink }}"><h2>{{ meta.gallerytitle }}</h2></a>
+				<a href="{{ meta.gallerylink }}"><h2>{{ latest_art.title }}</h2></a>
 			{% endif %}
 			</header>
 			
-			<a href="{{ meta.gallerylink }}" class="image main"><img src="{{ meta.gallerythumbnail }}"{% if meta.gallerydescription %} alt="{{ meta.gallerydescription }}"{% endif %}></a>
+			<a href="{{ latest_art.url }}" class="image main"><img src="/{{ resize( 'assets/' ~ latest_art.meta.image, null, config.gallery.image_size ) }}"{% if latest_art.meta.imagedescription %} alt="{{ latest_art.meta.imagedescription}}"{% endif %}></a>
 			
 			<ul class="actions special stacked">
-				<li><a href="{{ meta.gallerylink }}" class="button large">See Details</a></li>
-				<li><a href="{{ pages["gallery/index"].url }}" class="button primary large">Visit the Gallery</a></li>
+				<li><a href="{{ latest_art.url }}" class="button primary large">See Details</a></li>
+				<li><a href="{{ pages["gallery/index"].url }}" class="button large">Visit the Gallery</a></li>
 			</ul>
 		</article>
 
@@ -111,8 +115,8 @@
 			</div>
 
 			<ul class="actions special stacked">
-				<li><a href="{{ latest_news.url }}" class="button large">Read More</a></li>
-				<li><a href="{{ pages["news/index"].url }}" class="button primary large">View All News Items</a></li>
+				<li><a href="{{ latest_news.url }}" class="button primary large">Read More</a></li>
+				<li><a href="{{ pages["news/index"].url }}" class="button large">View All News Items</a></li>
 			</ul>
 		</article>
 
@@ -138,8 +142,8 @@
 		{% endif %}
 		
 			<ul class="actions special stacked">
-				<li><a href="{{ latest_article.url }}" class="button large">Read More</a></li>
-				<li><a href="{{ pages["articles/index"].url }}" class="button primary large">View All Articles</a></li>
+				<li><a href="{{ latest_article.url }}" class="button primary large">Read More</a></li>
+				<li><a href="{{ pages["articles/index"].url }}" class="button large">View All Articles</a></li>
 			</ul>
 		</article>
 		

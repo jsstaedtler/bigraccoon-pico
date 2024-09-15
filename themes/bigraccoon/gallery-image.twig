@@ -1,0 +1,320 @@
+{#
+ # A template to present a single gallery image, or a grouping of multiple images.  It will have a date, H2 title,
+ # and prev/next buttons.  Metadata will be provided with each main image.  Finally, other related images can be
+ # displayed as thumbnails (just like in the main gallery listing).
+ #}
+ 
+{% extends "_base.twig" %}
+
+
+{### Put the main image into the background, overriding the external CSS style file, as well as blurring an adult-only image #}
+{% block head_style %}
+	{{ parent() }}
+	
+	<style>
+	
+	{% if meta.adultonly and username != "eighteen" %}
+		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+	{% else %}
+		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); }
+	{% endif %}
+	
+	</style>
+	
+{% endblock head_style %}
+
+
+{% block head_style_noscript %}
+
+	{{ parent() }}
+	
+	<style>
+	
+	{% if meta.adultonly and username != "eighteen" %}
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+	{% else %}
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
+	{% endif %}
+	
+	</style>
+	
+{% endblock head_style_noscript %}
+		
+
+
+{% block page_body %}
+
+{### To determine the previous and next pages, we must find the siblings of the current page.
+   # Pico natively provides previous_page and next_page variables, but those are based on *all* pages at the current level of the page
+   # hierarchy--even if they belng to different parent pages.
+   # The following code will look only at children of *this page's parent*, and determine the previous and next pages based on those.
+   # Once we have those values, we can produce the HTML that makes "prev" and "next" buttons.
+   #}
+
+
+{### Collect all tags currently in use in the entire site (via PicoTags plugin).  Sadly can not just get tags within this Gallery section #}
+	{% set all_site_tags = get_all_tags() %}
+
+{### Get any selected tags that have been supplied in the "?tag=" URL parameter, then validate that each one actually exists in the site #}
+	{% set requested_tags = [] %}														{# Start a new, empty array #}
+	{% for tag in url_param('tag', 'string')|replace({'&#39;': '\''})|split(',') %}		{# For some reason, Twig won't unescape a URL-encoded apostrophe, so we use the replace() filter for that #}
+		{% if tag|trim in all_site_tags %}
+			{% set requested_tags = requested_tags|merge([tag|trim]) %}					{# Add this valid tag to the array #}
+		{% endif %}
+	{% endfor %}
+	
+{### Make a string out of the valid tag(s), to be put back in the URL as a parameter #}
+	{% set requested_tags_string = requested_tags|join(',') %}
+
+	
+{# Find out what our parent page is #}
+	{% set parents_array = pages(current_page.id, offset=-1) %}		{# Returns an array with a single element #}
+	{% set current_parent = parents_array | first %}				{# ...so just save the first one #}
+
+{# Get all child pages of that parent (ie. the siblings of this page), as long as they aren't hidden #}
+	{% set siblingpage_array = pages(current_parent.id)|sort((a, b) => b.date <=> a.date)|filter(p => not p.hidden) %}
+
+{### Now filter based on any selected tags #}
+	{% for tag in requested_tags %}
+		{% set siblingpage_array = siblingpage_array|filter(p => tag in p.meta.tags) %}
+	{% endfor %}
+	
+	{% set siblingid_array = siblingpage_array|keys %}
+	
+{# Initialize these variables so they exist outside the scope of the following loops #}
+	{% set next_page = NULL %}
+	{% set previous_page = NULL %}
+	
+{# Find the current page within the list of all pages, and when we do, save the previous and next pages #}
+	{% for siblingid in siblingid_array %}
+		{% if siblingid == current_page.id %}
+			{% set previous_page = pages[siblingid_array[loop.index0-1]] %}
+			{% set next_page = pages[siblingid_array[loop.index0+1]] %}
+		{% endif %}
+	{% endfor %}
+	
+{# Get the gallery image for the previous and next pages, for use as preview thumbnails as well as for pre-caching #}
+	{% set previous_thumb = NULL %}
+	{% if previous_page.meta.image %}
+		{% if previous_page.meta.adultonly and username != "eighteen" %}
+			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.blurred_image_size) %}
+			{% set previous_placeholder = true %}
+		{% else %}
+			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.image_size) %}
+			{% set previous_placeholder = false %}
+		{% endif %}
+	{% endif %}
+
+	{% set next_thumb = NULL %}
+	{% if next_page.meta.image %}
+		{% if next_page.meta.adultonly and username != "eighteen" %}
+			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.blurred_image_size) %}
+			{% set next_placeholder = true %}
+		{% else %}
+			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.image_size) %}
+			{% set next_placeholder = false %}
+		{% endif %}
+	{% endif %}
+
+
+{### PAGINATION (UPPER) ###}
+	{# Insert prev/next browsing buttons that include thumbnail images #}
+
+	{{ include("_segment-gallery-image-pagination.twig") }}
+
+
+				<!-- A post -->
+				<section class="post">
+					<header class="major">
+					
+				
+{### DISPLAY CURRENT TAGS/IMAGE COUNT ###}
+	{% if requested_tags %}
+		<h4 class="inline">Viewing images tagged:</h4>
+		<ul class="tags">
+			{% for tag in requested_tags|sort %}
+			<li>
+				{### We need to remove this tag from the requested_tags array, and put the remaining tags into the target URL #}
+				{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
+				<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+
+						{% if meta.date %}<span class="date">{{ meta.date_formatted }}</span>{% endif %}
+						{% if meta.title %}<h2>{{ meta.title }}</h2>{% endif %}
+
+
+{### SHOW/HIDE ADULT-ONLY CONTENT ###}
+
+	{# Only if this page is tagged "18+", since it may be a group of images with a mix of adult-only and all-ages #}
+	{% if "18+" in meta.tags %}
+		{{ include("_segment-adult-toggle.twig") }}
+	{% endif %}
+
+					</header>
+					
+
+
+{### DISPLAY PRIMARY IMAGE #}
+					<div class="gallery-image" id="main-image">
+					
+	{% if meta.adultonly and username != "eighteen" %}
+	{### Clicking the image directs user to the adult-only consent page, with a reference back to this page #}
+
+						<a href="/adult-content?dest={{ current_page.id }}">
+						
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
+
+							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
+							<div class="icons centered">
+								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
+							</div>		
+
+						</a>
+						
+	{% else %}
+	{### Clicking the image will simply open the original, full-size image file (which could be huge) #}
+	
+						<a href="{{ assets_url }}/{{ meta.image }}">
+						
+							{# The image displayed here is resized, so that browsing isn't slowed down by very large images #}
+							<img src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}"{% if meta.imagedescription %} alt="{{ meta.imagedescription }}"{% endif %}>
+							
+						</a>
+	{% endif %}
+
+					</div>
+
+
+
+{### DISPLAY ADDITIONAL IMAGES #}
+			{###  If there are more images in this group, display them next #}
+			{% if meta.moreimages %}
+				{% for thisimage in meta.moreimages %}
+						
+					<div class="gallery-image">
+					
+					{% if thisimage.adultonly and username != "eighteen" %}
+
+						<a href="/adult-content?dest={{ current_page.id }}">
+						
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ thisimage.image, null, 30 ) }}" alt="Adult-only content hidden">
+						
+							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
+							<div class="icons centered">
+								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
+							</div>
+							
+						</a>
+
+					{% else %}
+	
+						<a href="{{ assets_url }}/{{ thisimage.image }}">
+							<img src="/{{ resize( 'assets/' ~ thisimage.image, null, 800 ) }}"{% if thisimage.imagedescription %} alt="{{ thisimage.imagedescription }}"{% endif %}>
+						</a>
+						
+					{% endif %}
+					
+					</div>
+	
+				{% endfor %}
+			{% endif %}
+
+
+{### TEXT CONTENT #}			
+				<span class="align-center">{{ content }}</span>
+
+			
+{### DISPLAY ASSOCIATED TAGS #}
+			{% if meta.tags %}
+			
+				<h3 class="align-center">Tagged</h4>
+				<ul class="tags">
+				{% for tag in meta.tags|sort %}
+					<li>
+						<a href="/gallery?tag={{ tag|url_encode }}">{{ tag|raw }}</a>
+					</li>
+				{% endfor %}
+				</ul>
+
+			{% endif %}
+			
+
+{### DISPLAY RELATED IMAGES #}
+			{# If there are related images, display them as thumbnails #}
+			{% if meta.related %}
+					<h3 class="align-center">Related Images</h3>
+					<div id="thumbnails">
+					
+					{% for image in meta.related %}
+						{% set imagepage = pages['gallery/' ~ image] %}
+						
+						<a href="{{ imagepage.url }}">
+						<abbr title="{{ imagepage.title }}">
+						
+						{% if imagepage.meta.adultonly and username != "eighteen" %}
+						
+							{# The resize() function comes from the Pico plugin ImageResize #}
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, 30 ) }}" alt="Adult-only content hidden">
+						
+						{% else %}
+						
+							<img src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, 300 ) }}"{% if imagepage.meta.imagedescription %} alt="{{ imagepage.meta.imagedescription }}"{% endif %}>
+							
+						{% endif %}
+						
+						{% if ("18+" in imagepage.meta.tags) or (imagepage.meta.moreimages) %}
+							{### Create a div to overlay on the image, which will contain one or more icons #}
+							<div class="icons">
+								
+							{% if "18+" in imagepage.meta.tags %}
+								{### An 18+ warning icon (based on tags, meaning at least one image in the group is adult-only) #}
+								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
+							{% endif %}
+
+							{% if imagepage.meta.moreimages %}
+								{### A "group" icon, indicating there's more than one image here #}
+								<abbr title="Multiple variants"><img src="{{ theme_url }}/img/cards.svg"></abbr>
+							{% endif %}
+
+							</div>		
+						{% endif %}
+						
+						</abbr>
+						</a>
+							
+					{% endfor %}
+					
+					</div>
+						
+			{% endif %}
+
+
+{### COMMENTS #}
+					{{ include("_segment-comments.twig") }}
+					
+				</section>
+
+
+{### PAGINATION (LOWER) ###}
+	{{ include("_segment-gallery-image-pagination.twig") }}
+	
+	
+{% endblock page_body %}
+
+
+
+{% block scripts %}
+	{# Add lightbox elements and script #}
+	{{ include("_segment-lightbox.twig") }}
+	
+	{{ parent() }}
+	
+	{# Include thumbnail scripting if related images exist for this image #}
+	{% if meta.related %}
+		<script src="{{ theme_url }}/js/bigraccoon-gallery.js"></script>
+	{% endif %}
+{% endblock scripts %}

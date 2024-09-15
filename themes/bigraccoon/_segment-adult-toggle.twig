@@ -1,0 +1,12 @@
+<!-- Adult-only content toggle -->
+{### If user is logged in as "eighteen", give them a button with which to log out #}
+{% if username == "eighteen" %}
+	<form method="post" action="">
+		<input type="submit" name="logout" value="Hide Adult-Only Content" />
+	</form>
+{% else %}
+	<ul class="actions special stacked">
+			<li><a href="/adult-content?dest={{ current_page.id }}&page={{ current_segment_number }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}" class="button primary">Display Adult-Only Content</a></li>
+	</ul>
+{% endif %}
+<!-- ------------------------- -->

@@ -1,36 +1,67 @@
 {% extends "_base.twig" %}
 
+
 {% block page_content %}
-	<header class="major">
-		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
-<!--		{% if meta.blurb %}<p>{{ meta.blurb }}</p>{% endif %}
-	</header>
-	
-	{{ content }}
--->
-<!--
-	<p>OMG TAGS</p>
-	{% set tags = get_all_tags() %}
-	<ul>
-	{% for tag in tags|sort %}
-		<li>{{ tag }}</li>
+
+	{### Collect all tags currently in use in the entire site (via PicoTags plugin).  Sadly can not just get tags within this Gallery section #}
+	{% set all_site_tags = get_all_tags() %}
+
+
+	{### Get any selected tags that have been supplied in the "?tag=" URL parameter, then validate that each one actually exists in the site #}
+	{% set requested_tags = [] %}														{# Start a new, empty array #}
+	{% for tag in url_param('tag', 'string')|replace({'&#39;': '\''})|split(',') %}		{# For some reason, Twig won't unescape a URL-encoded apostrophe, so we use the replace() filter for that #}
+		{% if tag|trim in all_site_tags %}
+			{% set requested_tags = requested_tags|merge([tag|trim]) %}					{# Add this valid tag to the array #}
+		{% endif %}
 	{% endfor %}
-	</ul>
--->
+	
+	{### Make a string out of the valid tag(s), to be put back in the URL as a parameter #}
+	{% set requested_tags_string = requested_tags|join(',') %}
+	
+	
+	{### Save a list of all pages subordinate to this index page, except hidden ones, sorting by descending date #}
+	{% set all_pages = pages(current_page.id)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %}
+	
+	{### Now filter based on any selected tags #}
+	{% for tag in requested_tags %}
+		{% set all_pages = all_pages|filter(p => tag in p.meta.tags) %}
+	{% endfor %}
+	
 
-
-	{% set all_pages = pages(current_page.id)|filter(p => not p.meta.adultonly)|filter(p => not p.hidden)|sort((a, b) => b.date <=> a.date) %}
-
-	{% set segment_size = config.segment_size %}
+	{### Set a default segment size.  Override that with any value set in the site config.  And override that with any meta value set on this page. #}
+	{% set segment_size = 25 %}
+	{% if config.segment_size %}{% set segment_size = config.segment_size %}{% endif %}
+	{% if meta.segment_size %}{% set segment_size = meta.segment_size %}{% endif %}
+	
 	{% set total_segments = ((all_pages|length) / segment_size)|round(0, 'ceil') %}
 {#	
 	<p>all_pages|length = {{ all_pages|length }}</p>
 	<p>segment_size = {{ segment_size }}</p>
 	<p>total_segments = {{ total_segments }}</p>
 #}
-	{# Get the value of any "?page=n" parameter in the URL, and if it's not an int, set it to 1 #}
-	{% set current_segment_number = url_param('page', 'int', 1) %}
 
+
+	{% set current_segment_number = 0 %}
+	
+	{### If a "?from=" prameter was given, we need to find which page that ID belongs to, and navigate to it #}
+	{% set from_id = url_param('from', 'string') %}
+	{% if from_id %}
+	
+		{% for s in 1..total_segments %}
+			{% if pages[from_id] in all_pages|slice((s - 1) * segment_size, segment_size) %}
+				{% set current_segment_number = s %}
+			{% endif %}
+		{% endfor %}
+	
+	{% else %}
+
+		{### Get the value of any "?page=n" parameter in the URL, and if there's no valid number, set it to 0 #}
+		{% set current_segment_number = url_param('page', 'int', 0) %}
+		
+	{% endif %}
+
+
+	{### Correct the segment number if it's not within the proper bounds #}
 	{% if current_segment_number < 1 %}
 		{% set current_segment_number = 1 %}
 	{% endif %}
@@ -39,40 +70,127 @@
 		{% set current_segment_number = total_segments %}
 	{% endif %}
 	
-{#
-	<p>current_segment_number = {{ current_segment_number }}</p>
-	<p>current_segment_start = {{ (current_segment_number - 1) * segment_size }}</p>
-#}
+	
+	{### Get the current segment, which is an array of all image pages to appear on this screen #}
 	{% set current_segment = all_pages|slice((current_segment_number - 1) * segment_size, segment_size) %}
+
+
+
+	<header class="major">
+		{% if meta.title %}<h1>{{ meta.title }}</h1>{% endif %}
+
+
+{### DISPLAY CURRENT TAGS/IMAGE COUNT ###}
+		<h4 class="inline">Viewing {{ all_pages|length }} images{% if requested_tags %} tagged:{% endif %}</h4>
+		
+	{% if requested_tags %}
+		<ul class="tags">
+			{% for tag in requested_tags|sort %}
+			<li>
+				{### We need to remove this tag from the requested_tags array, and put the remaining tags into the target URL #}
+				{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
+				<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+	
+{### SHOW/HIDE ADULT-ONLY CONTENT ###}
+	{% if all_pages|length > 0 %}
+		{{ include("_segment-adult-toggle.twig") }}
+	{% endif %}
+	
+	</header>
+
+
+{### PAGINATION (UPPER) ###}
+	{{ include("_segment-gallery-index-pagination.twig") }}
+
+
+{### IMAGE THUMBNAILS ###}
+	{% if all_pages|length <= 0 %}
+	
+		<p><img src="{{ theme_url }}/img/dotdotdot.jpg" class="align-center"></p>
+		
+	{% else %}
+	
+		<div id="thumbnails">
+	{% for page in current_segment %}
+
+		{### Pass the current tags filter in the URL to the image page, so it can use the same filter for navigating prev/next images #}
+			<a href="{{ page.url }}{% if requested_tags %}?tag={{ requested_tags_string|url_encode }}{% endif %}">
+			<abbr title="{{ page.title }}">
+
+		{% if page.meta.adultonly and username != "eighteen" %}
+
+			{### To obscure this thumbnail, resize it to an extremely low resolution, then use CSS to apply a blur #}
+			{### The resize() function comes from the Pico plugin ImageResize #}
+				<img class="placeholder" src="/{{ resize( 'assets/' ~ page.meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
+			
+		{% else %}
+			
+			{### Resize to a reasonable thumbnail resolution #}
+				<img src="/{{ resize( 'assets/' ~ page.meta.image, null, config.gallery.thumbnail_size ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
+				
+		{% endif %}
+
+
+		{% if ("18+" in page.meta.tags) or (page.meta.moreimages) %}
+			{### Create a div to overlay on the image, which will contain one or more icons #}
+				<div class="icons">
+				
+			{% if "18+" in page.meta.tags %}
+				{### An 18+ warning icon (based on tags, meaning at least one image in the group is adult-only) #}
+					<abbr title="Adult-only image"><img src="{{ theme_url }}/img/warning.svg"></abbr>
+			{% endif %}
+
+			{% if page.meta.moreimages %}
+				{### A "group" icon, indicating there's more than one image here #}
+					<abbr title="Multiple variants"><img src="{{ theme_url }}/img/cards.svg"></abbr>
+			{% endif %}
+
+				</div>		
+		{% endif %}
+		
+			</abbr>
+			</a>
+		
+	{% endfor %}
+		</div>
+	{% endif %}
+	
+		
+{### PAGINATION (LOWER) ###}
+	{{ include("_segment-gallery-index-pagination.twig") }}
 	
 
-{% if total_segments > 1 %}
-	<div class="pagination">
-		<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}" class="previous">Prev</a>
-	{% for seg in 1..total_segments %}
-		<a href="{{ current_page.url }}?page={{ seg }}" class="page{% if seg == current_segment_number %} active{% endif %}">{{ seg }}</a>
-	{% endfor %}
-		<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}" class="next">Next</a>
-	</div>
-{% endif %}
+{### TAG CLOUD ###}
+	{### Tag cloud for the user to choose from.  If a tag is currently active, it gets the "active" class, and clicking it will remove it from the active tags.  No need for the "page=" URL parameter on these, changing the tags will always send the user to segment 1. #}
+		<h4 class="align-center">Filter by tag</h4>
+		<ul class="tags">
+		{% for tag in all_site_tags|sort %}
+			<li>
+			{% if tag in requested_tags %}
+				{### We need to remove this tag from the requested_tags array, and put the remaining tags into the target URL #}
+				{% set new_tags_string = requested_tags|filter(v => v != tag)|join(',') %}
+				<a href="{{current_page.url}}?tag={{ new_tags_string|url_encode }}" class="active">{{ tag|raw }}</a>
+			{% else %}
+				{### Simply tack this new tag onto the target URL, after any existing "?tag=" parameter #}
+				<a href="{{current_page.url}}?tag={{ ((requested_tags ? requested_tags_string ~ ',') ~ tag)|url_encode }}">{{ tag|raw }}</a>
+			{% endif %}
+			</li>
+		{% endfor %}
+		</ul>
 
-
-	<div id="thumbnails">
-	{% for page in current_segment %}
-		<a href="{{ page.url }}">
-			{# The resize() function comes from the Pico plugin ImageResize #}
-			{{ page.meta.adultonly }} <img src="/{{ resize( 'assets/' ~ page.meta.image, null, 300 ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
-		</a>
-	{% endfor %}
-	</div>
-
-
+		
 {% endblock page_content %}
 
 
+{### Insert JavaScript specifically for this gallery index page #}
 {% block scripts %}
 
-	{{ parent() }}
 	<script src="{{ theme_url }}/js/bigraccoon-gallery.js"></script>
+	{{ parent() }}
 	
 {% endblock scripts %}

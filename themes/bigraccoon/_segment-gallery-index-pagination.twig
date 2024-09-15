@@ -1,0 +1,94 @@
+
+	{### If there's more than one segment full of images, we need navigation to move between them.  The links on these buttons must preserve any existing tag filters. #}
+	{% if total_segments > 1 %}
+		<div class="pagination">
+		
+		{### "Previous" button - disabled if we're on segment 1 #}
+			<a href="{{ current_page.url }}?page={{ current_segment_number - 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="previous{% if current_segment_number - 1 < 1 %} disabled{% endif %}">
+				<svg role="img" class="arrow" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"></path></svg>
+				<span class="title">Prev</span>
+			</a>
+			
+		{### Now for a list of segment/page numbers, to go to any specific number. #}
+		{#   More than 9 will be too wide for many displays, so some will be omitted with ellipses. #}
+		{#   The first and last page will always be available, as well as the current page.  Others will be assigned a class that can be hidden with CSS based on screen width.  On mobile, only up to 3 pages will be listed: first, last, and (if it's neither of those) current. #}
+		{#   The last challenge is to stick ellipses in where page numbers are being skipped. #}
+		
+		{# 1st page (which is always present) #}
+		{% if current_segment_number == 1 %}
+			<span class="active">1</span>
+		{% else %}
+			<a href="{{ current_page.url }}?page=1{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page{% if current_segment_number == 1 %} active{% endif %}">1</a>
+		{% endif %}
+		
+					
+		{# If there are more than 2 pages (which are the first and last pages), we need to start listing them all #}
+		{% if total_segments > 2 %}
+			
+			{# This is where an ellipsis may appear, but not if the current page is one of the first 4. #}
+			{# If there are 9 or fewer total pages, it is not needed on desktop, but is needed when "shrunk" on mobile. #}
+			{# If there are 4 or fewer total pages, then no ellipses are needed on mobile either. #}
+			{% if current_segment_number > 4 %}
+				<span{% if total_segments <= 9 %} class="shrunk"{% endif %}>...</span>
+			{% elseif (total_segments > 4) and (current_segment_number > 3) %}
+				<span class="shrunk">...</span>
+			{% endif %}
+
+			{% if total_segments <= 9 %}
+				{# If there are 9 or fewer pages, then we never need to omit any from the list. #}
+				{% set start = 2 %}
+				{% set end = total_segments - 1 %}
+			{% elseif current_segment_number <= 4 %}
+				{# If we're currently on one of the first 4 pages, we should only omit from the end of the list. #}
+				{% set start = 2 %}
+				{% set end = 7 %}
+			{% elseif current_segment_number >= total_segments - 3 %}
+				{# Similarly, if we're on one of the last 4 pages, we should only omit from the beginning of the list #}
+				{% set start = total_segments - 6 %}
+				{% set end = total_segments - 1 %}
+			{% else %}
+				{# In all other cases, both start and end of the list will be omitted.  We need to centre the list on the current_segment_number. #}
+				{% set start = current_segment_number - 2 %}
+				{% set end = current_segment_number + 2 %}
+			{% endif %}
+			
+			{% for seg in start..end %}
+				{% if seg == current_segment_number %}
+					{# The current page number is not a link, just a simple number #}
+					<span class="active">{{ seg }}</span>
+				{% elseif (seg == 2 and current_segment_number == 3) or (seg == total_segments - 1 and current_segment_number == total_segments - 2) or total_segments <= 4%}
+					{# A page link must always remain visible if there are 4 or fewer total pages, or if it's within 2 pages of the first or last page #}
+					<a href="{{ current_page.url }}?page={{ seg }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page">{{ seg }}</a>
+				{% else %}
+					{# This page can be "omitted" on mobile to save space #}
+					<a href="{{ current_page.url }}?page={{ seg }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page omittable">{{ seg }}</a>
+				{% endif %}
+			{% endfor %}
+			
+			{# This is where an ellipsis may appear, but not if the current page is one of the last 4. #}
+			{# If there are 9 or fewer pages, it is not needed on desktop, but is needed when "shrunk" on mobile. #}
+			{# If there are 4 or fewer total pages, then no ellipses are needed on mobile either. #}
+			{% if current_segment_number < total_segments - 3 %}
+				<span{% if total_segments <= 9 %} class="shrunk"{% endif %}>...</span>
+			{% elseif (total_segments > 4) and (current_segment_number < total_segments - 2) %}
+				<span class="shrunk">...</span>
+			{% endif %}
+			
+		{% endif %}
+
+
+		{# Last page (which is always present) #}
+		{% if current_segment_number == total_segments %}
+			<span class="active">{{ total_segments }}</span>
+		{% else %}
+			<a href="{{ current_page.url }}?page={{ total_segments }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="page{% if current_segment_number == total_segments %} active{% endif %}">{{ total_segments }}</a>
+		{% endif %}
+		
+		{### "Next" button - disabled if we're on the last segment #}
+			<a href="{{ current_page.url }}?page={{ current_segment_number + 1 }}{% if requested_tags %}&tag={{ requested_tags_string|url_encode }}{% endif %}#main" class="next{% if current_segment_number + 1 > total_segments %} disabled{% endif %}">
+				<span class="title">Next</span>
+				<svg role="img" class="arrow" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg>
+			</a>
+		</div>
+	{% endif %}
+	

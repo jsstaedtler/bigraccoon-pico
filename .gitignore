@@ -25,8 +25,5 @@ desktop.ini
 /gallery/
 /testing/
 
-### Live site config (but the config template will remain)
-/config/config.yml
-
 ### .htaccess may be different for each server
 .htaccess
