@@ -1,3 +1,5 @@
+* "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
+* Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
 * Make BG image fade in sooner?
 * Add OpenGraph meta tags to all pages (pulling data programmatically)
@@ -34,7 +36,7 @@
 * Rebuild gallery in Pico
     * style.css line 1717 is for gallery-index pagination, but it's messing up article/news pagination
 	* Submitting a comment shuld preserve the URL parameters
-	* Make "Medium: Pencil/Digital" tags
+	* Make "Media: Pencil/Digital" tags
 	* Find out how piwigo can resize images so cleanly
 	* Any good way to count pageviews?
 	* Make better 18+ icon for thumbnails
