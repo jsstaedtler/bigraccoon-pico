@@ -7,14 +7,14 @@
 {% extends "_base.twig" %}
 
 
-{### Put the main image into the background, overriding the external CSS style file, as well as blurring an adult-only image #}
+{### Put the main image into the background, overriding the external CSS style file, as well as pixelating an adult-only image #}
 {% block head_style %}
 	{{ parent() }}
 	
 	<style>
 	
 	{% if meta.adultonly and username != "eighteen" %}
-		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
 	{% else %}
 		#wrapper > .bg { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); }
 	{% endif %}
@@ -31,7 +31,7 @@
 	<style>
 	
 	{% if meta.adultonly and username != "eighteen" %}
-		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
+		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.2)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size ) }}{% else %}{{ 'assets/' ~ current_parent.meta.image }}{% endif %}"); filter: blur(25px);}
 	{% else %}
 		#wrapper { background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url("/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}{% else %}{{ current_parent.meta.image }}{% endif %}"); }
 	{% endif %}
@@ -97,7 +97,7 @@
 	{% set previous_thumb = NULL %}
 	{% if previous_page.meta.image %}
 		{% if previous_page.meta.adultonly and username != "eighteen" %}
-			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.blurred_image_size) %}
+			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size) %}
 			{% set previous_placeholder = true %}
 		{% else %}
 			{% set previous_thumb = '/' ~ resize('assets/' ~ previous_page.meta.image, null, config.gallery.image_size) %}
@@ -108,7 +108,7 @@
 	{% set next_thumb = NULL %}
 	{% if next_page.meta.image %}
 		{% if next_page.meta.adultonly and username != "eighteen" %}
-			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.blurred_image_size) %}
+			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size) %}
 			{% set next_placeholder = true %}
 		{% else %}
 			{% set next_thumb = '/' ~ resize('assets/' ~ next_page.meta.image, null, config.gallery.image_size) %}
@@ -166,7 +166,7 @@
 
 						<a href="/adult-content?dest={{ current_page.id }}">
 						
-							<img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.blurred_image_size ) }}" alt="Adult-only content hidden">
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size, config.gallery.pixel_size ) }}" alt="Adult-only content hidden">
 
 							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
 							<div class="icons centered">
@@ -201,7 +201,7 @@
 
 						<a href="/adult-content?dest={{ current_page.id }}">
 						
-							<img class="placeholder" src="/{{ resize( 'assets/' ~ thisimage.image, null, 30 ) }}" alt="Adult-only content hidden">
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size, config.gallery.pixel_size) }}" alt="Adult-only content hidden">
 						
 							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
 							<div class="icons centered">
@@ -213,7 +213,7 @@
 					{% else %}
 	
 						<a href="{{ assets_url }}/{{ thisimage.image }}">
-							<img src="/{{ resize( 'assets/' ~ thisimage.image, null, 800 ) }}"{% if thisimage.imagedescription %} alt="{{ thisimage.imagedescription }}"{% endif %}>
+							<img src="/{{ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) }}"{% if thisimage.imagedescription %} alt="{{ thisimage.imagedescription }}"{% endif %}>
 						</a>
 						
 					{% endif %}
@@ -258,11 +258,11 @@
 						{% if imagepage.meta.adultonly and username != "eighteen" %}
 						
 							{# The resize() function comes from the Pico plugin ImageResize #}
-							<img class="placeholder" src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, 30 ) }}" alt="Adult-only content hidden">
+							<img class="placeholder" src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size ) }}" alt="Adult-only content hidden">
 						
 						{% else %}
 						
-							<img src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, 300 ) }}"{% if imagepage.meta.imagedescription %} alt="{{ imagepage.meta.imagedescription }}"{% endif %}>
+							<img src="/{{ resize( 'assets/' ~ imagepage.meta.image, null, config.gallery.thumbnail_size ) }}"{% if imagepage.meta.imagedescription %} alt="{{ imagepage.meta.imagedescription }}"{% endif %}>
 							
 						{% endif %}
 						

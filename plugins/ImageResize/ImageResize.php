@@ -73,26 +73,29 @@ class ImageResize extends AbstractPicoPlugin
     }
 
     /**
-     * Resize an image, save it to a temporary folder and return new filename
+     * Resize an image, optionally apply a pixellate filter, then save it to a temporary folder and return new filename
      * @param string $file
      * @param int $width
      * @param int $height
+	 * @param int $pixels
      * @return string
      */
-    public function resize($file, $width = null, $height = null)
+    public function resize($file, $width = null, $height = null, $pixels = null)
     {
-        if (is_null($width) && is_null($height)) {
-            error_log(new InvalidArgumentException("Width and height can't both be null"));
+        if (is_null($width) && is_null($height) && is_null($pixels)) {
+            error_log(new InvalidArgumentException("Width and height can't both be null when not applying pixellation"));
             return $file;
         }
 
         // determine resized filename
-        $newFile = sprintf('%s/%s/%s-%dx%d.jpg',
+		$pxstr = is_null($pixels) ? '' : ('p' . $pixels);
+        $newFile = sprintf('%s/%s/%s-%dx%d%s.jpg',
             dirname($file),
             $this->folder,
             pathinfo($file, PATHINFO_FILENAME),
             $width,
-            $height
+            $height,
+			$pxstr
         );
 
         // if we have already resized, just return the existing file
@@ -130,8 +133,18 @@ class ImageResize extends AbstractPicoPlugin
             $image->writeImage($newFile);
         } else {
             $image = imagecreatefromstring(file_get_contents($file));
-            $newResource = imagescale($image, $resizedWidth, $resizedHeight, IMG_BLACKMAN);
-            imagejpeg($newResource, $newFile, $this->quality);
+			$newResource = $image;
+			
+			if (!(is_null($width) && is_null($height))) {
+				$image = imagescale($image, $resizedWidth, $resizedHeight, IMG_BLACKMAN);
+			}
+			
+			if (!is_null($pixels)) {
+				imagefilter($image, IMG_FILTER_PIXELATE, $pixels, true);	// true means to use a newer pixellation algorithm
+			}
+			
+            imagejpeg($image, $newFile, $this->quality);
+			imagedestroy($image);
         }
 
         return $newFile;
