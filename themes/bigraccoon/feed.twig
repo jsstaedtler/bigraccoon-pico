@@ -32,12 +32,13 @@
 		{% if section[0] == 'gallery' %}
 		
 			{% if page.meta.adultonly %}
+				<description>&lt;p&gt;(Adult-only content - please visit the site to view)&lt;/p&gt;{{ page.id|content|e }}</description>
 				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size) %}
 			{% else %}
+				<description>{{ page.id|content|e }}</description>
 				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
 			{% endif %}
 			<enclosure url="{{ base_url }}/{{ image }}" type="image/jpeg" />
-			<description>&lt;p&gt;(Adult-only content - please visit the site to view)&lt;/p&gt;{{ page.id|content|e }}</description>
 
 		{% else %}
 		
