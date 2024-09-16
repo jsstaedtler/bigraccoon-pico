@@ -34,11 +34,9 @@
 	* Brownish (like a raccoon)?
 	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
-    * style.css line 1717 is for gallery-index pagination, but it's messing up article/news pagination
-	* Submitting a comment shuld preserve the URL parameters
+	* Submitting a comment and shwing adult-only content are losing the the URL parameters for tags
 	* Make "Media: Pencil/Digital" tags
 	* Find out how piwigo can resize images so cleanly
-	* Any good way to count pageviews?
 	* Make better 18+ icon for thumbnails
 	* Add number of images to the "group" icon
 	* Fix padding of gallery index page bar (when squished on mobile)
