@@ -1,26 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  {% set RFC822 = "D, d M Y H:i:s O" %}
-  <channel>
-    <title>{{ site_title | e }}</title>
-    <description>{{ pages.index.meta.description | e }}</description>
-    <link>{{ base_url }}/</link>
-    <atom:link href="{{ base_url ~ "/feed" }}" rel="self" type="application/rss+xml"/>
-    <pubDate>{{ "now" | date(RFC822) }}</pubDate>
-    <lastBuildDate>{{ "now" | date(RFC822) }}</lastBuildDate>
-    <generator>Pico</generator>
-    {% for page in pages if pages(page.id) | length == 0 and page.id not in ['index','feed','gallery/index','links/index'] and not page.hidden and not end %}
-      <item>
-        <title>{{ page.title | e }}</title>
-        <description>{{ page.id | content | e }}</description>
-        <pubDate>{{ page.date | date(RFC822) }}</pubDate>
-        <link>{{ page.url }}</link>
-        <guid isPermaLink="true">{{ page.url }}</guid>
-        {% for cat in page.meta.categories %}
-          <category>{{ cat | e }}</category>
-        {% endfor %}
-      </item>
-      {% if loop.index == 10 %}{% set end = true %}{% endif %}
-    {% endfor %}
-  </channel>
+
+	{% set RFC822 = "D, d M Y H:i:s O" %}
+
+	<channel>
+		<title>{{ site_title|e }}</title>
+		<description>{{ pages.index.meta.description | e }}</description>
+		<link>{{ base_url }}/</link>
+		<atom:link href="{{ base_url ~ "/feed" }}" rel="self" type="application/rss+xml"/>
+		<pubDate>{{ "now"|date(RFC822) }}</pubDate>
+		<lastBuildDate>{{ "now"|date(RFC822) }}</lastBuildDate>
+		<generator>Pico</generator>
+
+	{% for page in pages if pages(page.id)|length == 0 and page.id not in ['index','feed','rss','articles/index','gallery/index','links/index','news/index'] and not page.hidden and not end %}
+
+		<item>
+
+			<title>{{ page.title|e }}</title>
+			<pubDate>{{ page.date|date(RFC822) }}</pubDate>
+			<link>{{ page.url }}</link>
+			<guid isPermaLink="true">{{ page.url }}</guid>
+
+		{### If this page is a child of a top-level section, that section name will be the first element split from the page id #}
+		{% set section = page.id|split('/') %}
+		{% if section[0] in ['articles', 'gallery', 'news'] %}
+			<category>{{ section[0]|e }}</category>
+			<comments>{{ page.url }}#comments</comments>
+		{% endif %}
+
+		{### If this is a gallery post, it needs some formatting help #}
+		{% if section[0] == 'gallery' %}
+		
+			{% if page.meta.adultonly %}
+				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size) %}
+			{% else %}
+				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
+			{% endif %}
+			<enclosure url="{{ base_url }}/{{ image }}" type="image/jpeg" />
+			<description>&lt;p&gt;(Adult-only content - please visit the site to view)&lt;/p&gt;{{ page.id|content|e }}</description>
+
+		{% else %}
+		
+			<enclosure url="{{ assets_url }}/{{ page.meta.image }}" type="image/jpeg" />
+			<description>{{ page.id|content|e }}</description>
+		
+		{% endif %}
+
+		</item>
+
+		{% if loop.index == 10 %}{% set end = true %}{% endif %}
+		  
+	{% endfor %}
+
+	</channel>
+  
 </rss>
