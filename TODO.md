@@ -1,3 +1,4 @@
+Add IP address filtering to view counter
 * "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
 * Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
@@ -34,7 +35,8 @@
 	* Brownish (like a raccoon)?
 	* Or the existing bright blue could be more prominent
 * Rebuild gallery in Pico
-	* Submitting a comment and shwing adult-only content are losing the the URL parameters for tags
+	* Submitting a comment and showing adult-only content are losing the the URL parameters for tags
+	* Pages 8 and 10 have messed up row lengths
 	* Make "Media: Pencil/Digital" tags
 	* Find out how piwigo can resize images so cleanly
 	* Make better 18+ icon for thumbnails
