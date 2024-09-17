@@ -1,4 +1,7 @@
-Add IP address filtering to view counter
+View counter
+    * Add IP address filtering
+    * Split into daily files in "contents/_stats"
+    * Build a template to view stats for daily/monthly/etc.
 * "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
 * Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
