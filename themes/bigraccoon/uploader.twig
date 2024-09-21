@@ -2,15 +2,28 @@
 <html>
 	<head>
 		<style>
-			div.media {
-				display: inline-block;
+			p#submission-error {
+				color: red;
+			}
+			
+			div#available-tags {
+				width: 20rem;
+				height: 10rem;
+				border: 2px solid;
+				overflow-y: scroll;
+			}
+			
+			div.tag-option {
+				margin: 5px;
 			}
 		</style>
 	</head>
 	
 	<body>
+	
+	<p id="submission-error">{{ upload_error }}</p>
 
-	<form method="post" enctype="multipart/form-data" action=".">
+	<form method="post" enctype="multipart/form-data" action="">
 	
 	<div class="form" id="main-form">
 		{# This hidden field is present so the plugin can be sure the submission came from our form #}
@@ -41,6 +54,9 @@
 			const rightNow = new Date();
 			document.getElementById('date-picker').value = rightNow.toISOString().slice(0,10) + 'T00:00';
 		</script>
+		
+		<p><label for="md-filename">Title:</label></p>
+		<p><input name="title" id="title" /></p>
 
 		<p><label for="media-picker">Media File:</label></p>
 		<p><input type="file" name="media-picker" id="media-picker" multiple="false" /></p>
@@ -66,19 +82,18 @@
 		{### Collect all tags currently in use #}
 		{% set all_site_tags = get_all_tags() %}
 		
-		<p><label for="available-tags">Available tags:</label></p>
-		<p><select name="available-tags" id="available-tags" multiple size="8">
+		<p>Available tags:</p>
+		<div id="available-tags">
 			{% for tag in all_site_tags|sort %}
-				<option>{{ tag }}</option>
+				<div class="tag-option">{{ tag }}</div>
 			{% endfor %}
-			</select>
-		</p>
+		</div>
 		<p><label>New tag:
 			<input name="new-tag" id="new-tag" /><input type="button" id="tag-button" value="Add" />
 			</label></p>
 		<p>Selected tags:
 			<ol id="selected-tags-list"></ol>
-			<input name="selected-tags" id="selected-tags-field" size="50" disabled />
+			<input name="selected-tags" id="selected-tags-field" size="50" />
 		</p>
 		
 		<p><label for="related-images">Related images: (one page name per line, no YAML formatting)</label></p>
@@ -115,7 +130,7 @@
 		const variantsAddButton = document.getElementById("variants-add-button");
 		const previewDiv = document.getElementById("preview");
 		
-		
+
 		function returnFileSize(number) {
 			if (number < 1e3) {
 				return `${number} bytes`;
@@ -256,7 +271,9 @@
 
 		mediaFile.addEventListener("change", updatePreview);
 		
-		tagSelect.addEventListener("change", function() { addTag(tagSelect.value); });
+		for (const el of tagSelect.children) {
+			el.addEventListener("click", function(e) { addTag(e.target.textContent); });
+		}
 		
 		tagInput.addEventListener("keydown", function(e) {
 			if (e.key == "Enter") {
