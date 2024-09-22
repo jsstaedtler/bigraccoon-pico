@@ -2,13 +2,48 @@
 <html>
 	<head>
 		<style>
+			body {
+				font-size: 18px;
+				font-family: sans-serif;
+			}
+			
+			form {
+				display: flex;
+			}
+			
+			p {
+				margin: 0.5em 0 0;
+			}
+			
 			p#submission-error {
 				color: red;
 			}
 			
+			label {
+				font-size: 18px;
+			}
+			
+			input, textarea {
+				max-width: 100%;
+				border: 2px solid gray;
+			}
+			
+			input[type="submit"] {
+				width: 10em;
+				height: 5em;
+				text-align: center;
+			}
+				
+			#date-picker {
+				width: auto;
+				height: 2em;
+			}
+			
 			div#available-tags {
-				width: 20rem;
-				height: 10rem;
+				width: 20em;
+				height: 10em;
+				max-width: 100%;
+				margin-top: 1em;
 				border: 2px solid;
 				overflow-y: scroll;
 			}
@@ -28,7 +63,8 @@
 	<div class="form" id="main-form">
 		{# This hidden field is present so the plugin can be sure the submission came from our form #}
 		<input type="hidden" name="form_name" value="GalleryUploader">
-	
+
+{#	
 		{% set siteSections = [] %}
 		{% for page in pages() %}
 			{% set splitId = page.id|split('/', -1) %}
@@ -36,7 +72,7 @@
 				{% set siteSections = siteSections|merge([splitId[0]]) %}
 			{% endif %}
 		{% endfor %}
-{#		
+	
 		<p><label>Choose a section:</label></p>
 		<select name="section">
 			<option value="">None (root)</option>
@@ -54,31 +90,31 @@
 			const rightNow = new Date();
 			document.getElementById('date-picker').value = rightNow.toISOString().slice(0,10) + 'T01:00';
 		</script>
-		
+		<hr>
 		<p><label for="md-filename">Title:</label></p>
 		<p><input name="title" id="title" /></p>
-
+		<hr>
 		<p><label for="media-picker">Media File:</label></p>
 		<p><input type="file" name="media-picker" id="media-picker" multiple="false" /></p>
-
+		<hr>
 		<p><label for="md-filename">Desired Filename:</label></p>
 		<p><input name="md-filename" id="md-filename" /> .md/.png/.jpg</p>
-		
+		<hr>
 		<p><label for="media-width">Media Width:</label></p>
 		<p><input name="media-width" id="media-width" /></p>
-		
+		<hr>
 		<p><label for="media-height">Media Height:</label></p>
 		<p><input name="media-height" id="media-height" /></p>
-		
+		<hr>
 		<p><label for="media-description">Media description (alt text):</label></p>
 		<p><textarea name="media-description" id="media-description" rows="8" cols="50"></textarea></p>
-		
+		<hr>
 		<p><label for="adult-only">Adult-only:</label>
 		<input type="checkbox" name="adult-only" /></p>
-		
+		<hr>
 		<p><label for="page-hidden">Hidden:</label>
 		<input type="checkbox" name="page-hidden" /></p>
-		
+		<hr>
 		{### Collect all tags currently in use #}
 		{% set all_site_tags = get_all_tags() %}
 		
@@ -96,17 +132,17 @@
 			<input name="selected-tags" id="selected-tags-field" size="50" />
 		</p>
 		
-		<p><label for="related-images">Related images: (one page name per line, no YAML formatting)</label></p>
+		<p><label for="related-images">Related images: (one page ID per line, no YAML formatting)</label></p>
 		<p><textarea name="related-images" id="related-images" rows="8" cols="50"></textarea></p>
-		
+		<hr>
 		<p>Variants:</p>
 		<div id="variants-form"><ol id="variants-list"></ol></div>
 		<p><input type="button" id="variants-add-button" value="Add New Variant" /></p>
-		
+		<hr>
 		<p><label for="text-content">Text content (markdown):</label></p>
 		<p><textarea name="text-content" id="text-content" rows="8" cols="50"></textarea></p>
-
-		<button>Save</button>
+		<hr>
+		<input type="submit" value="Save" />
 		
 	</div>
 		
