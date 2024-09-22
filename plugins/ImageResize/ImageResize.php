@@ -133,10 +133,20 @@ class ImageResize extends AbstractPicoPlugin
             $image->writeImage($newFile);
         } else {
             $image = imagecreatefromstring(file_get_contents($file));
-			$newResource = $image;
-			
+
 			if (!(is_null($width) && is_null($height))) {
-				$image = imagescale($image, $resizedWidth, $resizedHeight, IMG_BLACKMAN);
+				$newResource = imagecreatetruecolor($resizedWidth, $resizedHeight);
+				imagealphablending($newResource, false);
+				imagesavealpha($newResource, true);
+				if (function_exists('imageantialias'))
+				{
+				  imageantialias($newResource, true);
+				}
+
+				// This function provides better resultng image quality than imagescale()
+				imagecopyresampled($newResource, $image, 0, 0, 0, 0, $resizedWidth, $resizedHeight, $originalWidth, $originalHeight);
+				imagedestroy($image);
+				$image = $newResource;
 			}
 			
 			if (!is_null($pixels)) {
