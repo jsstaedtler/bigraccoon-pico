@@ -1,2 +1,2 @@
 # Keep the live site's config out of this repository
-config.yml
+*.yml
