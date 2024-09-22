@@ -26,6 +26,11 @@ class GalleryUploader extends AbstractPicoPlugin
 			$twigVariables['upload_error'] = '';
 
 
+			if (!isset($_POST['pass']) || $_POST['pass'] != 'Squ1rrel') {
+				$twigVariables['upload_error'] = 'Incorrect password';
+                return;
+            }
+
 			if (!isset($_POST['title']) || strlen($_POST['title']) == 0) {
 				$twigVariables['upload_error'] = 'No title provided';
                 return;
