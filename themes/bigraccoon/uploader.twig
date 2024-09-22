@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			body {
+				font-size: 18px;
+				font-family: sans-serif;
+			}
+			
+			form {
+				display: flex;
+			}
+			
+			p {
+				margin: 0.5em 0 0;
+			}
+			
+			p#submission-error {
+				color: red;
+			}
+			
+			label {
+				font-size: 18px;
+			}
+			
+			input, textarea {
+				max-width: 100%;
+				border: 2px solid gray;
+			}
+			
+			input[type="submit"] {
+				width: 10em;
+				height: 5em;
+				text-align: center;
+			}
+				
+			#date-picker {
+				width: auto;
+				height: 2em;
+			}
+			
+			div#available-tags {
+				width: 20em;
+				height: 10em;
+				max-width: 100%;
+				margin-top: 1em;
+				border: 2px solid;
+				overflow-y: scroll;
+			}
+			
+			div.tag-option {
+				margin: 5px;
+			}
+		</style>
+	</head>
+	
+	<body>
+	
+	<p id="submission-error">{{ upload_error }}</p>
+
+	<form method="post" enctype="multipart/form-data" action="">
+	
+	<div class="form" id="main-form">
+		{# This hidden field is present so the plugin can be sure the submission came from our form #}
+		<input type="hidden" name="form_name" value="GalleryUploader">
+
+{#	
+		{% set siteSections = [] %}
+		{% for page in pages() %}
+			{% set splitId = page.id|split('/', -1) %}
+			{% if splitId[0] %}
+				{% set siteSections = siteSections|merge([splitId[0]]) %}
+			{% endif %}
+		{% endfor %}
+	
+		<p><label>Choose a section:</label></p>
+		<select name="section">
+			<option value="">None (root)</option>
+			
+			{% for sec in siteSections %}
+			<option value="{{ sec }}">{{ sec }}</option>
+			{% endfor %}
+			
+		</select>
+		</label></p>
+#}		
+		<p><label for="date-picker">Date & time:</label></p>
+		<p><input type="datetime-local" name="date-picker" id="date-picker" /></p>
+		<script>
+			const rightNow = new Date();
+			document.getElementById('date-picker').value = rightNow.toISOString().slice(0,10) + 'T01:00';
+		</script>
+		<hr>
+		<p><label for="md-filename">Title:</label></p>
+		<p><input name="title" id="title" /></p>
+		<hr>
+		<p><label for="media-picker">Media File:</label></p>
+		<p><input type="file" name="media-picker" id="media-picker" multiple="false" /></p>
+		<hr>
+		<p><label for="md-filename">Desired Filename:</label></p>
+		<p><input name="md-filename" id="md-filename" /> .md/.png/.jpg</p>
+		<hr>
+		<p><label for="media-width">Media Width:</label></p>
+		<p><input name="media-width" id="media-width" /></p>
+		<hr>
+		<p><label for="media-height">Media Height:</label></p>
+		<p><input name="media-height" id="media-height" /></p>
+		<hr>
+		<p><label for="media-description">Media description (alt text):</label></p>
+		<p><textarea name="media-description" id="media-description" rows="8" cols="50"></textarea></p>
+		<hr>
+		<p><label for="adult-only">Adult-only:</label>
+		<input type="checkbox" name="adult-only" /></p>
+		<hr>
+		<p><label for="page-hidden">Hidden:</label>
+		<input type="checkbox" name="page-hidden" /></p>
+		<hr>
+		{### Collect all tags currently in use #}
+		{% set all_site_tags = get_all_tags() %}
+		
+		<p>Available tags:</p>
+		<div id="available-tags">
+			{% for tag in all_site_tags|sort %}
+				<div class="tag-option">{{ tag }}</div>
+			{% endfor %}
+		</div>
+		<p><label>New tag:
+			<input name="new-tag" id="new-tag" /><input type="button" id="tag-button" value="Add" />
+			</label></p>
+		<p>Selected tags:
+			<ol id="selected-tags-list"></ol>
+			<input name="selected-tags" id="selected-tags-field" size="50" />
+		</p>
+		
+		<p><label for="related-images">Related images: (one page ID per line, no YAML formatting)</label></p>
+		<p><textarea name="related-images" id="related-images" rows="8" cols="50"></textarea></p>
+		<hr>
+		<p>Variants:</p>
+		<div id="variants-form"><ol id="variants-list"></ol></div>
+		<p><input type="button" id="variants-add-button" value="Add New Variant" /></p>
+		<hr>
+		<p><label for="text-content">Text content (markdown):</label></p>
+		<p><textarea name="text-content" id="text-content" rows="8" cols="50"></textarea></p>
+		<hr>
+		<input type="submit" value="Save" />
+		
+	</div>
+		
+
+	<div class="media" id="preview">
+		<p>No image</p>
+	</div>
+	
+	
+	</form>
+	
+	
+			
+	<script>
+		const mediaFile = document.getElementById("media-picker");
+		const tagSelect = document.getElementById("available-tags");
+		const tagInput = document.getElementById("new-tag");
+		const tagButton = document.getElementById("tag-button");
+		const selectedTags = document.getElementById("selected-tags-list");
+		const selectedTagsField = document.getElementById("selected-tags-field");
+		const variantsAddButton = document.getElementById("variants-add-button");
+		const previewDiv = document.getElementById("preview");
+		
+
+		function returnFileSize(number) {
+			if (number < 1e3) {
+				return `${number} bytes`;
+			} else if (number >= 1e3 && number < 1e6) {
+				return `${(number / 1e3).toFixed(1)} KB`;
+			} else {
+				return `${(number / 1e6).toFixed(1)} MB`;
+			}
+		}
+		
+
+		function updatePreview() {
+			while (previewDiv.firstChild) {
+				previewDiv.removeChild(previewDiv.firstChild);
+			}
+
+			const curFiles = mediaFile.files;
+			if (curFiles.length === 0) {
+				const para = document.createElement("p");
+				para.textContent = "No files currently selected for upload";
+				previewDiv.appendChild(para);
+			} else {
+				const file = curFiles[0];	// Multiple files are not allowed, so we should get an array of length==1
+
+				const para = document.createElement("p");
+				para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size,)}.`;
+				
+				// Fill form field with filename minus extension
+				document.getElementById("md-filename").value = file.name.replace(/\.[^/.]+$/, "");
+				
+				
+				const image = document.createElement("img");
+				image.onload = function() {
+					// Fill form fields once image is loaded and dimensions are available
+					document.getElementById("media-width").value = image.width;
+					document.getElementById("media-height").value = image.height;
+				};
+				image.src = URL.createObjectURL(file);
+				image.alt = image.title = file.name;
+
+				previewDiv.appendChild(image);
+				previewDiv.appendChild(para);
+				
+				
+				// Convert this file to an Image object, from which we can extract width and height
+/*				var fr = new FileReader;
+				fr.onload = function() {
+				
+					var img = new Image;
+					img.onload = function() {
+						document.getElementById("media-width").setRangeText(img.width);
+						document.getElementById("media-height").setRangeText(img.height);
+					};
+					
+					img.src = fr.result;	// img.onload will get width and height once they're available
+					
+				}
+				
+				fr.readAsDataURL(file);		// fr.onload will create the img when the file has finished loading
+*/
+				
+			}
+		}
+		
+		
+		function addTag(tag) {
+		
+			// Ensure it's not an empty string
+			if (tag) {
+				const selectedTagsList = selectedTags.children;
+				const selectedTagsArray = Array.from(selectedTagsList);		// Convert HTMLCollection to a simple Array to make searching easier
+			
+				// If tags have already been selected, we can't add a duplicate entry
+				if (selectedTags.children.length > 0) {
+					
+					// Stop if the tag is already within any of the existing child elements
+					if (selectedTagsArray.some(el => el.textContent == tag)) {
+						return;
+					}
+				}
+				
+				// Append to the tags form field.  If entries are already present, add a "pipe" character to separate from the next one
+				//if (selectedTagsField.value != "") selectedTagsField.value += "|";
+				//selectedTagsField.value += tag;
+				
+				// Add this tag to the visible list of selected tags, from which they can be deselected
+				const item = document.createElement("li");
+				item.textContent = tag;
+				selectedTags.appendChild(item);
+				item.addEventListener("click", (event) => removeTag(event.target));
+				
+				// Serialize the array so it can be submitted in a form field
+				selectedTagsField.value = JSON.stringify(Array.from(selectedTags.children).map((el) => el.textContent));
+				
+			}
+		}
+
+		
+		function removeTag(element) {
+
+			// We're going to remove the tag from the list, but we must also rebuild the text string that goes in the hidden form field
+			//selectedTagsField.value = "";
+
+			//const item = document.createElement("li");
+			//item.textContent = event.target.textContent;
+			selectedTags.removeChild(element);
+			/*
+			for (i = 0; i < selectedTags.children.length; i++) {
+				if (selectedTags.children[i].textContent == event.target.textContent) {
+					selectedTags.removeChild(selectedTags.children[i]);	
+					break;
+			
+					// Note that element [i+1] now becomes element [i],
+				}
+			*/
+				// Serialize the array so it can be submitted in a form field
+
+
+				// and selectedTags.children.length is reduced by 1
+				
+				// We might have deleted the final item; make sure we're not pointing at a nonexistent element
+				//if (i < selectedTags.children.length) {
+					// If entries are already present in the form field, add a "pipe" character to separate from the next one
+					//if (selectedTagsField.value != "") selectedTagsField.value += "|";
+					//selectedTagsField.value += selectedTags.children[i].textContent;
+				
+			//}
+			
+			selectedTagsField.value = JSON.stringify(Array.from(selectedTags.children).map((el) => el.textContent));
+
+		}
+		
+		
+		function addVariant() {
+			const variantsList = document.getElementById("variants-list");
+		}
+
+
+		mediaFile.addEventListener("change", updatePreview);
+		
+		for (const el of tagSelect.children) {
+			el.addEventListener("click", function(e) { addTag(e.target.textContent); });
+		}
+		
+		tagInput.addEventListener("keydown", function(e) {
+			if (e.key == "Enter") {
+				e.preventDefault();
+				addTag(tagInput.value);
+				tagInput.value = "";
+			}
+		});
+		tagInput.addEventListener("keyup", function(e) { if (e.key == "Enter") e.preventDefault(); });
+		
+		tagButton.addEventListener("click", function() {
+			addTag(tagInput.value);
+			tagInput.value = "";
+		});
+		
+	</script>
+	
+  
+	</body>
+</html>
