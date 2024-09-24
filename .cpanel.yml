@@ -15,7 +15,7 @@ deployment:
     # --delete-after will remove deleted files and folders after syncing.
     # Trailing slash on source means to copy the directory contents (and not the directory itself)
     - /bin/rsync -aP ${REPOPATH}/index.php ${DEPLOYPATH}/
-    - /bin/rsync -aP ${REPOPATH}/config/ ${DEPLOYPATH}/config --delete-after
+    - /bin/rsync -aP ${REPOPATH}/config/ ${DEPLOYPATH}/config
     - /bin/rsync -aP ${REPOPATH}/plugins/ ${DEPLOYPATH}/plugins --delete-after
     - /bin/rsync -aP ${REPOPATH}/themes/ ${DEPLOYPATH}/themes --delete-after
     - /bin/rsync -aP ${REPOPATH}/vendor/ ${DEPLOYPATH}/vendor --delete-after
