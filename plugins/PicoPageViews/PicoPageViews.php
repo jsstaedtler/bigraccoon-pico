@@ -7,23 +7,28 @@ class PicoPageViews extends AbstractPicoPlugin
     const API_VERSION = 3;
     protected $enabled = true;
     protected $dependsOn = array();
-    protected $md = './content/_stats.md'; // stats here
+    protected $statsDir = './content/stats';	// Root of stats files
     private $statsPageMeta = array();
     
-    public function onSinglePageLoading($id, &$skipPage)
+/*    public function onSinglePageLoading($id, &$skipPage)
     {
-        if ($id === '_stats') { $skipFile = true; }
+        if (strpos($id, 'stats/') === 0) { $skipPage = true; }
     }
-    
+*/    
     public function onCurrentPageDiscovered(
         array &$currentPage = null,
         array &$previousPage = null,
         array &$nextPage = null
     ) {
+		date_default_timezone_set('America/Toronto');
+		$this->currentDate = date('Y-m-d');
+		$this->currentTime = date('H:i');
+		$this->md = $this->statsDir . '/stats' . $this->currentDate . '.md';
+		
         $currentPage = $this->getPico()->getCurrentPage();
-        if ($currentPage !== null) {
+        if ($currentPage !== null && strpos($id, 'stats/') !== 0) {		// Don't count stats pages themselves
 			
-			// Open the file as read/write without erasing its contents (creating it if it doesn't exist)
+			// Open the stats file as read/write without erasing its contents (creating it if it doesn't exist)
             $file = fopen($this->md, 'c+');
 
 			// Get an exclusive lock on the file; a shared lock for reading isn't appropriate, since another process could then read it before this one has updated it
@@ -61,13 +66,17 @@ class PicoPageViews extends AbstractPicoPlugin
 		// If the current page isn't already in this array, then put it in
         if (!array_key_exists($currentPageId, $this->statsPageMeta['stats'])) {
             $this->statsPageMeta['stats'][$currentPageId] = 0;
-        }                
+        }
+		
+		// Update the datetime in the file
+		$this->statsPageMeta['date'] = $this->currentDate . ' ' . $this->currentTime;
     }
     
     private function saveStats($file)
     {
         // Convert our array of stats into a string of YAML
-        $frontMatterArray = array('stats' => $this->statsPageMeta['stats']);
+        $frontMatterArray['stats'] = $this->statsPageMeta['stats'];
+		$frontMatterArray['date'] = $this->statsPageMeta['date'];
         $yaml = "---\n" . Yaml::dump($frontMatterArray) . "---\n";
 		
 		// Overwrite the stats file with our new data
