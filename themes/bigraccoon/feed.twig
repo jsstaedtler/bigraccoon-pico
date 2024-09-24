@@ -12,7 +12,7 @@
 		<lastBuildDate>{{ "now"|date(RFC822) }}</lastBuildDate>
 		<generator>Pico</generator>
 
-	{% for page in pages if pages(page.id)|length == 0 and page.id not in ['index','feed','rss','articles/index','gallery/index','links/index','news/index'] and not page.hidden and not end %}
+	{% for page in pages if pages(page.id)|length == 0 and page.id not in ['index','feed','rss'] and not (page.id starts with 'stats') and not page.hidden and not end %}
 
 		<item>
 
