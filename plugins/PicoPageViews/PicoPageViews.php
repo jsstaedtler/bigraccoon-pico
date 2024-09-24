@@ -49,8 +49,7 @@ class PicoPageViews extends AbstractPicoPlugin
         $currentPage = $this->getPico()->getCurrentPage();
 		if ($currentPage !== null) {
 			$currentPageId = $currentPage['id'];
-			
-			error_log(strpos($currentPageId, 'stats'));
+
 			if ($currentPageId !== null && strpos($currentPageId, 'stats') !== 0) {		// Don't count stats pages themselves
 				
 				// Open the stats file as read/write without erasing its contents (creating it if it doesn't exist)
