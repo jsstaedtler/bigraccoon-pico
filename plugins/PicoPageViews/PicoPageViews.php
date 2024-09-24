@@ -14,7 +14,28 @@ class PicoPageViews extends AbstractPicoPlugin
     {
         if (strpos($id, 'stats/') === 0) { $skipPage = true; }
     }
-*/    
+*/
+
+    /**
+     * Triggered after Pico has read its configuration
+     *
+     * @see Pico::getConfig()
+     * @see Pico::getBaseUrl()
+     * @see Pico::getBaseThemeUrl()
+     * @see Pico::isUrlRewritingEnabled()
+     *
+     * @param array &$config array of config variables
+     *
+     * @return void
+     */
+    public function onConfigLoaded(array &$config)
+    {
+        $this->template = null;
+        if (isset($config['PicoPageViews']['template']))
+            $this->template = $config['PicoPageViews']['template'];
+    }
+	
+	
     public function onCurrentPageDiscovered(
         array &$currentPage = null,
         array &$previousPage = null,
@@ -26,28 +47,29 @@ class PicoPageViews extends AbstractPicoPlugin
 		$this->md = $this->statsDir . '/stats' . $this->currentDate . '.md';
 		
         $currentPage = $this->getPico()->getCurrentPage();
-        if ($currentPage !== null && strpos($id, 'stats/') !== 0) {		// Don't count stats pages themselves
+		if ($currentPage !== null) {
+			$currentPageId = $currentPage['id'];
 			
-			// Open the stats file as read/write without erasing its contents (creating it if it doesn't exist)
-            $file = fopen($this->md, 'c+');
+			error_log(strpos($currentPageId, 'stats'));
+			if ($currentPageId !== null && strpos($currentPageId, 'stats') !== 0) {		// Don't count stats pages themselves
+				
+				// Open the stats file as read/write without erasing its contents (creating it if it doesn't exist)
+				$file = fopen($this->md, 'c+');
 
-			// Get an exclusive lock on the file; a shared lock for reading isn't appropriate, since another process could then read it before this one has updated it
-            if (flock($file, LOCK_EX)) {
+				// Get an exclusive lock on the file; a shared lock for reading isn't appropriate, since another process could then read it before this one has updated it
+				if (flock($file, LOCK_EX)) {
+					$this->loadStats($file);
+					$this->statsPageMeta['stats'][$currentPageId]++;
+					$this->saveStats($file);
+					
+					// Release the file lock
+					flock($file, LOCK_UN);
+				}
 				
-                $currentPageId = $this->getPico()->getCurrentPage()['id'];
-				
-				$this->loadStats($file);
-                $this->statsPageMeta['stats'][$currentPageId]++;
-                $this->saveStats($file);
-				
-				// Release the file lock
-                flock($file, LOCK_UN);
-				
-            }
-			
-            fclose($file);
+				fclose($file);
 
-        }
+			}
+		}
     }
 
     private function loadStats($file)
@@ -77,6 +99,8 @@ class PicoPageViews extends AbstractPicoPlugin
         // Convert our array of stats into a string of YAML
         $frontMatterArray['stats'] = $this->statsPageMeta['stats'];
 		$frontMatterArray['date'] = $this->statsPageMeta['date'];
+		if(isset($this->template)) $frontMatterArray['template'] = $this->template;	// Update the template name, if it was specified in config.yml
+
         $yaml = "---\n" . Yaml::dump($frontMatterArray) . "---\n";
 		
 		// Overwrite the stats file with our new data
