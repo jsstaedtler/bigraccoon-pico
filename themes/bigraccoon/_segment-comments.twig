@@ -1,12 +1,12 @@
-{% macro print_comments(comments, reply, assets_url) %}
-	{# I have to pass in pico's global assets_url variable as a parameter, because somehow it's not available within the macro #}
+{% macro print_comments(comments, reply, theme_url) %}
+	{# I have to pass in pico's global theme_url variable as a parameter, because somehow it's not available within the macro #}
 
     {% for comment in comments %}
 	
     <div id="{{ comment.guid }}" class="comment{{ reply ? " reply" : "" }}">
 	
 		<span class="date">{{ comment.date | date('D, j M Y') }}</span>
-        <h5><span class="comment-author">{% if comment.author == "j$-$taedtler" %}<img src="{{ assets_url }}/originalauthor-icon.svg" class="original-author">jsstaedtler{% else %}{{ comment.author|raw }}{% endif %}</span> {{ reply ? "replied" : "wrote" }}:</h5>
+        <h5><span class="comment-author">{% if comment.author == "j$-$taedtler" %}<img src="{{ theme_url }}/img/originalauthor-icon.svg" class="original-author">jsstaedtler{% else %}{{ comment.author|raw }}{% endif %}</span> {{ reply ? "replied" : "wrote" }}:</h5>
         <div class="comment-content">{{ comment.content|markdown }}</div>
 		
 {# Disabling replies to comments
@@ -99,9 +99,9 @@
 				<h4><span id="comments-message" class="{{ comments_message_status == 0 ? "green" : "red" }}">
 				
 				{% if comments_message_status == 0 %}
-					<img src="{{ assets_url }}/comment-success.svg" alt="Checkmark">
+					<img src="{{ theme_url }}/img/comment-success.svg" alt="Checkmark">
 				{% else %}
-					<img src="{{ assets_url }}/comment-failure.svg" alt="Warning">
+					<img src="{{ theme_url }}/img/comment-failure.svg" alt="Warning">
 				{% endif %}
 					{{ comments_message }}
 				</span></h4>
@@ -115,7 +115,7 @@
 		{% endif %}
 
 
-		{{ _self.print_comments(comments, false, assets_url) }}
+		{{ _self.print_comments(comments, false, theme_url) }}
 
 	</div>
 
