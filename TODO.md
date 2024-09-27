@@ -1,16 +1,13 @@
 * Modify PicoTags so it can be limited to a specific section instead of the entire site
 * View counter
   * Add IP address filtering
-  * Split into daily files in "contents/_stats"
   * Build a template to view stats for daily/monthly/etc.
 * "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
 * Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
 * Make BG image fade in sooner?
-* Add OpenGraph meta tags to all pages (pulling data programmatically)
 * Store all fonts locally
 	* Pick better header/body fonts?
-* Move all icons/logos to theme folder (instead of in "assets")
 * Add other sites to Links section
 	* Make a new post, to appear after the existing Links content
 	* Provide a link banner/buttons
@@ -41,7 +38,6 @@
 	* Submitting a comment and showing adult-only content are losing the the URL parameters for tags
 	* Pages 8 and 10 have messed up row lengths
 	* Make "Media: Pencil/Digital" tags
-	* Find out how piwigo can resize images so cleanly
 	* Make better 18+ icon for thumbnails
 	* Add number of images to the "group" icon
 	* Fix padding of gallery index page bar (when squished on mobile)
