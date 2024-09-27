@@ -2847,7 +2847,7 @@ input, select, textarea {
 			#main > .posts > article div.news-snippet {
 				max-height: 20rem;
 				overflow: hidden;
-				-webkit-mask: alpha linear-gradient(180deg, white 0 14rem, rgba(255, 255, 255, 0) 19rem) 0 0 / 20rem repeat-x;
+				-webkit-mask: alpha linear-gradient(180deg, white 0 12rem, rgba(255, 255, 255, 0) 19rem) 0 0 / 20rem repeat-x;
 				mask: alpha linear-gradient(180deg, white 0 14rem, rgba(255, 255, 255, 0) 19rem) 0 0 / 20rem repeat-x;
 			}
 

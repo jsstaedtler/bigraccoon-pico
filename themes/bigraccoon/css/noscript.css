@@ -32,14 +32,25 @@
 	body.is-preload #intro {
 		opacity: 1;
 	}
+	
+	body.is-preload #intro.hidden {
+		pointer-events: initial;
+		visibility: visible;
+		-moz-transform: none;
+		-webkit-transform: none;
+		-ms-transform: none;
+		transform: none;
+	}
 
-		body.is-preload #intro:not(.hidden) + #header + #nav {
-			-moz-transform: none;
-			-webkit-transform: none;
-			-ms-transform: none;
-			transform: none;
-			opacity: 1;
-		}
+	body.is-preload #intro:not(.hidden) + #header + #nav {
+		-moz-transform: none;
+		-webkit-transform: none;
+		-ms-transform: none;
+		transform: none;
+		opacity: 1;
+	}
+	
+	
 
 /* Nav */
 

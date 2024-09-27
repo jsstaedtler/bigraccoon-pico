@@ -61,7 +61,9 @@
 
 		<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
-
+			<div class="bg fixed" style="transform: none;"></div>
+			
+			
 		{% block page_header %}
 		
 			<!-- Page header -->
@@ -71,11 +73,13 @@
 			
 		{% endblock page_header %}
 		
+		
 		{% block navbar %}
 
 {{ include("_segment-navbar.twig") }}
 
 		{% endblock navbar %}
+
 
 			<!-- Main -->
 			<div id="main">
@@ -121,13 +125,6 @@
 		
 	{% block scripts %}
 		<!-- Scripts -->
-		<script src="{{ theme_url }}/js/jquery.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrollex.min.js"></script>
-		<script src="{{ theme_url }}/js/jquery.scrolly.min.js"></script>
-		<script src="{{ theme_url }}/js/browser.min.js"></script>
-		<script src="{{ theme_url }}/js/breakpoints.min.js"></script>
-		<script src="{{ theme_url }}/js/util.js"></script>
-		<script src="{{ theme_url }}/js/main.js"></script>
 		<script src="{{ theme_url }}/js/bigraccoon.js"></script>
 	{% endblock scripts %}
 

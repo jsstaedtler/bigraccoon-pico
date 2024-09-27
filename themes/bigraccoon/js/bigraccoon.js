@@ -1,4 +1,5 @@
-// Define global variables to store various element positions
+// Define global variables to store various elements and their positions.  Ones that can change will not be "const"
+const intro = document.getElementById("intro");		// Only exists on the front page
 var navBar;
 var navBarTop;
 var logo;
@@ -38,6 +39,7 @@ function toggleMenu() {
 		openMenu();
 	}
 }
+
 
 // A handler to test whether the mobile navPanel menu is visible, and if the click was outside of it, close the navPanel
 function closeMenuOnClickOutside(event) {
@@ -82,6 +84,7 @@ function resetDimensions() {
 	scrollChanges();
 }
 
+
 function scrollChanges() {
 	// If the navBar somehow scrolled up above the screen without sticking, fix the value of navBarTop
 /*	if (window.pageYOffset >= navBar.offsetTop) {
@@ -98,9 +101,11 @@ function scrollChanges() {
 	
 	// If the page scrolls past the middle of the logo, present the logo on the navbar
 	if (window.pageYOffset >= logoMid) {
+		if (intro) intro.classList.add("hidden");
 		homeButton.classList.remove("hidden");
 		backtotopButton.classList.remove("hidden");
 	} else {
+		if (intro) intro.classList.remove("hidden");
 		homeButton.classList.add("hidden");
 		backtotopButton.classList.add("hidden");
 	}
@@ -125,4 +130,17 @@ backtotopButton.addEventListener("click", closeMenuOnBackToTop);
 
 // At this point, we can assume the page has been loaded (despite media still possibly downloading, which we don't want to wait for).  We can remove the "is-preload" class from body, so initial animations can start.
 
+if (intro) intro.classList.remove("hidden");
 document.body.classList.remove("is-preload");
+
+/*
+if (document.readyState !== "interactive") {
+	document.addEventListener("DOMContentLoaded", function() {
+		intro.classList.remove("hidden");
+		document.body.classList.remove("is-preload");
+	});
+} else {
+	intro.classList.remove("hidden");
+	document.body.classList.remove("is-preload");
+}
+*/
