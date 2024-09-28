@@ -5,12 +5,20 @@
 
 	<channel>
 		<title>{{ site_title|e }}</title>
-		<description>{{ pages.index.meta.description | e }}</description>
+		<description>{{ pages.index.meta.description|e }}</description>
 		<link>{{ base_url }}/</link>
 		<atom:link href="{{ base_url ~ "/feed" }}" rel="self" type="application/rss+xml"/>
+		<language>en-ca</language>
 		<pubDate>{{ "now"|date(RFC822) }}</pubDate>
 		<lastBuildDate>{{ "now"|date(RFC822) }}</lastBuildDate>
-		<generator>Pico</generator>
+		<generator>Pico CMS</generator>
+		
+		{# <image> is a logo to accompany the feed, has a curious max size of 144x400px according to RSS 2.0 specs #}
+		<image>
+			<url>{{ base_url ~ resize('themes/bigraccoon/img/bigraccoon_logo_black.png', 144, 400) }}</url>
+			<title>{{ site_title|e }}</title>
+			<link>{{ base_url }}/</link>
+		</image>
 
 	{% for page in pages if pages(page.id)|length == 0 and page.id not in ['index','feed','rss'] and not (page.id starts with 'stats') and not page.hidden and not end %}
 
@@ -32,10 +40,14 @@
 		{% if section[0] == 'gallery' %}
 		
 			{% if page.meta.adultonly %}
-				<description>&lt;p&gt;(Adult-only content - please visit the site to view)&lt;/p&gt;{{ page.id|content|e }}</description>
+				<description>
+					{{ '<p>(Adult-only content - please <a href=\"' ~ page.url ~ '">visit the site</a> to view)</p>' }}{{ page.id|content|e }}
+				</description>
 				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size) %}
 			{% else %}
-				<description>{{ page.id|content|e }}</description>
+				<description>
+					{{ page.id|content|e }}
+				</description>
 				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
 			{% endif %}
 			<enclosure url="{{ base_url }}/{{ image }}" type="image/jpeg" />
