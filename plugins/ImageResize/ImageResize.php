@@ -84,8 +84,13 @@ class ImageResize extends AbstractPicoPlugin
     {
         if (is_null($width) && is_null($height) && is_null($pixels)) {
             error_log(new InvalidArgumentException("Width and height can't both be null when not applying pixellation"));
-            return $file;
+            return;
         }
+		
+		if (!file_exists($file)) {
+			error_log(new InvalidArgumentException("File not found: " . $file));
+			return;
+		}
 
         // determine resized filename
 		$pxstr = is_null($pixels) ? '' : ('p' . $pixels);
@@ -110,13 +115,15 @@ class ImageResize extends AbstractPicoPlugin
         // calculate the final width and height (keep ratio)
         $widthRatio = $originalWidth / ($width ?: 1);
         $heightRatio = $originalHeight / ($height ?: 1);
-        if ($widthRatio < 1 || $heightRatio < 1) {
+        if ($widthRatio < 1 && $heightRatio < 1) {		// Original dimensions are already within the requested dimensions
             $resizedWidth = $originalWidth;
             $resizedHeight = $originalHeight;
-        } else if ($widthRatio < $heightRatio) {
+        } else if ($widthRatio > $heightRatio) {		// This image's width must shrink to fit
+			error_log('$widthRatio > $heightRatio');
             $resizedWidth = $width;
             $resizedHeight = round($originalHeight / $widthRatio);
-        } else {
+        } else {										// This image's height must shrink to fit
+			error_log('$widthRatio <= $heightRatio');
             $resizedWidth = round($originalWidth / $heightRatio);
             $resizedHeight = $height;
         }
@@ -136,14 +143,18 @@ class ImageResize extends AbstractPicoPlugin
 
 			if (!(is_null($width) && is_null($height))) {
 				$newResource = imagecreatetruecolor($resizedWidth, $resizedHeight);
-				imagealphablending($newResource, false);
-				imagesavealpha($newResource, true);
+				
+				// Since we save to JPG, any transparency will be lost, so we're going to blend it against a white background
+				imagealphablending($newResource, true);		// Any alpha value in the original will be blended with the background
+				imagesavealpha($newResource, false);		// Don't preserve the alpha channel
 				if (function_exists('imageantialias'))
 				{
 				  imageantialias($newResource, true);
 				}
+				$white = imagecolorallocate($newResource, 255, 255, 255);
+				imagefill($newResource, 0, 0, $white);		// The new image will start off completely white
 
-				// This function provides better resultng image quality than imagescale()
+				// This function provides better resulting image quality than imagescale()
 				imagecopyresampled($newResource, $image, 0, 0, 0, 0, $resizedWidth, $resizedHeight, $originalWidth, $originalHeight);
 				imagedestroy($image);
 				$image = $newResource;
