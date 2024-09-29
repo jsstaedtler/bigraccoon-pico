@@ -119,11 +119,9 @@ class ImageResize extends AbstractPicoPlugin
             $resizedWidth = $originalWidth;
             $resizedHeight = $originalHeight;
         } else if ($widthRatio > $heightRatio) {		// This image's width must shrink to fit
-			error_log('$widthRatio > $heightRatio');
             $resizedWidth = $width;
             $resizedHeight = round($originalHeight / $widthRatio);
         } else {										// This image's height must shrink to fit
-			error_log('$widthRatio <= $heightRatio');
             $resizedWidth = round($originalWidth / $heightRatio);
             $resizedHeight = $height;
         }
