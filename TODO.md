@@ -1,3 +1,4 @@
+* Move "bg" images out of their own folder and put them with the rest of the assets (maybe as "bg.jpg")
 * Modify PicoTags so it can be limited to a specific section instead of the entire site
 * View counter
   * Add IP address filtering
