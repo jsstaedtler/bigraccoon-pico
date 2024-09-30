@@ -2,6 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 
 	{% set RFC822 = "D, d M Y H:i:s O" %}
+	{% set page_limit = 15 %}
 
 	<channel>
 		<title>{{ site_title|e }}</title>
@@ -36,33 +37,57 @@
 			<comments>{{ page.url }}#comments</comments>
 		{% endif %}
 
+			<description>
+			
 		{### If this is a gallery post, it needs some formatting help #}
 		{% if section[0] == 'gallery' %}
-		
-			{% if page.meta.adultonly %}
-				<description>
-					{{ '<p>(Adult-only content - please <a href=\"' ~ page.url ~ '">visit the site</a> to view)</p>' }}{{ page.id|content|e }}
-				</description>
-				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size) %}
-			{% else %}
-				<description>
-					{{ page.id|content|e }}
-				</description>
-				{% set image = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
+			
+			{% if '18+' in page.meta.tags %}
+				{{ '<p>(Adult-only content - please <a href="' ~ page.url ~ '">visit the site</a> to view)</p>' }}
 			{% endif %}
-			<enclosure url="{{ base_url }}/{{ image }}" type="image/jpeg" />
+			
+			{# Main image: #}
+			{% if page.meta.adultonly %}
+				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size ) ~ '" alt="Adult-only content hidden"></a></p>' }}
+				{% set media = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size) %}
+			{% else %}
+				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size ) ~ '"' }}{% if page.meta.imagedescription %}{{ ' alt="' ~ page.meta.imagedescription ~ '"' }}{% endif %}{{'></a></p>'|e }}  {# <- Why does *that* single statement need to be escaped?? #}
+				{% set media = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
+			{% endif %}
+			
+			{# Variants: #}
+			{% if page.meta.moreimages %}{% for thisimage in page.meta.moreimages %}
+				{% if thisimage.adultonly and username != "eighteen" %}
+					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~  base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size, config.gallery.pixel_size) ~ '" alt="Adult-only content hidden"></a></p>' }}
+				{% else %}
+					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) ~ '"' }}{% if thisimage.imagedescription %}{{ ' alt="' ~ thisimage.imagedescription ~ '"' }}{% endif %}{{'></a></p>' }}  {# <- Why doesn't *this* statement need to be escaped?? #}
+				{% endif %}
+			{% endfor %}{% endif %}
+			
 
 		{% else %}
-		
-			<enclosure url="{{ assets_url }}/{{ page.meta.image }}" type="image/jpeg" />
-			<description>{{ page.id|content|e }}</description>
+
+			{% if page.meta.image %}
+				{% set media = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
+			{% else %}
+				{% set media = '' %}
+			{% endif %}
 		
 		{% endif %}
 
+
+		{# Text content: #}
+				{{ page.id|content|e }}
+			</description>
+
+		{% if media %}
+			<enclosure url="{{ base_url }}/{{ media }}" type="image/jpeg" />
+		{% endif %}
+
+		
 		</item>
 
-		{% if loop.index == 10 %}{% set end = true %}{% endif %}
-		  
+		{% if loop.index >= page_limit %}{% set end = true %}{% endif %}
 	{% endfor %}
 
 	</channel>
