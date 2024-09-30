@@ -15,11 +15,12 @@
 		<generator>Pico CMS</generator>
 		
 		{# <image> is a logo to accompany the feed, has a curious max size of 144x400px according to RSS 2.0 specs #}
-		<image>
+{#		<image>
 			<url>{{ base_url ~ resize('themes/bigraccoon/img/bigraccoon_logo_black.png', 144, 400) }}</url>
 			<title>{{ site_title|e }}</title>
 			<link>{{ base_url }}/</link>
 		</image>
+#}
 
 	{% for page in pages if pages(page.id)|length == 0 and page.id not in ['index','feed','rss'] and not (page.id starts with 'stats') and not page.hidden and not end %}
 
@@ -51,7 +52,7 @@
 				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size ) ~ '" alt="Adult-only content hidden"></a></p>' }}
 				{% set media = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size) %}
 			{% else %}
-				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size ) ~ '"' }}{% if page.meta.imagedescription %}{{ ' alt="' ~ page.meta.imagedescription ~ '"' }}{% endif %}{{'></a></p>'|e }}  {# <- Why does *that* single statement need to be escaped?? #}
+				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size ) ~ '"' }}{% if page.meta.imagedescription %}{{ ' alt="' ~ page.meta.imagedescription ~ '"' }}{% endif %}{{ '></a></p>'|e }}  {# <- Why does *that* single statement need to be escaped?? #}
 				{% set media = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
 			{% endif %}
 			
@@ -60,7 +61,7 @@
 				{% if thisimage.adultonly and username != "eighteen" %}
 					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~  base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size, config.gallery.pixel_size) ~ '" alt="Adult-only content hidden"></a></p>' }}
 				{% else %}
-					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) ~ '"' }}{% if thisimage.imagedescription %}{{ ' alt="' ~ thisimage.imagedescription ~ '"' }}{% endif %}{{'></a></p>' }}  {# <- Why doesn't *this* statement need to be escaped?? #}
+					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) ~ '"' }}{% if thisimage.imagedescription %}{{ ' alt="' ~ thisimage.imagedescription ~ '"' }}{% endif %}{{ '></a></p>' }}  {# <- Why doesn't *this* statement need to be escaped?? #}
 				{% endif %}
 			{% endfor %}{% endif %}
 			
