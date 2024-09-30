@@ -112,10 +112,10 @@ class ImageResize extends AbstractPicoPlugin
         $originalWidth = $dimensions[0];
         $originalHeight = $dimensions[1];
 
-        // calculate the final width and height (keep ratio)
-        $widthRatio = $originalWidth / ($width ?: 1);
-        $heightRatio = $originalHeight / ($height ?: 1);
-        if ($widthRatio < 1 && $heightRatio < 1) {		// Original dimensions are already within the requested dimensions
+        // calculate the final width and height (keeping aspect ratio)
+        $widthRatio = $width ? $originalWidth/$width : 0;			// If >1, the image must shrink to the desired size along that dimension
+        $heightRatio = $height ? $originalHeight/$height : 0;		// If the dimension wasn't specified, no need to shrink it
+        if ($widthRatio < 1 && $heightRatio < 1) {		// Both original dimensions are already within the requested dimensions
             $resizedWidth = $originalWidth;
             $resizedHeight = $originalHeight;
         } else if ($widthRatio > $heightRatio) {		// This image's width must shrink to fit
