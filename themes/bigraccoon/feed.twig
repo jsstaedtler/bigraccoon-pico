@@ -52,7 +52,7 @@
 				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size ) ~ '" alt="Adult-only content hidden"></a></p>' }}
 				{% set media = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size, config.gallery.pixel_size) %}
 			{% else %}
-				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size ) ~ '"' }}{% if page.meta.imagedescription %}{{ ' alt="' ~ page.meta.imagedescription ~ '"' }}{% endif %}{{ '></a></p>'|e }}  {# <- Why does *that* single statement need to be escaped?? #}
+				{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size ) ~ '"' }}{% if page.meta.imagedescription %}{{ ' alt="' ~ page.meta.imagedescription|e ~ '"' }}{% endif %}{{ '></a></p>'|e }}  {# <- Why does *that* single statement need to be escaped?? #}
 				{% set media = resize( 'assets/' ~ page.meta.image, null, config.gallery.image_size) %}
 			{% endif %}
 			
@@ -61,7 +61,7 @@
 				{% if thisimage.adultonly and username != "eighteen" %}
 					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~  base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size, config.gallery.pixel_size) ~ '" alt="Adult-only content hidden"></a></p>' }}
 				{% else %}
-					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) ~ '"' }}{% if thisimage.imagedescription %}{{ ' alt="' ~ thisimage.imagedescription ~ '"' }}{% endif %}{{ '></a></p>' }}  {# <- Why doesn't *this* statement need to be escaped?? #}
+					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~ base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) ~ '"' }}{% if thisimage.imagedescription %}{{ ' alt="' ~ thisimage.imagedescription|e ~ '"' }}{% endif %}{{ '></a></p>' }}  {# <- Why doesn't *this* statement need to be escaped?? #}
 				{% endif %}
 			{% endfor %}{% endif %}
 			
