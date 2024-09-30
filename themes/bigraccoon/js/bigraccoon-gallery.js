@@ -13,7 +13,7 @@
  * The operation will be done on initial page load, but also whenever the page is resized.
  */
  
-const debug = true;
+const debug = false;
 
 const debugDiv = document.createElement('div');
 if (debug) {
