@@ -4203,10 +4203,10 @@ div#thumbnails div.icons, div.gallery-image div.icons  {
 	right: 0;
 	bottom: 0;
 	margin: 0.5rem;
-	padding: 0.2rem;
+	padding: 0.4rem;
 	line-height: 0;
-	border: 2px solid rgba(0,0,0,0.2);
-	border-radius: 5px;
+/*	border: 2px solid rgba(0,0,0,0.2);
+	border-radius: 5px; */
 	background-color: rgba(0,0,0,0.3);
 }
 
@@ -4221,6 +4221,7 @@ div#thumbnails div.icons img, div.gallery-image div.icons img {
 	display: inline-block;
 	height: 2rem;
 	fill: white;
+	filter: invert(100%);	/* The SVG image starts off black, this changes it to white */
 }
 
 div.gallery-image div.icons.centered img {
@@ -4235,7 +4236,7 @@ div.gallery-image div.icons.centered img {
 	}
 	
 	div#thumbnails div.icons {
-		padding: 0.1rem;
+		padding: 0.2rem;
 		margin: 0.2rem;
 	}
 	
@@ -4252,7 +4253,7 @@ div.gallery-image div.icons.centered img {
 	}
 
 	div#thumbnails div.icons img {
-		height: 1rem;
+		height: 1.5rem;
 	}
 }
 
