@@ -33,6 +33,7 @@ class PicoPageViews extends AbstractPicoPlugin
         $this->template = null;
         if (isset($config['PicoPageViews']['template']))
             $this->template = $config['PicoPageViews']['template'];
+            $this->make_hidden = $config['PicoPageViews']['make_hidden'];
     }
 	
 	
@@ -98,7 +99,8 @@ class PicoPageViews extends AbstractPicoPlugin
         // Convert our array of stats into a string of YAML
         $frontMatterArray['stats'] = $this->statsPageMeta['stats'];
 		$frontMatterArray['date'] = $this->statsPageMeta['date'];
-		if(isset($this->template)) $frontMatterArray['template'] = $this->template;	// Update the template name, if it was specified in config.yml
+		if(isset($this->template)) $frontMatterArray['template'] = $this->template;			// Update the template name, if it was specified in config.yml
+		if(isset($this->make_hidden)) $frontMatterArray['hidden'] = $this->make_hidden;		// Update the "hidden" value, if it was specified in config.yml
 
         $yaml = "---\n" . Yaml::dump($frontMatterArray) . "---\n";
 		
