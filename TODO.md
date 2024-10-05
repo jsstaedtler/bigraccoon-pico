@@ -7,15 +7,17 @@
 	* Default will be light mode, overridden by system preference (reported by browser)
 	* If it's customized, how can it persist across browser sessions?  Cookie?
 * Gallery improvements
-	* Submitting a comment and showing adult-only content are losing the the URL parameters for tags
+	* Submitting a comment and showing adult-only content are losing the URL parameters for tags
+	* Organize tags into sections (OCs, styles, years, etc.), instead of a mixed up cloud
 	* Make "Media: Pencil/Digital" tags
-	* Add number of images to the "group" icon
+	* Add number of images to the "variants" thumbnail icon
 	* Add icon with number of comments (if > 0)
 	* Need a minimum thumbnail width to accomodate all the icons
 	* Fix padding of gallery index page bar (when squished on mobile)
 	* "moreimages" YAML key ought to be renamed to "variants"
 	* Thumbnails width and height attributes (to make less jumpy layout on page load)
 		* Can PHP take the dimensions saved in the md file and calculate what they are when resized to thumbnails?
+	* Save "centre of interest" for each image, when thumbnails are forced to crop
 * Provide separate RSS feeds per section (eg. Gallery, Articles)
 * "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
 * Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
