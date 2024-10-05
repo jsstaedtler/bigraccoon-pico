@@ -1,9 +1,22 @@
 * Move "bg" images out of their own folder and put them with the rest of the assets (maybe as "bg.jpg")
 * Modify PicoTags so it can be limited to a specific section instead of the entire site
 * View counter
-  * Add IP address filtering
   * Build a template to view stats for daily/monthly/etc.
   * Use PicoUsers to secure the stats pages
+* Add dark-mode toggle
+	* Default will be light mode, overridden by system preference (reported by browser)
+	* If it's customized, how can it persist across browser sessions?  Cookie?
+* Gallery improvements
+	* Submitting a comment and showing adult-only content are losing the the URL parameters for tags
+	* Make "Media: Pencil/Digital" tags
+	* Add number of images to the "group" icon
+	* Add icon with number of comments (if > 0)
+	* Need a minimum thumbnail width to accomodate all the icons
+	* Fix padding of gallery index page bar (when squished on mobile)
+	* "moreimages" YAML key ought to be renamed to "variants"
+	* Thumbnails width and height attributes (to make less jumpy layout on page load)
+		* Can PHP take the dimensions saved in the md file and calculate what they are when resized to thumbnails?
+* Provide separate RSS feeds per section (eg. Gallery, Articles)
 * "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
 * Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
@@ -22,26 +35,15 @@
 	* Display caption/alt text at bottom of lightbox
 	* Tap image to hide controls, tap again to bring them back
 	* Centre the zoom effect on the mouse cursor, or the touch/pinch point
+	* Fix buttons to be styled like gallery thumbnail icons
 	* Show reduced-size image thumbnails on pages, but always open full-size in the Lightbox
 		* How to programatically determine what image size is needed for thumbnails?
 		* Just use the native HTML implementation?
 * Display imgblock groups 4-in-a-row on very wide screens?
 * With JS disabled, can images link to their full-size version in a new tab?
 	* Will probably need a Pico plugin or modification to Markdown parsing
-* Add dark-mode toggle
-	* Default will be light mode, overridden by system preference (reported by browser)
-	* If it's customized, how can it persist across browser sessions?  Cookie?
 * Replace fontawesome icons with SVGs
-* Get rid of jQuery
 * Introduce a highlight colour, or make tinted instead of plain black?
 	* Brownish (like a raccoon)?
 	* Or the existing bright blue could be more prominent
-* Rebuild gallery in Pico
-	* Submitting a comment and showing adult-only content are losing the the URL parameters for tags
-	* Pages 8 and 10 have messed up row lengths
-	* Make "Media: Pencil/Digital" tags
-	* Make better 18+ icon for thumbnails
-	* Add number of images to the "group" icon
-	* Fix padding of gallery index page bar (when squished on mobile)
-	* "moreimages" YAML key ought to be renamed to "variants"
 * Clean up/refactor CSS because it's probably 50% unused cruft
