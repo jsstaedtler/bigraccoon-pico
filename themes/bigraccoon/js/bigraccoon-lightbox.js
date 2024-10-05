@@ -222,6 +222,7 @@ function lightboxChange(change, reset) {
 			// Reset the position and zoom level of the canvas, so the image fits precisely in the centre
 			cameraOffset = {x: br_canvas.width / 2, y: br_canvas.height / 2};
 			cameraZoom = MIN_ZOOM;
+			lastZoom = cameraZoom;
 
 		} else {
 			
@@ -393,14 +394,16 @@ function handlePinch(e) {
     let touch1 = {x: e.touches[0].clientX, y: e.touches[0].clientY};
     let touch2 = {x: e.touches[1].clientX, y: e.touches[1].clientY};
     
-    // This is distance squared, but no need for an expensive sqrt as it's only used in ratio
-    let currentDistance = (touch1.x - touch2.x)**2 + (touch1.y - touch2.y)**2;
+    // This is distance squared, but no need for an expensive sqrt as it's only used in ratio.
+	// "* 2" is to improve proportionality of zoom speed vs. finger speed
+    let currentDistance = ( (touch1.x - touch2.x)**2 + (touch1.y - touch2.y)**2 ) * 2;
     
+	// If this is the very first touch, then initialPinchDistance doesn't exist yet
     if (initialPinchDistance == null) {
         initialPinchDistance = currentDistance;
-    } else {
-        adjustZoom(null, currentDistance/initialPinchDistance);
     }
+    
+	adjustZoom(null, currentDistance/initialPinchDistance);
 }
 
 
