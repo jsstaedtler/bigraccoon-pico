@@ -88,7 +88,9 @@ class PicoComments extends AbstractPicoPlugin
 
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
-        } else if (isset($reply_guid)) {
+        }
+		
+		if ($reply_guid) {
             $reply_exists = false;          // whether $reply_guid corresponds to a real comment. false by default
             $dir = glob($path . "/*.md"); 
             foreach ($dir as $file) {       // check if the comment pointed to by reply_guid exists, fail if not
@@ -98,7 +100,7 @@ class PicoComments extends AbstractPicoPlugin
                 }
             }
             if (!$reply_exists) {   // if the comment that reply_guid points to can't be found,
-                return 'Unknown error when submitting reply';       // don't create the comment
+                return 'Could not find GUID to reply to: "' . $reply_guid . '"';       // don't create the comment
             }
         }
 
@@ -114,7 +116,7 @@ class PicoComments extends AbstractPicoPlugin
         // if comment review is enabled, add header
         if ($this->getPluginConfig("comment_review")) { $file_contents .= "pending: true\n"; }
         $file_contents .= "---\n";
-        $file_contents .= $content;
+        $file_contents .= html_entity_decode($content, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
 
         $handle = fopen($path . "/" . $guid . ".md", "w");
         if (!fwrite($handle, $file_contents)) { // if file writing fails for some reason
