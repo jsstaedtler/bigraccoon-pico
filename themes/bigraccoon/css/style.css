@@ -4121,6 +4121,7 @@ div.gallery-image {
 	width: 100%;
 	line-height: 0;
 	margin-bottom: 2rem;
+	text-align: center;
 }
 
 div#thumbnails a {
