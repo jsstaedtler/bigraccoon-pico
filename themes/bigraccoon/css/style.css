@@ -303,6 +303,11 @@ input, select, textarea {
 		margin: 0 0.15rem;
 		padding: 0.25rem 0.3rem;
 	}
+	
+	code b {
+		background-color: khaki;
+		font-weight: initial;
+	}
 
 	pre {
 		-webkit-overflow-scrolling: touch;

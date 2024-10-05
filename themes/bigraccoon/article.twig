@@ -1,6 +1,13 @@
 {# A standard article.  It will have a date, H2 title, a blurb, and prev/next buttons #}
 {% extends "_base.twig" %}
 
+
+{% block head_style %}
+	<link rel="stylesheet" href="{{ theme_url }}/css/stackoverflow-light.min.css" type="text/css" />
+	{{ parent() }}
+{% endblock head_style %}
+
+
 {% block page_body %}
 	{{ include("_segment-pagination.twig") }}
 
@@ -25,6 +32,13 @@
 {% block scripts %}
 	{# Add lightbox elements and script #}
 	{{ include("_segment-lightbox.twig") }}
+	
+	<script src="{{ theme_url }}/js/highlight.min.js"></script>
+	<script src="{{ theme_url }}/js/highlight-mergeHTMLPlugin.js"></script>
+	<script>
+		hljs.addPlugin(mergeHTMLPlugin);
+		hljs.highlightAll();
+	</script>
 	
 	{{ parent() }}
 {% endblock scripts %}
