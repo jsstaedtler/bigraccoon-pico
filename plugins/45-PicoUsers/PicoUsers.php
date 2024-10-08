@@ -153,7 +153,7 @@ class PicoUsers extends AbstractPicoPlugin
     private function fingerprint()
     {
         return hash('sha256', 'pico'
-                .$_SERVER['HTTP_USER_AGENT']
+                . array_key_exists('HTTP_USER_AGENT', $_SERVER ) ? $_SERVER['HTTP_USER_AGENT'] : ''
                 .$_SERVER['REMOTE_ADDR']
                 .$_SERVER['SCRIPT_NAME']
                 .session_id());
