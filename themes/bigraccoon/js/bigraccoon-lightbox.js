@@ -249,7 +249,9 @@ function lightboxClose() {
 	// Hide the lightbox <div>, and reenable scrolling on the page
 	document.getElementById("lightbox").classList.add("disabled");
 	document.getElementsByTagName('html')[0].classList.remove("noscroll");
-
+	
+	// Clear this so the next lightbox doesn't think the image is still zoomed in
+	initialPinchDistance = null;
 }
 
 
