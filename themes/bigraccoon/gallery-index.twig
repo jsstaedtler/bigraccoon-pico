@@ -136,7 +136,7 @@
 		{% endif %}
 
 
-		{% if ("18+" in page.meta.tags) or (page.meta.moreimages) %}
+		{% if ("18+" in page.meta.tags) or (page.meta.variants) %}
 			{### Create a div to overlay on the image, which will contain one or more icons #}
 				<div class="icons">
 				
@@ -145,7 +145,7 @@
 					<abbr title="Adult-only image"><img src="{{ theme_url }}/img/eighteen.svg"></abbr>
 			{% endif %}
 
-			{% if page.meta.moreimages %}
+			{% if page.meta.variants %}
 				{### A "group" icon, indicating there's more than one image here #}
 					<abbr title="Multiple variants"><img src="{{ theme_url }}/img/cards.svg"></abbr>
 			{% endif %}

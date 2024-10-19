@@ -57,7 +57,7 @@
 			{% endif %}
 			
 			{# Variants: #}
-			{% if page.meta.moreimages %}{% for thisimage in page.meta.moreimages %}
+			{% if page.meta.variants %}{% for thisimage in page.meta.variants %}
 				{% if thisimage.adultonly and username != "eighteen" %}
 					{{ '<p><a href="' ~ page.url ~ '"><img src="' ~  base_url ~ '/' ~ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size, config.gallery.pixel_size) ~ '" alt="Adult-only content hidden"></a></p>' }}
 				{% else %}

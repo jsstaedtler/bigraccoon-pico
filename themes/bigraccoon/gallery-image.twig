@@ -192,8 +192,8 @@
 
 {### DISPLAY ADDITIONAL IMAGES #}
 			{###  If there are more images in this group, display them next #}
-			{% if meta.moreimages %}
-				{% for thisimage in meta.moreimages %}
+			{% if meta.variants %}
+				{% for thisimage in meta.variants %}
 						
 					<div class="gallery-image">
 					
@@ -266,7 +266,7 @@
 							
 						{% endif %}
 						
-						{% if ("18+" in imagepage.meta.tags) or (imagepage.meta.moreimages) %}
+						{% if ("18+" in imagepage.meta.tags) or (imagepage.meta.variants) %}
 							{### Create a div to overlay on the image, which will contain one or more icons #}
 							<div class="icons">
 								
@@ -275,7 +275,7 @@
 								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/eighteen.svg"></abbr>
 							{% endif %}
 
-							{% if imagepage.meta.moreimages %}
+							{% if imagepage.meta.variants %}
 								{### A "group" icon, indicating there's more than one image here #}
 								<abbr title="Multiple variants"><img src="{{ theme_url }}/img/cards.svg"></abbr>
 							{% endif %}
