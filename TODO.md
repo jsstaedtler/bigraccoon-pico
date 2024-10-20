@@ -3,8 +3,16 @@
 * Move "bg" images out of their own folder and put them with the rest of the assets (maybe as "bg.jpg")
 * Modify PicoTags so it can be limited to a specific section instead of the entire site
 * View counter
-  * Build a template to view stats for daily/monthly/etc.
-  * Use PicoUsers to secure the stats pages
+	* Save IP and agent string for each visit
+* Quick feedback buttons
+	* Put a heart ("like") button on each gallery image page
+	* Display on each thumbnail in the gallery index
+	* Make a plugin that could permit any number of custom reactions (eg. thumbs up/down, reaction emojis); provide variables that user can use in Twig files, and they will provide their own names and icons in HTML/CSS
+* Comments
+	* Set up new config options, including enable_replies
+	* Send email to user when their comment is approved (or if they get a reply)
+	* Include link in that email to delete a comment
+	* Include notice that if the email recipient did not make the comment, they can request their address be denylisted
 * Add dark-mode toggle
 	* Default will be light mode, overridden by system preference (reported by browser)
 	* If it's customized, how can it persist across browser sessions?  Cookie?
