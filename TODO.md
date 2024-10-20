@@ -5,15 +5,20 @@
 * Move "bg" images out of their own folder and put them with the rest of the assets (maybe as "bg.jpg")
 * Modify PicoTags so it can be limited to a specific section instead of the entire site
 * View counter
-	* Save IP and agent string for each visit
+	* Save IP and agent string for each page view
+	* Keep just one instance of each IP/agent pair, which will result in counting only unique views of each page
+	* Save referrers to each page ID?  Perhaps only external ones?  (Exclude bigraccoon.ca itself from being recorded)
+	* Reverse DNS lookup of IPs
 * Quick feedback buttons
-	* Put a heart ("like") button on each gallery image page
+	* Put a heart ("like") button on each gallery image page (perhaps on each variant)
 	* Display on each thumbnail in the gallery index
 	* Make a plugin that could permit any number of custom reactions (eg. thumbs up/down, reaction emojis); provide variables that user can use in Twig files, and they will provide their own names and icons in HTML/CSS
 * Comments
+	* Change "author_*" values to "owner_*"
 	* Set up new config options, including enable_replies
-	* Send email to user when their comment is approved (or if they get a reply)
+	* Send email to user when their comment is approved or if they get a reply
 	* Include link in that email to delete a comment
+	* Remember to PHP-validate the provided email address
 	* Include notice that if the email recipient did not make the comment, they can request their address be denylisted
 * Add dark-mode toggle
 	* Default will be light mode, overridden by system preference (reported by browser)
@@ -26,12 +31,10 @@
 	* Add icon with number of comments (if > 0)
 	* Need a minimum thumbnail width to accomodate all the icons
 	* Fix padding of gallery index page bar (when squished on mobile)
-	* "moreimages" YAML key ought to be renamed to "variants"
 	* Thumbnails width and height attributes (to make less jumpy layout on page load)
 		* Can PHP take the dimensions saved in the md file and calculate what they are when resized to thumbnails?
 	* Save "centre of interest" for each image, when thumbnails are forced to crop
 * Provide separate RSS feeds per section (eg. Gallery, Articles)
-* "ol" numbering resets to "1" regardless of what number you put in the md file - see the dryer article
 * Make new class of imgblock div (class="imgblock single") that is 100% wide, for single images
 * Test site in Chrome, Safari
 * Make BG image fade in sooner?
