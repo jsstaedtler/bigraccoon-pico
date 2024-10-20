@@ -1,3 +1,5 @@
+* Fix double-slash in URI issue (pico.php)
+	* To replace multiple slashes with a single one: $uri = preg_replace('(\/{2,})', '/', $uri);
 * Uploader: Escape quotation marks in the description field
 * OpenGraph meta image needs to be of reduced dimension, and pixelated for 18+ content
 * Move "bg" images out of their own folder and put them with the rest of the assets (maybe as "bg.jpg")
