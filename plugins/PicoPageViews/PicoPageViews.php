@@ -5,9 +5,11 @@ use Symfony\Component\Yaml\Yaml;
 class PicoPageViews extends AbstractPicoPlugin
 {
     const API_VERSION = 3;
-    protected $enabled = true;
     protected $dependsOn = array();
-    protected $statsDir = './content/stats';	// Root of stats files
+	
+    private $statsDir = 'stats';			// Default location to store stats md files (within Pico's /contents directory)
+	private $template = null;				// By default, don't specify a template name in stats md files
+	private $make_hidden = false;			// By default, don't add "hidden: true" to YAML frontmatter
     private $statsPageMeta = array();
     
 /*    public function onSinglePageLoading($id, &$skipPage)
@@ -30,11 +32,24 @@ class PicoPageViews extends AbstractPicoPlugin
      */
     public function onConfigLoaded(array &$config)
     {
-        $this->template = null;
+		// Define the root storage location with the default value, which can be overridden by a custom value in config.yml
+		$this->statsRoot = './content/' . $this->statsDir;
+		
+        if (isset($config['PicoPageViews']['content_folder'])) {
+			// Ensure the directory name provided in the config file is a valid one (and not something that might blow up the filesystem)
+			if (preg_match('#^[\w][\w\-. \/]*$#', $config['PicoPageViews']['content_folder'])) {
+				$this->statsRoot = './content/' . $config['PicoPageViews']['content_folder'];
+			} else {
+				error_log('PicoPageViews: Invalid value given for config option "content_folder".  Using default value instead: ' . $this->statsDir);
+			}
+		}
+
         if (isset($config['PicoPageViews']['template']))
             $this->template = $config['PicoPageViews']['template'];
+		
 		if (isset($config['PicoPageViews']['make_hidden']))
             $this->make_hidden = $config['PicoPageViews']['make_hidden'];
+		
 		if (isset($config['PicoPageViews']['ignore_addresses']))
             $this->ignore_list = $config['PicoPageViews']['ignore_addresses'];
     }
@@ -46,18 +61,19 @@ class PicoPageViews extends AbstractPicoPlugin
         array &$nextPage = null
     ) {
 		// Don't continue if the user is visiting from an IP address that we're ignoring
-		if ($this->valid_address()) {
+		if ($this->isValidAddress()) {
 			
 			date_default_timezone_set('America/Toronto');
 			$this->currentDate = date('Y-m-d');
 			$this->currentTime = date('H:i');
-			$this->md = $this->statsDir . '/stats' . $this->currentDate . '.md';
+			$this->md = $this->statsRoot . '/stats' . $this->currentDate . '.md';
 			
 			$currentPage = $this->getPico()->getCurrentPage();
 			if ($currentPage !== null) {
 				$currentPageId = $currentPage['id'];
 
-				if ($currentPageId !== null && strpos($currentPageId, 'stats') !== 0) {		// Don't count stats pages themselves
+				// Don't count visits to stats pages themselves (which will have a page ID beginning with the stats directory)
+				if ($currentPageId !== null && strpos($currentPageId, $this->statsDir) !== 0) {
 					
 					// Open the stats file as read/write without erasing its contents (creating it if it doesn't exist)
 					$file = fopen($this->md, 'c+');
@@ -81,7 +97,7 @@ class PicoPageViews extends AbstractPicoPlugin
     }
 	
 	
-	private function valid_address()
+	private function isValidAddress()
 	{
 		if (
 			array_key_exists('REMOTE_ADDR',$_SERVER)		// This global should always be set, but let's not take chances
@@ -125,8 +141,8 @@ class PicoPageViews extends AbstractPicoPlugin
         // Convert our array of stats into a string of YAML
         $frontMatterArray['stats'] = $this->statsPageMeta['stats'];
 		$frontMatterArray['date'] = $this->statsPageMeta['date'];
-		if(isset($this->template)) $frontMatterArray['template'] = $this->template;			// Update the template name, if it was specified in config.yml
-		if(isset($this->make_hidden)) $frontMatterArray['hidden'] = $this->make_hidden;		// Update the "hidden" value, if it was specified in config.yml
+		if(isset($this->template)) $frontMatterArray['template'] = $this->template;			// Provide the template name, which can be customized in config.yml
+		if(isset($this->make_hidden)) $frontMatterArray['hidden'] = $this->make_hidden;		// Provide the "hidden" status, which can be customized in config.yml
 
         $yaml = "---\n" . Yaml::dump($frontMatterArray) . "---\n";
 		
