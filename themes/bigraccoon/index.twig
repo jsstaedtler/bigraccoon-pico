@@ -64,7 +64,7 @@
 {% block page_body %}
 		<!-- Artwork section -->
 
-		{# Get all child pages of the News section (which aren't hidden, adult-only, or a subsection index), then pick the newest one #}
+		{# Get all child pages of the Gallery section (which aren't hidden, adult-only, or a subsection index), then pick the newest one #}
 		{% set latest_art_id = pages("gallery", depth=null)|filter(a => not (a.hidden or a.meta.adultonly or a.id ends with "index"))|keys|first %}
 		{% set latest_art = pages[latest_art_id] %}
 		
@@ -72,7 +72,7 @@
 			<header class="major">
 				<h3>Latest Artwork</h3>
 				<span class="date">{{ latest_art.date_formatted }}</span>
-			{% if meta.gallerytitle %}
+			{% if latest_art.title %}
 				<a href="{{ latest_art.url }}"><h2>{{ latest_art.title }}</h2></a>
 			{% endif %}
 			</header>
