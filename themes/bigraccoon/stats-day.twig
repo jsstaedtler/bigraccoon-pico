@@ -1,0 +1,37 @@
+{% extends "_base.twig" %}
+
+{% block page_content %}
+		<header class="major">
+			{% if meta.date %}<span class="date">{{ meta.date }}</span>{% endif %}
+			{% if meta.date_formatted %}<h3>{{ meta.date_formatted }}</h3>{% endif %}
+		</header>
+
+	
+
+	{{ content }}
+
+	
+	{% if meta.stats %}
+		{% set statsarray = meta.stats %}
+		<table class="alt">
+			<thead>
+			<tr>
+				<th>Page ID</th>
+				<th>Views</th>
+			</tr>
+			</thead>
+		
+			<tbody>
+		{% for pageid in statsarray|sort((a, b) => b <=> a)|keys %}
+			<tr>
+				<td><a href="{{ pages[pageid].url }}">{{ pageid }}</a></td>
+				<td>{{ statsarray[pageid] }}</td>
+			</tr>
+		{% endfor %}
+			</tbody>
+		
+		</table>
+	{% endif %}
+
+
+{% endblock page_content %}

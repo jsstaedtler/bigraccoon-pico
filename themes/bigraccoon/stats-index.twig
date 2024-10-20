@@ -1,0 +1,37 @@
+{% extends "_base.twig" %}
+
+{% block page_content %}
+	<header class="major">
+		{% if meta.title %}<h3>{{ meta.title }}</h3>{% endif %}
+	</header>
+	
+
+	{{ content }}
+	
+	
+	<table class="alt">
+	<thead>
+	<tr>
+		<th>Date</th>
+		<th>Views</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	{% for page in pages(current_page.id)|sort((a, b) => b.date <=> a.date) %}
+		{% set views = 0 %}
+		{% for id_views in page.meta.stats %}
+			{% set views = views + id_views %}
+		{% endfor %}
+		
+		<tr>
+			<td><a href="{{ page.url }}">{{ page.date_formatted }}</a></td>
+			<td>{{ views }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+		
+	</table>
+		
+
+{% endblock page_content %}
