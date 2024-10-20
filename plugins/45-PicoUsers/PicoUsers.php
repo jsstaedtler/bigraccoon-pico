@@ -63,7 +63,7 @@ class PicoUsers extends AbstractPicoPlugin
     public function onPagesDiscovered(array &$pages)
     {
         foreach ($pages as $id => $page) {
-            if ($id == '403' || !$this->hasRight($page['url'], true)) {
+            if ($id == '403' || !$this->hasRight($id, true)) {
                 unset($pages[$id]);
             }
         }
