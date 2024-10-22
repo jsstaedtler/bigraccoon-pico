@@ -20,7 +20,7 @@
 				padding: 1em;
 			}
 			
-			#preview img {
+			#preview img, #preview video {
 				max-width: 100%;
 			}
 			
@@ -119,6 +119,9 @@
 		<p><label for="media-height">Media Height:</label></p>
 		<p><input name="media-height" id="media-height" /></p>
 		<hr>
+		<p><label for="video">Video:</label>
+		<input type="checkbox" name="video" id="video" /></p>
+		<hr>
 		<p><label for="media-description">Media description (alt text):</label></p>
 		<p><textarea name="media-description" id="media-description" rows="8" cols="50"></textarea></p>
 		<hr>
@@ -192,6 +195,8 @@
 		
 
 		function updatePreview() {
+			var mediaElement;
+					
 			while (previewDiv.firstChild) {
 				previewDiv.removeChild(previewDiv.firstChild);
 			}
@@ -203,6 +208,27 @@
 				previewDiv.appendChild(para);
 			} else {
 				const file = curFiles[0];	// Multiple files are not allowed, so we should get an array of length==1
+				
+				// Is this an image, video, or neither?
+				if (file.type.toLowerCase().startsWith("image/")) {
+					mediaElement = document.createElement("img");
+					mediaElement.onload = function() {
+						// Fill form fields once image is loaded and dimensions are available
+						document.getElementById("media-width").value = mediaElement.naturalWidth;
+						document.getElementById("media-height").value = mediaElement.naturalHeight;
+					};
+				} else if (file.type.toLowerCase().startsWith("video/")) {
+					mediaElement = document.createElement("video");
+					mediaElement.controls = true;
+					mediaElement.onloadeddata = function() {
+						// Fill form fields once image is loaded and dimensions are available
+						document.getElementById("media-width").value = mediaElement.videoWidth;
+						document.getElementById("media-height").value = mediaElement.videoHeight;
+					};
+					document.getElementById("video").checked = true;
+				} else {
+					return;
+				}
 
 				const para = document.createElement("p");
 				para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size,)}.`;
@@ -210,17 +236,10 @@
 				// Fill form field with filename minus extension
 				document.getElementById("md-filename").value = file.name.replace(/\.[^/.]+$/, "");
 				
-				
-				const image = document.createElement("img");
-				image.onload = function() {
-					// Fill form fields once image is loaded and dimensions are available
-					document.getElementById("media-width").value = image.width;
-					document.getElementById("media-height").value = image.height;
-				};
-				image.src = URL.createObjectURL(file);
-				image.alt = image.title = file.name;
+				mediaElement.src = URL.createObjectURL(file);
+				mediaElement.alt = mediaElement.title = file.name;
 
-				previewDiv.appendChild(image);
+				previewDiv.appendChild(mediaElement);
 				previewDiv.appendChild(para);
 				
 				

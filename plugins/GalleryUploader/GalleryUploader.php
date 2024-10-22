@@ -37,7 +37,7 @@ class GalleryUploader extends AbstractPicoPlugin
             }
 			
 			if (!isset($_FILES['media-picker']) || $_FILES['media-picker']['size'] == 0) {
-				$twigVariables['upload_error'] = 'No image file provided (or upload failed)';
+				$twigVariables['upload_error'] = 'No media file provided (or upload failed)';
                 return;
 			}
 			
@@ -61,9 +61,11 @@ class GalleryUploader extends AbstractPicoPlugin
 			
 			// HTML date field outputs ISO "yyyy-mm-ddThh:mm" format, but Pico wants "yyyy-mm-dd hh:mm".  Pretty simple to swap out the "T".
 			$md_contents .= "date: " . str_replace('T', ' ', $_POST['date-picker']) . "\n";
-			$md_contents .= "title: \"" . $_POST['title'] . "\"\n";
+			// When a YAML string value might possibly contain a colon, it must be wrapped in quotation marks, and existing quotes in the string must be escaped
+			$md_contents .= "title: \"" . str_replace('"', '\"', $_POST['title']) . "\"\n";
 			$md_contents .= "image: gallery/" . $media_filename . "\n";
-			$md_contents .= "imagedescription: \"" . (isset($_POST['media-description']) ? $_POST['media-description'] : '') . "\"\n";
+			$md_contents .= "imagedescription: \"" . (isset($_POST['media-description']) ? str_replace('"', '\"', $_POST['media-description']) : '') . "\"\n";
+			if (isset($_POST['video'])) $md_contents .= "isvideo: true\n";
 			$md_contents .= "width: " . $_POST['media-width'] . "\n";
 			$md_contents .= "height: " . $_POST['media-height'] . "\n";
 			$md_contents .= "adultonly: " . (isset($_POST['adult-only']) ? "true" : "false") . "\n";
