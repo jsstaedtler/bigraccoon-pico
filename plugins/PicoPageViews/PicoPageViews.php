@@ -81,8 +81,7 @@ class PicoPageViews extends AbstractPicoPlugin
 					// Get an exclusive lock on the file; a shared lock for reading isn't appropriate, since another process could then read it before this one has updated it
 					if (flock($file, LOCK_EX)) {
 						$this->loadStats($file);
-						$this->statsPageMeta['stats'][$currentPageId]++;
-						$this->saveStats($file);
+						$this->updateStats($file);
 						
 						// Release the file lock
 						flock($file, LOCK_UN);
@@ -113,44 +112,84 @@ class PicoPageViews extends AbstractPicoPlugin
 		// In all other cases, count the visit from this address
 		return true;
 	}
+	
 
     private function loadStats($file)
     {
-        $currentPageId = $this->pico->getCurrentPage()['id'];
-		
-        // Read the full contents of the stats file (but only if it has any contents)
+         // Read the full contents of the stats file (but only if it has any contents)
 		$fileLength = filesize($this->md);
         $frontMatter = $fileLength > 0 ? fread($file, $fileLength) : '';
 		
 		// Turn the contents into an array of data
         $frontMatterArray = $this->getPico()->parseFileMeta($frontMatter, []);        
         $this->statsPageMeta = $frontMatterArray;
-        $this->statsPageMeta['stats'] = $this->statsPageMeta['stats'] ?? [];
+        $this->statsPageMeta['visitors'] = $this->statsPageMeta['visitors'] ?? [];
+        $this->statsPageMeta['referers'] = $this->statsPageMeta['referers'] ?? [];
+	}
+	
+	
+	private function updateStats($file)
+	{
+		$currentPageId = $this->pico->getCurrentPage()['id'];
+
+		// 'visitors' is an associative array with Pico page IDs for keys.  For each page visit, we collect the IP address & user agent.
+		// Often enough, each unique visitor will have that consistent pair of values, and we only count each unique pair once per page.
+		// (Note the possibility of a missing UA string, normally only seen with bots/crawlers)
+		$visitor = [
+			'ip' => $_SERVER['REMOTE_ADDR'],
+			'ua' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '',
+		];
 		
-		// If the current page isn't already in this array, then put it in
-        if (!array_key_exists($currentPageId, $this->statsPageMeta['stats'])) {
-            $this->statsPageMeta['stats'][$currentPageId] = 0;
+		// 'referers' similarly uses Pico page IDs for keys.  For each page visit, we check the referrer URL, and keep a count of each one.
+		// This will help indicate whether any one particular referrer is driving lots of traffic compared to others.
+		// On top of that, by summing the total for every referrer to a single Pico page, we will have the total hits for that page.
+		// (Note that the referrer may not be present, for various reasons)
+		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+		error_log('Referer: "' . $referer . '"');
+		
+		
+		// If the current page ID isn't already in the visitors array, add it in:
+        if ( !array_key_exists($currentPageId, $this->statsPageMeta['visitors']) ) {
+            $this->statsPageMeta['visitors'][$currentPageId] = [];
         }
+		
+		// Similarly, if the current page ID isn't already in the referers array, add it in:
+        if ( !array_key_exists($currentPageId, $this->statsPageMeta['referers']) ) {
+            $this->statsPageMeta['referers'][$currentPageId] = [];
+        }
+		
+		// If this visitor is not already present, add them
+		if ( !in_array($visitor, $this->statsPageMeta['visitors'][$currentPageId]) ) {
+            array_push($this->statsPageMeta['visitors'][$currentPageId], $visitor);
+        }
+		
+		// Increment the count for this referer, initializing it first if not yet present
+		if ( !array_key_exists($referer, $this->statsPageMeta['referers'][$currentPageId]) ) {
+            $this->statsPageMeta['referers'][$currentPageId][$referer] = 0;
+        }
+		$this->statsPageMeta['referers'][$currentPageId][$referer]++;
+		
 		
 		// Update the datetime in the file
 		$this->statsPageMeta['date'] = $this->currentDate . ' ' . $this->currentTime;
-    }
-    
-    private function saveStats($file)
-    {
-        // Convert our array of stats into a string of YAML
-        $frontMatterArray['stats'] = $this->statsPageMeta['stats'];
-		$frontMatterArray['date'] = $this->statsPageMeta['date'];
-		if(isset($this->template)) $frontMatterArray['template'] = $this->template;			// Provide the template name, which can be customized in config.yml
-		if(isset($this->make_hidden)) $frontMatterArray['hidden'] = $this->make_hidden;		// Provide the "hidden" status, which can be customized in config.yml
 
-        $yaml = "---\n" . Yaml::dump($frontMatterArray) . "---\n";
+		// Convert our array of stats into a string of YAML
+		$frontMatterArray['visitors'] = $this->statsPageMeta['visitors'];
+		$frontMatterArray['referers'] = $this->statsPageMeta['referers'];
+		
+		$frontMatterArray['date'] = $this->currentDate . ' ' . $this->currentTime;		// Include the current datetime
+		if(isset($this->template)) $frontMatterArray['template'] = $this->template;		// Provide the template name, which can be customized in config.yml
+		if(isset($this->make_hidden)) $frontMatterArray['hidden'] = $this->make_hidden;	// Provide the "hidden" status, which can be customized in config.yml
+
+		$yaml = "---\n" . Yaml::dump($frontMatterArray, 3) . "---\n";	// '3' means the first 3 levels are expanded YAML, more than that get condensed
 		
 		// Overwrite the stats file with our new data
-		ftruncate ($file, 0);	// Empty the file
+		ftruncate($file, 0);	// Empty the file
 		rewind($file);			// Return to position 0
-        fwrite($file, $yaml);
-    } 
+		fwrite($file, $yaml);
+			
+	}
+	
 }
 
 ?>
