@@ -166,7 +166,14 @@
 
 						<a href="/adult-content?dest={{ current_page.id }}">
 						
-							<img class="placeholder" src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size, config.gallery.pixel_size ) }}" alt="Adult-only content hidden">
+		{# We can't build a thumbnail from a GIF or video file, so a thumbnail image must be explicitly provided in the MD file #}
+		{% if (meta.type == 'gif') or (meta.type == 'video') %}
+			{% set thumbnail_src = resize( 'assets/' ~ meta.thumbnailimage, null, config.gallery.image_size, config.gallery.pixel_size ) %}
+		{% else %}
+			{% set thumbnail_src = resize( 'assets/' ~ meta.image, null, config.gallery.image_size, config.gallery.pixel_size ) %}
+		{% endif %}
+						
+							<img class="placeholder" src="/{{ thumbnail_src }}" alt="Adult-only content hidden">
 
 							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
 							<div class="icons centered">
@@ -180,8 +187,14 @@
 	
 						<a href="{{ assets_url }}/{{ meta.image }}">
 						
-							{# The image displayed here is resized, so that browsing isn't slowed down by very large images #}
-							<img src="/{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}"{% if meta.imagedescription %} alt="{{ meta.imagedescription }}"{% endif %}>
+		{# We won't bother generating a thumbnail for this file if it's a GIF or video #}
+		{% if (meta.type =='gif') or (meta.type == 'video') %}
+			{% set thumbnail_src = 'assets/' ~ meta.image %}
+		{% else %}
+			{% set thumbnail_src = resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) %}
+		{% endif %}
+						
+							<img src="/{{ thumbnail_src }}"{% if meta.imagedescription %} alt="{{ meta.imagedescription }}"{% endif %}>
 							
 						</a>
 	{% endif %}
@@ -201,7 +214,14 @@
 
 						<a href="/adult-content?dest={{ current_page.id }}">
 						
-							<img class="placeholder" src="/{{ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size, config.gallery.pixel_size) }}" alt="Adult-only content hidden">
+						{# We can't build a thumbnail from a GIF or video file, so a thumbnail image must be explicitly provided in the MD file #}
+						{% if (thisimage.type == 'gif') or (thisimage.type == 'video') %}
+							{% set thumbnail_src = resize( 'assets/' ~ thisimage.thumbnailimage, null, config.gallery.image_size, config.gallery.pixel_size ) %}
+						{% else %}
+							{% set thumbnail_src = resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size, config.gallery.pixel_size ) %}
+						{% endif %}
+		
+							<img class="placeholder" src="/{{ thumbnail_src }}" alt="Adult-only content hidden">
 						
 							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
 							<div class="icons centered">
@@ -212,8 +232,15 @@
 
 					{% else %}
 	
+						{# We won't bother generating a thumbnail for this file if it's a GIF or video #}
+						{% if (thisimage.type =='gif') or (thisimage.type == 'video') %}
+							{% set thumbnail_src = 'assets/' ~ thisimage.image %}
+						{% else %}
+							{% set thumbnail_src = resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) %}
+						{% endif %}
+		
 						<a href="{{ assets_url }}/{{ thisimage.image }}">
-							<img src="/{{ resize( 'assets/' ~ thisimage.image, null, config.gallery.image_size ) }}"{% if thisimage.imagedescription %} alt="{{ thisimage.imagedescription }}"{% endif %}>
+							<img src="/{{ thumbnail_src }}"{% if thisimage.imagedescription %} alt="{{ thisimage.imagedescription }}"{% endif %}>
 						</a>
 						
 					{% endif %}
