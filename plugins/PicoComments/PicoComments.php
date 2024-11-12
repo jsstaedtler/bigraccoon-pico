@@ -8,7 +8,13 @@
 
 class PicoComments extends AbstractPicoPlugin
 {
-    protected $enabled = true;      // whether this plugin is enabled by default sitewide
+	/**
+     * API version used by this plugin
+     *
+     * @var int
+     */
+    const API_VERSION = 3;
+	
     protected $content_path;		// content storage path
     protected $headers;             // current page headers ("meta", "frontmatter", NOT HTML headers)
     protected $id;                  // current page URL ("id")
