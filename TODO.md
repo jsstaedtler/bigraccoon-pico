@@ -2,6 +2,8 @@
 	* To replace multiple slashes with a single one: $uri = preg_replace('(\/{2,})', '/', $uri);
 * Uploader: Escape quotation marks in the description field
 * OpenGraph meta image needs to be of reduced dimension, and pixelated for 18+ content
+* Put an "outside site" icon on links to other domains
+	* May need a Pico plugin to find \<a> elements, check if they're to an outside domain, and add a class so CSS can style it
 * Move "bg" images out of their own folder and put them with the rest of the assets (maybe as "bg.jpg")
 * Modify PicoTags so it can be limited to a specific section instead of the entire site
 * View counter
