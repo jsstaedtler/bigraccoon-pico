@@ -110,6 +110,11 @@ class PicoUsers extends AbstractPicoPlugin
     private function checkLogin()
     {
         if (session_status() == PHP_SESSION_NONE) {
+			session_set_cookie_params([
+				'secure' => true,
+				'httponly' => true,
+				'samesite' => 'Lax',
+			]);
             session_start();
         }
         $fp = $this->fingerprint();
