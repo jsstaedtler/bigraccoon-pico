@@ -1732,7 +1732,7 @@ input, select, textarea {
 		}
 		
 		.pagination a.thumbnail .placeholder {
-			filter: blur(5px);
+			filter: blur(10px);
 			overflow: clip;
 		}
 
@@ -4152,8 +4152,8 @@ div.gallery-image a {
 }
 
 div.gallery-image img.placeholder {
-	filter: blur(10px);
-	background-color: #eee;
+	filter: blur(25px);
+	transform: scale(115%);
 	height: 85vh;
 }
 
@@ -4180,8 +4180,8 @@ div#thumbnails img {
 }
 
 div#thumbnails img.placeholder {
-	filter: blur(10px);
-	background-color: #eee;
+	filter: blur(20px);
+	transform: scale(125%);		/* Crop out the blurred outside edges of the image */
 /*	background-image: url(../img/prohibit-bold.svg);
 	background-position: center;
 	background-repeat: no-repeat;
