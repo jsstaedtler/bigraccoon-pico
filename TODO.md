@@ -1,6 +1,7 @@
 * Fix double-slash in URI issue (pico.php)
 	* To replace multiple slashes with a single one: $uri = preg_replace('(\/{2,})', '/', $uri);
 * Uploader: Escape quotation marks in the description field
+* Add a "share" button (next to "like" button) which at least copies the URL to clipboard
 * OpenGraph meta image needs to be of reduced dimension, and pixelated for 18+ content
 * Put an "outside site" icon on links to other domains
 	* May need a Pico plugin to find \<a> elements, check if they're to an outside domain, and add a class so CSS can style it
