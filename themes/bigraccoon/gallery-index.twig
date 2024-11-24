@@ -123,31 +123,44 @@
 			<abbr title="{{ page.title }}">
 
 		{% if page.meta.adultonly and username != "eighteen" %}
+		
+			{% set imageIsCensored = true %}
 
-			{### To obscure this thumbnail, resize it to an extremely low resolution, then use CSS to apply a blur #}
+			{### To obscure this thumbnail, pixellate it via Pico plugin, then use CSS to apply a blur #}
 			{### The resize() function comes from the Pico plugin ImageResize #}
 				<img class="placeholder" src="/{{ resize( 'assets/' ~ page.meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size ) }}" alt="Adult-only content hidden">
+				
+			{### Add a div to overlay on the image, which will contain an 18+ warning icon #}
+				<div class="icons centered">
+					<abbr title="Adult-only image"><img src="{{ theme_url }}/img/eighteen.svg"></abbr>
+				</div>
 			
 		{% else %}
 			
+			{% set imageIsCensored = false %}
+
 			{### Resize to a reasonable thumbnail resolution #}
 				<img src="/{{ resize( 'assets/' ~ page.meta.image, null, config.gallery.thumbnail_size ) }}"{% if page.meta.imagedescription %} alt="{{ page.meta.imagedescription }}"{% endif %}>
 				
 		{% endif %}
 
 
-		{% if ("18+" in page.meta.tags) or (page.meta.variants) %}
-			{### Create a div to overlay on the image, which will contain one or more icons #}
+		{### Now we make a little corner div if there are any icons we need to display #}
+		{% if (("18+" in page.meta.tags) and (not imageIsCensored)) or (page.meta.variants) %}
 				<div class="icons">
 				
-			{% if "18+" in page.meta.tags %}
+			{% if ("18+" in page.meta.tags) and (not imageIsCensored) %}
 				{### An 18+ warning icon (based on tags, meaning at least one image in the group is adult-only) #}
+				{#   And we only show it if the thumbnail is not already obscured #}
 					<abbr title="Adult-only image"><img src="{{ theme_url }}/img/eighteen.svg"></abbr>
 			{% endif %}
 
 			{% if page.meta.variants %}
 				{### A "group" icon, indicating there's more than one image here #}
-					<abbr title="Multiple variants"><img src="{{ theme_url }}/img/cards.svg"></abbr>
+					<abbr title="{{ page.meta.variants|length + 1 }} variants">
+						<img src="{{ theme_url }}/img/cards.svg">
+						<span class="variants">{{ page.meta.variants|length + 1 }}</span>
+					</abbr>
 			{% endif %}
 
 				</div>		

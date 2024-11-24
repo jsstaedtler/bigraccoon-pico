@@ -4211,12 +4211,25 @@ div#thumbnails div.icons, div.gallery-image div.icons  {
 	margin: 0.5rem;
 	padding: 0.4rem;
 	line-height: 0;
-/*	border: 2px solid rgba(0,0,0,0.2);
-	border-radius: 5px; */
 	background-color: rgba(0,0,0,0.3);
 }
 
-div.gallery-image div.icons.centered {
+div#thumbnails div.icons span.variants {
+	font-family: "Source Sans Pro", Helvetica, sans-serif;
+	font-weight: 600;
+	font-size: 0.9rem;
+	line-height: 1;
+	text-align: center;
+	color: white;
+	position: absolute;
+	width: 2rem;
+    right: 0.5rem;
+    bottom: 0.8rem;
+	margin: 0;
+	padding: 0;
+}
+
+div#thumbnails div.icons.centered, div.gallery-image div.icons.centered {
 	left: calc(50% - 3rem);
 	top: calc(50% - 3rem);
 	right: calc(50% - 3rem);
@@ -4230,8 +4243,12 @@ div#thumbnails div.icons img, div.gallery-image div.icons img {
 	filter: invert(100%);	/* The SVG image starts off black, this changes it to white */
 }
 
-div.gallery-image div.icons.centered img {
+div#thumbnails div.icons.centered img, div.gallery-image div.icons.centered img {
 	height: 4.5rem;
+}
+
+div#thumbnails div.icons.centered {
+	background-color: transparent;
 }
 
 
@@ -4250,6 +4267,22 @@ div.gallery-image div.icons.centered img {
 		height: 1.5rem;
 	}
 
+	div#thumbnails div.icons.centered {
+		left: calc(50% - 2rem);
+		top: calc(50% - 2rem);
+	}
+
+	div#thumbnails div.icons.centered img {
+		height: 3.5rem;
+	}
+
+	div#thumbnails div.icons span.variants {
+		font-weight: 600;
+		font-size: 0.8rem;
+		width: 2rem;
+        right: 0;
+        bottom: 0.42rem;
+	}
 }
 
 @media screen and (max-width: 480px) {
@@ -4260,6 +4293,23 @@ div.gallery-image div.icons.centered img {
 
 	div#thumbnails div.icons img {
 		height: 1.5rem;
+	}
+	
+	div#thumbnails div.icons.centered {
+		left: calc(50% - 1.6rem);
+		top: calc(50% - 1.6rem);
+	}
+
+	div#thumbnails div.icons.centered img {
+		height: 2.5rem;
+	}
+	
+	div#thumbnails div.icons span.variants {
+		font-weight: 600;
+		font-size: 0.8rem;
+		width: 2rem;
+		right: 0.05rem;
+		bottom: 0.5rem;
 	}
 }
 
