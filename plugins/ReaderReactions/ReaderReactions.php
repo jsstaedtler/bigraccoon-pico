@@ -314,11 +314,9 @@ class ReaderReactions extends AbstractPicoPlugin
      */
     public function onTwigRegistered(Twig_Environment &$twig)
     {
-		if ($this->currentPageID) {
-			$twig->addFunction(
-				new Twig_Function('reaction_is_selected', [$this, 'isReactionSelected'])
-			);
-		}
+		$twig->addFunction(
+			new Twig_Function('reaction_is_selected', [$this, 'isReactionSelected'])
+		);
     }
 	
 	
