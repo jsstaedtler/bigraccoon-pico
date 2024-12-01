@@ -22,6 +22,10 @@
 					
 					{{ content }}
 					
+					<div id="end-bar"><img src="{{ theme_url }}/img/bigraccoon_icon_black.png"></div>
+					
+					{# reaction_form|raw #}
+
 					{{ include("_segment-comments.twig") }}
 					
 				</section>
@@ -33,6 +37,7 @@
 	{# Add lightbox elements and script #}
 	{{ include("_segment-lightbox.twig") }}
 	
+	{# Syntax highlighting #}
 	<script src="{{ theme_url }}/js/highlight.min.js"></script>
 	<script src="{{ theme_url }}/js/highlight-mergeHTMLPlugin.js"></script>
 	<script>

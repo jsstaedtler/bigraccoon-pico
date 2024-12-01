@@ -3708,6 +3708,34 @@ input, select, textarea {
 }
 
 
+#end-bar {
+	position: relative;
+	margin: -0.5rem 0 2rem 0;
+	text-align: center;
+}
+
+#end-bar img {
+	display: inline-block;
+	vertical-align: middle;
+	width: 3rem;
+	opacity: 20%;
+}
+
+#end-bar::before, #end-bar::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 50%;
+	width: calc(50% - 2rem);
+	border-top: solid 2px;
+	border-top-color: #eeeeee;
+}
+
+#end-bar::after {
+	right: 0;
+}
+
+
 /* For the font toggle switch */
 
 .serif-font {
@@ -4457,3 +4485,41 @@ div.comment span.date {
 	height: 2rem;
 }
 
+
+
+/***** Reactions/"Like" button *****/
+
+form.reaction-form ul {
+	list-style: none;
+	width: 100%;
+	padding: 0;
+	text-align: center;
+}
+
+form.reaction-form ul li {
+	display: inline-block;
+	background: none;
+	padding: 0;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+form.reaction-form ul li h3 {
+	display: inline;
+	vertical-align: middle;
+	margin: 0 0.5rem;
+}
+
+input.reaction-button {
+	display: inline;
+	background: none;
+	height: 3rem;
+	width: 3rem;
+	padding: 0;
+	margin: 0;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	cursor: pointer;
+	vertical-align: middle;
+}
