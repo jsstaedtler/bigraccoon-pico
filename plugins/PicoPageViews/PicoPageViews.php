@@ -5,13 +5,20 @@ use Symfony\Component\Yaml\Yaml;
 class PicoPageViews extends AbstractPicoPlugin
 {
     const API_VERSION = 3;
-    protected $dependsOn = array();
 	
-    private $statsDir = 'stats';			// Default location to store stats md files (within Pico's /contents directory)
-	private $template = null;				// By default, don't specify a template name in stats md files
-	private $make_hidden = false;			// By default, don't add "hidden: true" to YAML frontmatter
-    private $statsPageMeta = array();
+    private $statsDir = 'stats';		// Default location to store stats md files (within Pico's /contents directory - so it's also a Pico page ID)
+	private $template = null;			// By default, don't specify a template name in stats md files
+	private $make_hidden = false;		// By default, don't add "hidden: true" to YAML frontmatter
+	private $ignore_list = [];
+	
+    private $statsPageMeta = array();	// Data from the most recently loaded stats page
+    private $allStatsPages;
     
+	
+    /***********************
+     * Pico Event Handlers *
+     ***********************/
+	
 /*    public function onSinglePageLoading($id, &$skipPage)
     {
         if (strpos($id, 'stats/') === 0) { $skipPage = true; }
@@ -19,12 +26,7 @@ class PicoPageViews extends AbstractPicoPlugin
 */
 
     /**
-     * Triggered after Pico has read its configuration
-     *
-     * @see Pico::getConfig()
-     * @see Pico::getBaseUrl()
-     * @see Pico::getBaseThemeUrl()
-     * @see Pico::isUrlRewritingEnabled()
+     * After Pico has read its configuration, we capture config values specific to this plugin
      *
      * @param array &$config array of config variables
      *
@@ -55,6 +57,15 @@ class PicoPageViews extends AbstractPicoPlugin
     }
 
 	
+	/**
+     * Once the current page is known, we will capture information from the visitor, and add it to existing stored statistics
+     *
+     * @param array|null &$currentPage  data of the page being served
+     * @param array|null &$previousPage data of the previous page
+     * @param array|null &$nextPage     data of the next page
+     *
+     * @return void
+     */
     public function onCurrentPageDiscovered(
         array &$currentPage = null,
         array &$previousPage = null,
@@ -96,6 +107,26 @@ class PicoPageViews extends AbstractPicoPlugin
     }
 	
 	
+	/**
+     * Once all pages are loaded, we will grab the ones containing our statistics
+     *
+     * @param array[] &$pages sorted list of all known pages
+     */
+    public function onPagesLoaded(array &$pages)
+    {
+        //$this->allStatsPages = $pages[$this->statsDir];
+    }
+	
+	
+    /*********************
+     * Private Functions *
+     *********************/
+
+	/**
+     * Check whether the current visitor's IP address is not in the ignore list
+     *
+     * @return boolean whether this visitor should be counted
+     */
 	private function isValidAddress()
 	{
 		if (
@@ -113,7 +144,13 @@ class PicoPageViews extends AbstractPicoPlugin
 		return true;
 	}
 	
-
+	/**
+     * Create an array of data ($this->statsPageMeta) derived from the YAML frontmatter stored in a given file
+     *
+     * @param filehandle $file  an open handle to a markdown file
+     *
+     * @return void
+     */
     private function loadStats($file)
     {
          // Read the full contents of the stats file (but only if it has any contents)
@@ -127,7 +164,14 @@ class PicoPageViews extends AbstractPicoPlugin
         $this->statsPageMeta['referers'] = $this->statsPageMeta['referers'] ?? [];
 	}
 	
-	
+
+	/**
+     * Write an array of data into YAML frontmatter to a given file (deleting all existing contents)
+     *
+     * @param filehandle $file  a handle to a markdown file opened for writing
+     *
+     * @return void
+     */
 	private function updateStats($file)
 	{
 		$currentPageId = $this->pico->getCurrentPage()['id'];
@@ -145,8 +189,11 @@ class PicoPageViews extends AbstractPicoPlugin
 		// On top of that, by summing the total for every referrer to a single Pico page, we will have the total hits for that page.
 		// (Note that the referrer may not be present, for various reasons)
 		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+<<<<<<< Updated upstream
 		//error_log('Referer: "' . $referer . '"');
 		
+=======
+>>>>>>> Stashed changes
 		
 		// If the current page ID isn't already in the visitors array, add it in:
         if ( !array_key_exists($currentPageId, $this->statsPageMeta['visitors']) ) {
@@ -189,7 +236,77 @@ class PicoPageViews extends AbstractPicoPlugin
 		fwrite($file, $yaml);
 			
 	}
-	
+
+
+    /********************
+     * Public Functions *
+     ********************/
+
+	/**
+     * Return the raw number of page hits for the specified year, month, or date.
+	 * If only the year is provided, it will return all hits in that entire year.
+	 * If year and month are provided (but no date), it will return all hits in that entire month.
+	 * If a larger unit is omitted but then a smaller unit is provided, assume the larger unit is the current year/month.
+	 * If all parameters are omitted, the current date is used.
+	 * If an invalid date is provided, a null value will be returned.  Such cases include:
+	 * - a day is specified that does not exist in the specified month (29, 30, 31)
+	 * - a month or day is specified outside the valid range
+	 * - a year/month/day is specified for which no statistics files exist
+     *
+     * @param int|null $year	desired year (4 digits)
+     * @param int|null $month	desired month (from 1 to 12)
+     * @param int|null $day		desired day (from 1 to 31)
+     *
+     * @return int|null total page hits
+     */
+	public function getHits (
+		$year = null,
+		$month = null,
+		$day = null
+	) {
+		$total_hits = 0;
+		
+		// If a day has been provided (or nothing has been provided at all):
+		if ( !is_null($day) || (is_null($year) && is_null($month) && is_null($day)) ) {
+			$day = $day ?? date('d');
+			$month = $month ?? date('m');
+			$year = $year ?? date('Y');
+			
+			// Check the day is valid for the given month
+			if ($day < 1 || $day > date('t', date_create_from_format('m', $month))) {
+				return null;
+			}
+			
+			// Check the month is valid
+			if ($month < 1 || $month > 12) {
+				return null;
+			}
+			$month = date('m', date_create_from_format('m', $month));	// Ensure the month has 2 digits, zero-padded
+
+
+
+			// Try to find that date in the stats pages discovered by Pico
+
+
+
+			// See if a file exists for this date
+			$filename = 'stats' . $year . '-' . $month . '-' . $day . '.md';
+			if (!file_exists($filename)) {
+				return null;
+			}
+			
+			// Open the filestream, and get a shared lock on the file for reading (which will block attempts to write, but be blocked indefinitely if it's already locked for writing)
+			$file = fopen($this->statsRoot . '/' . $filename, 'r');
+			if (flock($file, LOCK_SH)) {
+				$this->loadStats($file);
+				flock($file, LOCK_UN);		// Release the file lock
+			}
+			fclose($file);
+			
+			
+
+		}
+	}
 }
 
 ?>
