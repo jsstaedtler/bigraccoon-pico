@@ -189,11 +189,7 @@ class PicoPageViews extends AbstractPicoPlugin
 		// On top of that, by summing the total for every referrer to a single Pico page, we will have the total hits for that page.
 		// (Note that the referrer may not be present, for various reasons)
 		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-<<<<<<< Updated upstream
 		//error_log('Referer: "' . $referer . '"');
-		
-=======
->>>>>>> Stashed changes
 		
 		// If the current page ID isn't already in the visitors array, add it in:
         if ( !array_key_exists($currentPageId, $this->statsPageMeta['visitors']) ) {
