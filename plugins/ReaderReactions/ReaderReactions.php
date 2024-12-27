@@ -8,10 +8,6 @@
  * License-Filename: LICENSE
  */
 
-
-use Symfony\Component\Yaml\Yaml;
-
-
 /**
  * ReaderReactions - a Pico plugin that provides readers with a quick and simple way to react to pages on the site.
  *
@@ -24,21 +20,27 @@ use Symfony\Component\Yaml\Yaml;
  * - 10 stars (with values of 1 to 10)
  * - A heart, a laughing face, a thinking face, a shocked face, a thumbs down
  *
- * In many cases, the reader may select only one out of the available options (like "radio button" behaviour), but it is possoble to permit multiple selections (behaving more like checkboxes).
+ * In many cases, the reader may select only one out of the available options (like "radio button" behaviour), but you can configure the plugin to permit multiple selections (like "checkbox" behaviour).
  *
  * It is up to the site owner to decide what each reaction type should mean, and what icons, images, or buttons should be displayed.  This plugin will provide Pico variables to be used in a Twig theme file, where image files or regular text (even emoji) can be employed as desired.  The count totals can also be used in different ways, either displayed as-is, or perhaps combined into an average (eg. for "star" ratings).
  *
- * This plugin provides no foolproof way to prevent any single reader from submitting more than one reaction per page; eg. a reader could technically "like" a page more than a dozen times, impossible to distinguish from 12 readers each liking it once.  There are some mitigation methods: enabling PHP Sessions to track a user's reactions will prevent them from being able to re-react just by reloading the page.  Or you can enable the use of an identifying cookie, and record all reactions from that ID to ensure there's only one per page.  Since there will always be the possibility of abuse, it is not recommended to rely on this plugin for important statistical measurements or for any serious voting process.  It is primarily to allow and encourage readers to give quick feedback.
+ * This plugin provides no foolproof way to prevent any single reader from submitting more than one reaction per page; eg. a reader could technically "like" a page more than a dozen times, impossible to distinguish from 12 readers each liking it once.  You can enable the use of an identifying cookie, and this plugin will record all reactions from that ID to ensure they only make one per page.  If you choose not to enable the cookie, or a reader's browser rejects the cookie, this plugin will track them by IP address.  Since there will always be the possibility of abuse, it is not recommended to rely on this plugin for important statistical measurements or for any serious voting process.  It is primarily to allow and encourage readers to give quick feedback.
  *
  * Possible future features:
  *  * Integrate with PicoAuth so only logged-in readers can react (for more reliable statistics)
  *  * "Up" and "down" buttons to raise or lower a shared count
+ *  * Allow counts to be displayed as a percentage of total reactions
+ *  * Selecting from a scale, so all icons up to the one selected appear selected as well (eg. 5-star ratings)
+ *  * Use page metadata to override the site-wide config with custom per-page settings
  *
  * @author  J.S. Staedtler
  * @link    https://bigraccoon.ca
  * @license http://opensource.org/licenses/MIT The MIT License
  * @version 1.0
  */
+
+use Symfony\Component\Yaml\Yaml;
+
 class ReaderReactions extends AbstractPicoPlugin
 {
     /**
@@ -116,10 +118,11 @@ class ReaderReactions extends AbstractPicoPlugin
      */
 	protected $useCookie = true;
 	
-	const FORM_NAME = 'reader_reactions';
+	const FORM_NAME = 'reader_reactions';			// A unique value to distinguish our POST submissions from any others
 	const COOKIE_NAME = 'PicoReaderReactions';		// If you change this, all previously issued cookies will become unreadable.
 	protected $newCookieCreated = false;
 	protected $newCookieFailed = false;
+	protected $jsNeeded = false;					// Determines whether this plugin needs to insert some JavaScript in the rendered page
 	protected $siteUrl;
 	protected $rootDir;
 	protected $currentPageID;
@@ -235,19 +238,17 @@ class ReaderReactions extends AbstractPicoPlugin
 			$this->currentPageID = $currentPage['id'];
 			$this->currentPageUrl = $currentPage['url'];
 			
-			error_log('$this->currentPageID: ' . $this->currentPageID);
-								
-			// Get all existing reactions already saved for this page
+			// Load all existing reactions already saved for this page
 			$this->loadReactions($this->currentPageID);
 			
 			// Determine the ID for this user based on whether we can tell they've visited before
 			$this->currentUserID = $this->getUserID();
 			
-			// Check if the page is responding to a POST request from a ReaderReactions form
+			
+			// Check if the page is responding to a POST request from a ReaderReactions button
 			if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_name']) && $_POST['form_name'] == self::FORM_NAME) {
 				
 				if (isset($_POST['i'])) {
-					//error_log('Got an i field of:' . $_POST['i']);
 					// The previous run had set a new cookie, and we need to validate that it was accepted.  It has submitted the value ("ID") of the new cookie in the 'i' field.  If that cookie was created successfully, then $this->getUserID() would have read it and saved it to $this->currentUserID.  So by comparing the 'i' field to $this->currentUserID, we know if creation succeeded.
 					
 					if ($_POST['i'] != $this->currentUserID) {
@@ -255,36 +256,39 @@ class ReaderReactions extends AbstractPicoPlugin
 						$this->currentUserID = $_SERVER['REMOTE_ADDR'];
 						$this->$newCookieFailed = true;
 					}
-
 				}
 				
-				// The "name" of the submit button that was clicked will appear as a key in $_POST, and we have to check for every possible name.
-				// Note that if the HTML form used <input type="image"> to submit the reaction, it will submit a pair of names: [name]_x and [name]_y.
-				foreach ($this->reactTypes as $type) {
-					if (array_key_exists($type['name'], $_POST) or array_key_exists($type['name'] . '_x', $_POST)) {
-						
-						// First see if this user has already made a selection in the past
-						$existingSelection = $this->userAlreadySelected($this->currentUserID);
-						
-						// If this reaction had already been selected by the user, clicking it again will undo that selection
-						if ($type['name'] == $existingSelection) {
-							$this->recordReaction($type['name'], -1);
-						} else {
-							// If multiselect is disabled, and the user selected a *different* reaction type in the past, undo it
-							if (!$this->multiSelect and $existingSelection) {
-								$this->recordReaction($existingSelection, -1);
-							}
-							
-							// Finally, record their new selection
-							$this->recordReaction($type['name'], 1);
-
+				if (isset($_POST['name'])) {
+					// Start a new array to store the info to be returned
+					$newCount = [];
+					
+					// Check if this user has already made a selection in the past
+					$existingSelection = $this->userAlreadySelected($this->currentUserID);
+					
+					// If this reaction had already been selected by the user, clicking it again will undo that selection
+					if ($_POST['name'] == $existingSelection) {
+						$newCount[] = ['name' => $_POST['name'], 'count' => $this->recordReaction($_POST['name'], -1)];
+					} else {
+						// If multiselect is disabled, and the user selected a *different* reaction type in the past, undo it
+						if (!$this->multiSelect and $existingSelection) {
+							$newCount[] = ['name' => $existingSelection, 'count' => $this->recordReaction($existingSelection, -1)];
 						}
 						
-						// No need to check any more names, only one of them could have been clicked
-						break;
+						// Finally, record their new selection
+						$newCount[] = ['name' => $_POST['name'], 'count' => $this->recordReaction($_POST['name'], 1)];
 					}
+					
+					// Now return the new total for this reaction, so the originating JavaScript can update the original page
+					echo json_encode($newCount);
+				} else {
+					// If the name field is missing, we can't do anything
+					http_response_code(400);
 				}
+				
+				// Since the page was loaded by a POST submission, we should not output any other page data
+				exit();
 			}
+			
 		}
 	}
 	
@@ -305,6 +309,23 @@ class ReaderReactions extends AbstractPicoPlugin
 			$twigVariables['reaction_form'] = $this->buildHTMLForm();
 		}
 	}
+	
+	
+	/**
+     * After Pico has fully rendered the HTML page, we can add additional content
+     *
+     * @param string &$output contents which will be sent to the user
+     */
+    public function onPageRendered(&$output)
+    {
+		// Some JavaScript must be inserted into this page for reaction buttons to work, but we don't want to tack entire scripts onto every single page of the site if they don't need it.  We only do so if the template has used any of the provided Twig variables or functions.
+		
+		// We will insert the scripting immediately before the end of the HTML body element, since it must execute only after the proper HTML elements have been added.
+
+		if ($this->jsNeeded) {
+			$output = str_ireplace('</body>', $this->buildJavaScript() . '</body>', $output);
+		}
+    }
 	
 
     /**
@@ -327,27 +348,12 @@ class ReaderReactions extends AbstractPicoPlugin
 
 	private function buildHTMLForm()
 	{
-		$formName = self::FORM_NAME;
+		// This will produce the base HTML elements, so that the static reaction images and current totals will appear on the page.
+		// Interaction with the images relies on JavaScript, and some JS scripting will be appended afterward.  Even if the user has JS
+		// disabled, the current reaction totals will still be displayed.
 		
 		$form = <<<END
-			<form method="post" action="#{$this->anchorID}" id="reactions" class="reaction-form">
-				<input type="hidden" name="form_name" value="{$formName}" />
-				
-			END;
-		
-		// Flag for a cookie check on the next script execution, if:
-		// - this user had no cookie and was given a new one; or
-		// - the previous check determined cookies are being refused and IP should be used instead.
-		// (In the latter case, this check will always fail, and so IP will always be used)
-		if ($this->useCookie and ($this->newCookieCreated or $this->newCookieFailed)) {
-			$form .= <<<END
-				<input type="hidden" name="i" value="{$this->currentUserID}" />
-					
-			END;
-		}
-		
-		$form .= <<<END
-			<ul>
+			<ul id="reader-reactions" class="reader-reactions">
 				
 			END;
 			
@@ -357,13 +363,13 @@ class ReaderReactions extends AbstractPicoPlugin
 
 			$form .= <<<END
 					<li>
-						<input type="image" id="{$type['name']}" name="{$type['name']}" src="/{$this->imageDir}/{$filename}.svg" class="{$classes}" alt="{$type['name']}" />
+						<img src="/{$this->imageDir}/{$filename}.svg" id="button-{$type['name']}" class="{$classes}" alt="{$type['name']}">
 
 			END;
 			
 			if ($type['display_count']) {
 				$form .= <<<END
-						<h3>{$this->currentReactionCounts[$type['name']]}</h3>
+						<span id="count-{$type['name']}" class="reaction-count">{$this->currentReactionCounts[$type['name']]}</span>
 						
 			END;
 			}
@@ -375,17 +381,115 @@ class ReaderReactions extends AbstractPicoPlugin
 		}
 		
 		$form .= <<<END
-				</ul>
-			</form>
+			</ul>
+		END;
+		
+		$this->jsNeeded = true;
+
+		return $form;
+	}
+	
+
+
+	private function buildJavaScript()
+	{
+		$formName = self::FORM_NAME;
+		
+		// We need JavaScript to add a click event handler to each reaction image.  Clicking on an image will send a POST request to this very same web page (like an HTML form would be submitted), and this plugin will catch the submission to record the change (see onCurrentPageDiscovered())
+		
+		// This is the POST data to be sent when a reader clicks a reaction button.  It is a string of JavaScript to be interpreted on-click.
+		$postString = "'form_name={$formName}&name=' + e.target.id.replace('button-','')";
+		
+		// If we have not established whether the browser permits cookies, send the current ID value in the "i" field
+		if ($this->useCookie and ($this->newCookieCreated or $this->newCookieFailed)) {
+			$postString .= " + '&i={$this->currentUserID}'";
+		}
+		
+		
+		$form = <<<END
+			<script>
+			// Produced by ReaderReactions plugin for Pico
 			
 			END;
 			
+		// Add event handlers for clicking on any of the reaction buttons
+		foreach ($this->reactTypes as $type) {
+			$form .= <<<END
+					document.getElementById('button-{$type['name']}').addEventListener('click', toggleReaction);
+					
+			END;
+		}
+		
+		$form .= <<<END
+				function addClickToButtons() {
+					for (const el of document.getElementById('reader-reactions').children) {
+						el.firstElementChild.addEventListener('click', toggleReaction);
+						el.firstElementChild.style.cursor = 'pointer';
+						el.firstElementChild.style.opacity = '100%';
+					}
+				}
+				
+				function removeClickFromButtons() {
+					for (const el of document.getElementById('reader-reactions').children) {
+						el.firstElementChild.removeEventListener('click', toggleReaction);
+						el.firstElementChild.style.cursor = 'initial';
+						el.firstElementChild.style.opacity = '30%';
+					}
+				}
+				
+				function toggleSelection(el) {
+					if (el.classList.contains('selected')) {
+						el.src = el.src.replace('-selected','');
+					} else {
+						el.src = el.src.replace(/\\.[^\\.]*$/, "-selected$&");
+					}
+					el.classList.toggle('selected');
+				}
+				
+				function toggleReaction(e) {
+					// Disable every button until we get the result back
+					removeClickFromButtons();
+					
+					// Toggle the button to its new state, so the user gets immediate feedback (which we will revert upon failure)
+					toggleSelection(e.target);
+					
+					var req = new XMLHttpRequest();
+					req.open('POST', '', true);		// (method, URL, asynchronous)
+					req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+					
+					req.onreadystatechange = () => {
+						if (req.readyState === XMLHttpRequest.DONE) {
+							if (req.status === 200) {
+								// Get the JSON data returned from the POST request, which tells us every reaction type that has changed
+								result = JSON.parse(req.responseText);
+								// Loop through the result, updating the number contained in each <span> element
+								for (const type of result) {
+									document.getElementById('count-' + type.name).textContent = type.count;
+								}
+							} else {
+								// Something went wrong, so revert the change to the button state
+								toggleSelection(e.target);
+							}
+							
+							// Now that the request has been completed, make buttons clickable again
+							addClickToButtons();
+						}
+					}
+					
+					req.send($postString);
+				}
+				
+				addClickToButtons();
+			</script>
+			
+			END;
+
 		return $form;
 	}
 
 
     /**
-     * Get the user's ID string.  If a PHP session can be established with a cookie, that ID can persist across pageviews and over time.
+     * Get the user's ID string.  If it can be saved in a cookie in the reader's browser, that ID can persist across pageviews and over time.
 	 * If the cookie can't be set, the ID will be based on the user's IP address.
      *
 	 * @return string	The user's unique ID
@@ -418,9 +522,9 @@ class ReaderReactions extends AbstractPicoPlugin
 				   Because, if it is not accepted, then a new cookie with a new id will be blindly generated again on the next run, ad infinitum.
 				   We would prefer to know the cookie can not be set, and instead use the user's IP address as an ID.
 				   
-				   To test the existence of the cookie, we will wait until the reader submits a form (ie. to submit or retract a reaction).
-				   In that form will be the ID value we are now storing in the cookie.  When the form is processed on the next script run, it will
-				   test whether that cookie exists.  If not, we will assume the cookie was refused, and we will use the reader's IP address instead.
+				   To test the existence of the cookie, we will wait until the reader submits a reaction.  In that POST submission will be
+				   the ID value we stored in the new cookie.  When that causes a new instance of this script to execute, it will test whether
+				   that cookie exists.  If not, we will assume the cookie was refused, and we will use the reader's IP address instead.
 				*/
 				
 				$cookieOptions = [
@@ -504,8 +608,7 @@ class ReaderReactions extends AbstractPicoPlugin
 			fclose($file);
 		}
 		
-		$this->currentReactionCounts = $counts;
-			
+		$this->currentReactionCounts = $counts;		
 	}
 		
 		
@@ -540,7 +643,7 @@ class ReaderReactions extends AbstractPicoPlugin
 		
 		// Arrange YAML frontmatter based on our reactions data
 		$newFrontMatter = ['reactions' => $this->currentReactions];
-		$newFileContents = "---\n" . Yaml::dump($newFrontMatter, 3) . "---\n";	// '3' means the first 3 levels are expanded YAML, more than that get condensed
+		$newFileContents = "---\n" . Yaml::dump($newFrontMatter, 5) . "---\n";	// '5' means the first 5 levels are expanded YAML, more than that get condensed
 		
 		// Open the reactions file as read/write (without erasing its contents)
 		$file = fopen($filePath, 'c+');
@@ -558,9 +661,11 @@ class ReaderReactions extends AbstractPicoPlugin
 		
 		fclose($file);
 		
+		// Return the new count of the reaction type that was updated
+		return $this->currentReactionCounts[$reactionName];
 	}
 	
-	
+
     /**
 	 * Checks whether a specific user has previously selected a specific reaction type.  Returns false if they have made none.
 	 * Otherwise, returns the name of the selected type as a string.
@@ -617,16 +722,6 @@ class ReaderReactions extends AbstractPicoPlugin
 		} else {
 			return false;
 		}
-	}
-	
-	/**
-	 * Produce a string of raw HTML to produce a form with buttons and current counts of each reaction type
-	 *
-     * @return	string	Raw HTML code to insert into a Twig theme file
-     */
-	public function reactionForm()
-	{
-		return $this->buildHTMLForm();
 	}
 	
 }
