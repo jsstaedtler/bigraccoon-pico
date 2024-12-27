@@ -178,7 +178,7 @@
 							{### Create a div to overlay on the image, which will contain an 18+ warning icon #}
 							<div class="icons centered">
 								<abbr title="Adult-only image"><img src="{{ theme_url }}/img/eighteen.svg"></abbr>
-							</div>		
+							</div>
 
 						</a>
 						
@@ -253,6 +253,10 @@
 
 {### TEXT CONTENT #}			
 				<span class="align-center">{{ content }}</span>
+				
+
+{### READER REACTIONS #}
+				{{ reaction_form|raw }}
 
 			
 {### DISPLAY ASSOCIATED TAGS #}
