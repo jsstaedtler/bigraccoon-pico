@@ -220,7 +220,7 @@ input, select, textarea {
 		margin: 0 0 1.5rem 0;
 	}
 
-	h1, h2, h3, h4, h5, h6, span.comment-author {
+	h1, h2, h3, h4, h5, h6, span.comment-author, ul.reader-reactions span {
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-weight: 900;
 		line-height: 1.5;
@@ -255,7 +255,7 @@ input, select, textarea {
 		margin: 0 0 1.5rem 0;
 	}
 
-	h3 {
+	h3, ul.reader-reactions span {
 		font-size: 2rem;
 		margin: 0 0 1rem 0;
 	}
@@ -379,7 +379,7 @@ input, select, textarea {
 		color: #212931;
 	}
 
-	h1, h2, h3, h4, h5, h6, span.comment-author {
+	h1, h2, h3, h4, h5, h6, span.comment-author, ul.reader-reactions span {
 		color: #212931;
 	}
 
@@ -3975,7 +3975,7 @@ div.imgblock.single p, div.imgblock.single video {
 		font-size: 2rem;
 	}
 	
-	h3 {
+	h3, ul.reader-reactions span {
 		font-size: 1.5rem;
 		margin: 0 0 1rem 0;
 	}
@@ -4489,14 +4489,14 @@ div.comment span.date {
 
 /***** Reactions/"Like" button *****/
 
-form.reaction-form ul {
+#reader-reactions {
 	list-style: none;
 	width: 100%;
 	padding: 0;
 	text-align: center;
 }
 
-form.reaction-form ul li {
+#reader-reactions li {
 	display: inline-block;
 	background: none;
 	padding: 0;
@@ -4504,13 +4504,12 @@ form.reaction-form ul li {
 	margin-right: 0.5rem;
 }
 
-form.reaction-form ul li h3 {
-	display: inline;
+#reader-reactions li span {
 	vertical-align: middle;
 	margin: 0 0.5rem;
 }
 
-input.reaction-button {
+img.reaction-button {
 	display: inline;
 	background: none;
 	height: 3rem;
@@ -4520,6 +4519,5 @@ input.reaction-button {
 	border: none;
 	border-radius: 0;
 	box-shadow: none;
-	cursor: pointer;
 	vertical-align: middle;
 }
