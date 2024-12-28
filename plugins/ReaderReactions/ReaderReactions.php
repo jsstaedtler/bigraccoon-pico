@@ -306,7 +306,7 @@ class ReaderReactions extends AbstractPicoPlugin
 			$twigVariables['reaction_counts'] = $this->currentReactionCounts;
 			
 			// This variable contains raw HTML for a form that includes all available reaction types
-			$twigVariables['reaction_form'] = $this->buildHTMLForm();
+			$twigVariables['reaction_form'] = $this->outputSimpleForm();
 		}
 	}
 	
@@ -383,8 +383,6 @@ class ReaderReactions extends AbstractPicoPlugin
 		$form .= <<<END
 			</ul>
 		END;
-		
-		$this->jsNeeded = true;
 
 		return $form;
 	}
@@ -609,6 +607,16 @@ class ReaderReactions extends AbstractPicoPlugin
 		}
 		
 		$this->currentReactionCounts = $counts;		
+	}
+	
+	
+	private function outputSimpleForm()
+	{
+		return <<<END
+			{$this->buildHTMLForm()}
+			
+			{$this->buildJavaScript()}
+			END;
 	}
 		
 		
