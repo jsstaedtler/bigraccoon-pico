@@ -4217,7 +4217,7 @@ div#thumbnails img.placeholder {
 }
 
 div#thumbnails img.cropped {
-	object-fit: cover
+	object-fit: cover;
 }
 
 div.gallery-image img {
