@@ -96,15 +96,6 @@ class ReaderReactions extends AbstractPicoPlugin
      * @var bool
      */
 	protected $multiSelect = false;
-	
-    /**
-     * This is the "anchor", or element ID, that the page will jump to when the user clicks a reaction button.  Since the page must reload
-	 * to submit the reaction, the anchor should be at or slightly above the reactions form (so that the user can immediately see the effect
-	 * of their selection).  The <form> element itself has id="reactions", so that is the default value.
-     *
-     * @var string
-     */
-	protected $anchorID = 'reactions';
 
 	/**
      * Whether to use an identifying cookie to track reactions by a single reader
@@ -117,6 +108,10 @@ class ReaderReactions extends AbstractPicoPlugin
      * @var bool
      */
 	protected $useCookie = true;
+	
+	protected $email_enabled = false;
+	protected $email_to = null;
+	protected $email_from = null;
 	
 	const FORM_NAME = 'reader_reactions';			// A unique value to distinguish our POST submissions from any others
 	const COOKIE_NAME = 'PicoReaderReactions';		// If you change this, all previously issued cookies will become unreadable.
@@ -200,11 +195,6 @@ class ReaderReactions extends AbstractPicoPlugin
 				);
 			}
 		}
-		
-		// anchor_id
-        if (isset($config['ReaderReactions']['anchor_id'])) {
-			$this->anchorID = $config['ReaderReactions']['anchor_id'];
-		}
 
 		// use_cookie
 		if (isset($config['ReaderReactions']['use_cookie'])) {
@@ -217,6 +207,21 @@ class ReaderReactions extends AbstractPicoPlugin
 			}
 		}
 		
+		// email_enabled
+        if (isset($config['ReaderReactions']['email_enabled'])) {
+			$this->email_enabled = $config['ReaderReactions']['email_enabled'];
+		}
+
+		// email_to
+        if (isset($config['ReaderReactions']['email_to'])) {
+			$this->email_to = $config['ReaderReactions']['email_to'];
+		}
+
+		// email_from
+        if (isset($config['ReaderReactions']['email_from'])) {
+			$this->email_from = $config['ReaderReactions']['email_from'];
+		}
+
     }
 	
 	
@@ -268,14 +273,17 @@ class ReaderReactions extends AbstractPicoPlugin
 					// If this reaction had already been selected by the user, clicking it again will undo that selection
 					if ($_POST['name'] == $existingSelection) {
 						$newCount[] = ['name' => $_POST['name'], 'count' => $this->recordReaction($_POST['name'], -1)];
+						if ($this->email_enabled) $this->sendEmail($_POST['name'], -1);
 					} else {
 						// If multiselect is disabled, and the user selected a *different* reaction type in the past, undo it
 						if (!$this->multiSelect and $existingSelection) {
 							$newCount[] = ['name' => $existingSelection, 'count' => $this->recordReaction($existingSelection, -1)];
+							if ($this->email_enabled) $this->sendEmail($existingSelection, -1);
 						}
 						
 						// Finally, record their new selection
 						$newCount[] = ['name' => $_POST['name'], 'count' => $this->recordReaction($_POST['name'], 1)];
+						if ($this->email_enabled) $this->sendEmail($_POST['name'], 1);
 					}
 					
 					// Now return the new total for this reaction, so the originating JavaScript can update the original page
@@ -709,6 +717,36 @@ class ReaderReactions extends AbstractPicoPlugin
 		return false;
 	}
 	
+	
+	private function sendEmail($reaction, $increment)
+	{
+		// Proceed only if To and From addresses are provided in the pico config
+		if ($this->email_to && $this->email_from) {
+		
+			$subject = 'bigraccoon.ca - ' . $reaction . ' ' . sprintf('%+d', $increment) . ' on ' . $this->pico->getCurrentPage()['title'];
+			$headers = array();
+			$headers['From'] = $this->email_from;		// PHP mail function needs the From value to be in the additional headers
+			$message = $reaction . ' ' . sprintf('%+d', $increment) . ' on ' . $this->pico->getCurrentPage()['title'] . "\n\nTotals:\n";
+			
+			// List totals for this page
+			foreach ($this->currentReactionCounts as $type => $count) {
+				$message .= " - $type: $count\n";
+			}
+
+			$success = mail($this->email_to, $subject, $message, $headers);		// Returns true on success, false on failure
+			
+			if (!$success) {
+				return error_get_last()['message'];	// Roundabout way to find out what went wrong
+			} else {
+				return null;
+			}
+			
+		} else {
+			
+			return null;
+			
+		}
+	}
 	
 	
 	/*********************
