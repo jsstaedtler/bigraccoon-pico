@@ -1580,6 +1580,10 @@ input, select, textarea {
 			text-transform: uppercase;
 		}
 		
+		.pagination a:first-child {
+			margin-left: 0;
+		}
+		
 		.pagination abbr {
 			text-decoration: none;
 		}
@@ -1587,11 +1591,11 @@ input, select, textarea {
 /* C */	.pagination .next, .pagination .previous, .pagination .up {
 			display: flex;
 			text-decoration: none;
-			padding: 0 0.75rem;
+			padding: 0 0.5rem;
 		}
 		
 /* N */ .pagination .next, .pagination .previous {
-			max-width: 40%;
+			max-width: 35%;
 			overflow: hidden;
 			white-space: nowrap;
 		}
@@ -2791,7 +2795,7 @@ input, select, textarea {
 		@media screen and (max-width: 736px) {
 
 			#main > .post {
-				padding: 2rem;
+				padding: 1.5rem;
 			}
 			
 			#main > .pagination {
@@ -4315,10 +4319,10 @@ div#thumbnails div.icons.centered {
 
 @media screen and (max-width: 480px) {
 
-	div#thumbnails img {
+/*	div#thumbnails img {
 		height: 6rem;
 	}
-
+*/
 	div#thumbnails div.icons img {
 		height: 1.5rem;
 	}
