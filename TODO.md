@@ -1,3 +1,5 @@
+* Disable Pico pages[] loading on gallery-image templates to reduce load times; only load previous and next pages (if it's even possible--refer to the plugin that prevents page tree processing)
+	* Maybe some way to only load pages within the current section, instead of all sections?
 * Fix double-slash in URI issue (pico.php)
 	* To replace multiple slashes with a single one: $uri = preg_replace('(\/{2,})', '/', $uri);
 * Uploader: Escape quotation marks in the description field
