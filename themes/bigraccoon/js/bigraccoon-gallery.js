@@ -181,10 +181,27 @@ function br_adjustThumbnailSizes() {
 				rowArray[rowIndex] = [];
 				rowWidthArray[rowIndex] = 0;
 				
-			} else if (i >= br_imageArray.length - 1) {
+			} else if (i == br_imageArray.length - 1) {
 				// In this case, we have reached the end of the image thumbnails, but have not capped off an entire row.
 				// This last row may have just one or two thumbnails in it, and growing them to fill the page width could result
-				// in very lopsided aspect ratios.  So we'll simply end the process here, leaving the final row as-is.
+				// in very lopsided aspect ratios.  So we won't grow the row's height, But we still need to apply the minimum
+				// width to each thumbnail.
+				
+				for (const el of rowArray[rowIndex]) {
+					const img = el.getElementsByTagName('img')[0];
+					
+					if (img.width < br_minWidth) {
+						
+						img.style.width = br_minWidth + "px";
+						img.style.height = img.height + "px";	// Explicitly keep the current height
+						
+						// Since this overrules the image's natural aspect ratio, it should be set to crop
+						img.classList.add("cropped");
+						
+					}
+				}
+				
+				// Since we reached the final thumbnail, we should end the entire process
 				break;
 			}
 			
