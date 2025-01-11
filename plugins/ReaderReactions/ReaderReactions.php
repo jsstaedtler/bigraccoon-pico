@@ -151,7 +151,7 @@ class ReaderReactions extends AbstractPicoPlugin
 				);
 			}
 		}
-        $this->rootDir = './content/' . $this->contentDir;
+        $this->rootDir = './' . $this->contentDir;
 		
 		// image_directory
         if (isset($config['ReaderReactions']['image_directory'])) {
