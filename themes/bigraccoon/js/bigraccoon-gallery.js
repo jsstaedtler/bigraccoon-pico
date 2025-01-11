@@ -23,11 +23,22 @@ if (debug) {
 // Lets start by saving an array of all thumbnail images, to refer back to whenever this page resizes.
 // Note that images will be wrapped in tags like <a>, <abbr>, and possibly more.  So use ".getElementsByTagName('img')[0]"
 // on each element of this array to get the actual image object.
-const br_imageArray = document.getElementById('thumbnails').children;
+var br_imageArray;
+try {
+	br_imageArray = document.getElementById('thumbnails').children;
+} catch {
+	// There probably weren't any thumbnails (eg. they're all filtered out by tag selections
+	br_imageArray = [];
+}
 
 // Create an object containing the current CSS styling of one thumbnail child (which updates automatically).
 // This is used only to see what border and margin widths currently are.
-const thumbnailChildStyle = window.getComputedStyle(br_imageArray[0]);
+var thumbnailChildStyle;
+try {
+	thumbnailChildStyle = window.getComputedStyle(br_imageArray[0]);
+} catch {
+	thumbnailChildStyle = null;
+}
 
 // The max ratio can be adjusted arbitrarily to set a maximum for how much taller images can be made.  There may
 // be cases where images are sufficiently wide that no more than one or two will fit in a row, and they could be
@@ -216,11 +227,17 @@ function br_adjustThumbnailSizes() {
 	}
 }
 
-// If the page hasn't finished loading yet, add an event listener.  If it has finished loading, just run the function immediately.
-if (document.readyState === "loading") {
-	window.addEventListener("load", br_adjustThumbnailSizes);
-} else {
-	br_adjustThumbnailSizes();
+
+if (br_imageArray.length > 0) {
+	
+	// If the page hasn't finished loading yet, add an event listener.  If it has finished loading, just run the function immediately.
+	if (document.readyState === "loading") {
+		window.addEventListener("load", br_adjustThumbnailSizes);
+	} else {
+		br_adjustThumbnailSizes();
+	}
+
+	window.addEventListener("resize", br_adjustThumbnailSizes);
+
 }
 
-window.addEventListener("resize", br_adjustThumbnailSizes);
