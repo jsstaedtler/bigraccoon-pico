@@ -35,12 +35,12 @@ class PicoPageViews extends AbstractPicoPlugin
     public function onConfigLoaded(array &$config)
     {
 		// Define the root storage location with the default value, which can be overridden by a custom value in config.yml
-		$this->statsRoot = './content/' . $this->statsDir;
+		$this->statsRoot = './' . $this->statsDir;
 		
         if (isset($config['PicoPageViews']['content_folder'])) {
 			// Ensure the directory name provided in the config file is a valid one (and not something that might blow up the filesystem)
 			if (preg_match('#^[\w][\w\-. \/]*$#', $config['PicoPageViews']['content_folder'])) {
-				$this->statsRoot = './content/' . $config['PicoPageViews']['content_folder'];
+				$this->statsRoot = './' . $config['PicoPageViews']['content_folder'];
 			} else {
 				error_log('PicoPageViews: Invalid value given for config option "content_folder".  Using default value instead: ' . $this->statsDir);
 			}
