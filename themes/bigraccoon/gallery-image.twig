@@ -10,9 +10,9 @@
 {# If this is an adult-only image, pixellate the OpenGraph preview thumbnail #}
 {% block og_image %}
 	{% if meta.adultonly %}
-		<meta property="og:image" content="{% if meta.image %}{{ base_url }}/{{ resize( 'assets/' ~ meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size ) }}{% else %}{{ assets_url }}/{{ current_parent.meta.image }}{% endif %}">
+		<meta property="og:image" content="{{ base_url }}/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size ) }}{% else %}{{ resize( 'assets/' ~ current_parent.meta.image, null, config.gallery.image_size ) }}{% endif %}">
 	{% else %}
-		<meta property="og:image" content="{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}">
+		<meta property="og:image" content="{{ base_url }}/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.image_size ) }}{% else %}{{ resize( 'assets/' ~ current_parent.meta.image, null, config.gallery.image_size ) }}{% endif %}">
 	{% endif %}
 {% endblock og_image %}
 	
