@@ -1,5 +1,5 @@
 {#
- # A template to present a single gallery image, or a grouping of multiple images.  It will have a date, H2 title,
+ # A template to present a single gallery image, as well as any variant images.  It will have a date, H2 title,
  # and prev/next buttons.  Metadata will be provided with each main image.  Finally, other related images can be
  # displayed as thumbnails (just like in the main gallery listing).
  #}
@@ -7,6 +7,16 @@
 {% extends "_base.twig" %}
 
 
+{# If this is an adult-only image, pixellate the OpenGraph preview thumbnail #}
+{% block og_image %}
+	{% if meta.adultonly %}
+		<meta property="og:image" content="{{ assets_url }}/{% if meta.image %}{{ resize( 'assets/' ~ meta.image, null, config.gallery.thumbnail_size, config.gallery.thumbnail_pixel_size ) }}{% else %}{{ current_parent.meta.image }}{% endif %}">
+	{% else %}
+		<meta property="og:image" content="{{ assets_url }}/{% if meta.image %}{{ meta.image }}{% else %}{{ current_parent.meta.image }}{% endif %}">
+	{% endif %}
+{% endblock og_image %}
+	
+	
 {### Put the main image into the background, overriding the external CSS style file, as well as pixelating an adult-only image #}
 {% block head_style %}
 	{{ parent() }}
