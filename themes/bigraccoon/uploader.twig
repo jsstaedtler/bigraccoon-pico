@@ -97,18 +97,22 @@
 		</select>
 		</label></p>
 #}		
+		<p><label for="media-picker">Media File:</label></p>
+		<p><input type="file" name="media-picker" id="media-picker" multiple="false" /></p>
+		<hr>
+		<p><label for="md-filename">Date & Time:</label></p>
+		<p><input name="year" id="year" maxlength="4" size="4" />-<input name="month" id="month" maxlength="2" size="2" />-<input name="day" id="day" maxlength="2" size="2" /> <input name="hour" id="hour" maxlength="2" size="2" />:<input name="minute" id="minute" maxlength="2" size="2" /></p>
+{#		<hr>
 		<p><label for="date-picker">Date & time:</label></p>
 		<p><input type="datetime-local" name="date-picker" id="date-picker" /></p>
 		<script>
 			const rightNow = new Date();
 			document.getElementById('date-picker').value = rightNow.toISOString().slice(0,10) + 'T01:00';
 		</script>
+#}
 		<hr>
 		<p><label for="md-filename">Title:</label></p>
 		<p><input name="title" id="title" /></p>
-		<hr>
-		<p><label for="media-picker">Media File:</label></p>
-		<p><input type="file" name="media-picker" id="media-picker" multiple="false" /></p>
 		<hr>
 		<p><label for="md-filename">Desired Filename:</label></p>
 		<p><input name="md-filename" id="md-filename" /> .md/.png/.jpg</p>
@@ -173,6 +177,11 @@
 	
 			
 	<script>
+		const yearField = document.getElementById("year");
+		const monthField = document.getElementById("month");
+		const dayField = document.getElementById("day");
+		const hourField = document.getElementById("hour");
+		const minuteField = document.getElementById("minute");
 		const mediaFile = document.getElementById("media-picker");
 		const tagSelect = document.getElementById("available-tags");
 		const tagInput = document.getElementById("new-tag");
@@ -208,6 +217,16 @@
 				previewDiv.appendChild(para);
 			} else {
 				const file = curFiles[0];	// Multiple files are not allowed, so we should get an array of length==1
+				
+				// See if the filename begins with an 8-digit Date
+				const prefix = file.name.slice(0, 8);
+				if (/^[0-9]+$/.test(prefix)) {
+					document.getElementById("year").value = prefix.slice(0, 4);
+					document.getElementById("month").value = prefix.slice(4, 6);
+					document.getElementById("day").value = prefix.slice(6);
+					document.getElementById("hour").value = '12';
+					document.getElementById("minute").value = '00';
+				}
 				
 				// Is this an image, video, or neither?
 				if (file.type.toLowerCase().startsWith("image/")) {
@@ -330,6 +349,26 @@
 			selectedTagsField.value = JSON.stringify(Array.from(selectedTags.children).map((el) => el.textContent));
 
 		}
+		
+		
+		// Handle datetime fields
+		yearField.addEventListener("input", (event) => {
+			if (yearField.value.length >= 4) {monthField.focus();}
+		});
+		yearField.addEventListener("focus", (event) => { yearField.select(); });
+		monthField.addEventListener("input", (event) => {
+			if (monthField.value.length >= 2) {dayField.focus();}
+		});
+		monthField.addEventListener("focus", (event) => { monthField.select(); });
+		dayField.addEventListener("input", (event) => {
+			if (dayField.value.length >= 2) {hourField.focus();}
+		});
+		dayField.addEventListener("focus", (event) => { dayField.select(); });
+		hourField.addEventListener("input", (event) => {
+			if (hourField.value.length >= 2) {minuteField.focus();}
+		});
+		hourField.addEventListener("focus", (event) => { hourField.select(); });
+		minuteField.addEventListener("focus", (event) => { minuteField.select(); });
 		
 		
 		function addVariant() {

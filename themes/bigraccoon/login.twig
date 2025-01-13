@@ -3,5 +3,9 @@
 {% block page_content %}
 
 	{{ login_form|raw }}
+	
+	{% if username == "jphillips" %}
+		<p><a href="{{ base_url }}/uploader">Uploader</a></p>
+	{% endif %}
 
 {% endblock page_content %}

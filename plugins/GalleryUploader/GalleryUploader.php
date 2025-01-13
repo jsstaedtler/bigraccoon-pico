@@ -26,18 +26,30 @@ class GalleryUploader extends AbstractPicoPlugin
 			$twigVariables['upload_error'] = '';
 
 
-			if (!isset($_POST['title']) || strlen($_POST['title']) == 0) {
+			if (!isset($_POST['title']) || mb_strlen($_POST['title'], 'utf8') == 0) {
 				$twigVariables['upload_error'] = 'No title provided';
                 return;
             }
 
-            if (!isset($_POST['md-filename']) || strlen($_POST['md-filename']) == 0) {
+            if (!isset($_POST['md-filename']) || mb_strlen($_POST['md-filename'], 'utf8') == 0) {
 				$twigVariables['upload_error'] = 'No md filename provided';
                 return;
             }
 			
 			if (!isset($_FILES['media-picker']) || $_FILES['media-picker']['size'] == 0) {
 				$twigVariables['upload_error'] = 'No media file provided (or upload failed)';
+                return;
+			}
+			
+			if (
+				!isset($_POST['year']) || !isset($_POST['month']) || !isset($_POST['day']) || !isset($_POST['hour']) || !isset($_POST['minute'])
+				|| mb_strlen($_POST['year'], 'utf8') != 4
+				|| mb_strlen($_POST['month'], 'utf8') != 2
+				|| mb_strlen($_POST['day'], 'utf8') != 2
+				|| mb_strlen($_POST['hour'], 'utf8') != 2
+				|| mb_strlen($_POST['minute'], 'utf8') != 2
+			) {
+				$twigVariables['upload_error'] = 'Incorrect date value(s) submitted';
                 return;
 			}
 			
@@ -53,14 +65,14 @@ class GalleryUploader extends AbstractPicoPlugin
 			}
 			
 			
-			$tags = isset($_POST['selected-tags']) ? json_decode($_POST['selected-tags']) : [];
+			$tags = isset($_POST['selected-tags']) ? json_decode($_POST['selected-tags']) : array();
 			
 			
 			// Now we build an md file.  We don't need to test every field if it's populated, since empty YAML values are fine.
 			$md_contents = "---\n";
 			
 			// HTML date field outputs ISO "yyyy-mm-ddThh:mm" format, but Pico wants "yyyy-mm-dd hh:mm".  Pretty simple to swap out the "T".
-			$md_contents .= "date: " . str_replace('T', ' ', $_POST['date-picker']) . "\n";
+			$md_contents .= "date: " . $_POST['year'] . "-" . $_POST['month'] . "-" . $_POST['day'] . " " . $_POST['hour'] . ":" . $_POST['minute'] . "\n";
 			// When a YAML string value might possibly contain a colon, it must be wrapped in quotation marks, and existing quotes in the string must be escaped
 			$md_contents .= "title: \"" . str_replace('"', '\"', $_POST['title']) . "\"\n";
 			$md_contents .= "image: gallery/" . $media_filename . "\n";
