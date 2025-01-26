@@ -2816,7 +2816,7 @@ input, select, textarea {
 		}
 
 		#main > .posts {
-			display: -moz-flex;
+/*			display: -moz-flex;
 			display: -webkit-flex;
 			display: -ms-flex;
 			display: flex;
@@ -2828,9 +2828,13 @@ input, select, textarea {
 			-webkit-align-items: -webkit-stretch;
 			-ms-align-items: -ms-stretch;
 			align-items: stretch;
-			text-align: center;
+/*			text-align: center; */
 			width: 100%;
 			padding: 0;
+			column-count: 2;
+			column-gap: 0;
+			column-rule: solid 2px #eee;
+			border-bottom: solid 2px #eee;
 		}
 
 			#main > .posts > * {
@@ -2842,15 +2846,9 @@ input, select, textarea {
 				-webkit-flex-grow: 0;
 				-ms-flex-grow: 0;
 				flex-grow: 0;
-			}
-
-			#main > .posts > * {
-				width: 50%;
-			}
-
-			#main > .posts > * {
-				padding: 4rem;
-				width: 50%;
+				padding: 3rem 4rem;
+				width: 100%;
+				break-inside: avoid;
 			}
 
 			#main > .posts > article {
@@ -2858,7 +2856,7 @@ input, select, textarea {
 				border-left-width: 2px;
 				border-style: solid;
 				border-top-width: 2px;
-				text-align: center;
+/*				text-align: center; */
 			}
 			
 			#main > .posts > article div.news-snippet {
@@ -2867,7 +2865,7 @@ input, select, textarea {
 				-webkit-mask: alpha linear-gradient(180deg, white 0 12rem, rgba(255, 255, 255, 0) 19rem) 0 0 / 20rem repeat-x;
 				mask: alpha linear-gradient(180deg, white 0 14rem, rgba(255, 255, 255, 0) 19rem) 0 0 / 20rem repeat-x;
 			}
-
+/*
 				#main > .posts > article > :last-child {
 					margin-bottom: 0;
 				}
@@ -2879,9 +2877,13 @@ input, select, textarea {
 				#main > .posts > article:nth-child(-n + 2) {
 					border-top-width: 0;
 				}
-
+*/
 			@media screen and (max-width: 980px) {
 
+				#main > .posts {
+					column-count: 1;
+				}
+				
 				#main > .posts > * {
 					padding: 2.5rem;
 /* C */				width: 100%;
@@ -3707,6 +3709,12 @@ input, select, textarea {
 	
 /*** My Additions ***/
 
+
+#main .post img.pixel {
+	image-rendering: pixelated;
+}
+
+
 .menucontrol {
 	display: inline-block;
 }
@@ -3818,7 +3826,8 @@ input:checked + .switchslider:before {  /* How far to move when checked */
 }
 
 
-#main .post span.logo_icon > img {
+#main .post span.logo_icon > img, #main .post img.logo_icon {
+	display: inline-block;
     height: 2rem;
     width: auto;
     margin-right: 0.7rem;
@@ -4148,6 +4157,16 @@ div#thumbnails {
 	margin-bottom: 2rem;
 }
 
+div.link_buttons {
+	width: 100%;
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+div.link_buttons:last-of-type {
+	margin-bottom: 0;
+}
+
 div.gallery-image {
 	display: block;
 	width: 100%;
@@ -4156,7 +4175,12 @@ div.gallery-image {
 	text-align: center;
 }
 
-div#thumbnails a {
+div.link_buttons p {
+	display: contents;
+}
+
+div#thumbnails a, div.link_buttons a {
+	display: block;
 	position: relative;		/* Necessary so we can overlay icons that have "position: absolute" */
 	border: solid 2px #eeeeee;
 	padding: 0;
@@ -4165,9 +4189,18 @@ div#thumbnails a {
 	overflow: hidden;
 }
 
+div.link_buttons a {
+	display: inline-block;
+}
+
+div#thumbnails abbr, div.link_buttons abbr {
+	display: contents;
+}
+
+
 @media screen and (max-width: 480px) {
 	
-	div#thumbnails a {
+	div#thumbnails a, div.link_buttons a {
 		margin: 1px;
 	}
 	
@@ -4201,7 +4234,7 @@ div.gallery-image img.placeholder {
 	}
 }
 
-div#thumbnails img {
+div#thumbnails img, div.link_buttons img {
 	width: auto;
 	max-width: 100%;
 	height: 12rem;
@@ -4211,13 +4244,15 @@ div#thumbnails img {
 	display: block;
 }
 
+#main .post div.link_buttons p img {
+	height: 3rem;
+	width: auto;
+}
+
+
 div#thumbnails img.placeholder {
 	filter: blur(20px);
 	transform: scale(125%);		/* Crop out the blurred outside edges of the image */
-/*	background-image: url(../img/prohibit-bold.svg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 4rem; */
 }
 
 div#thumbnails img.cropped {
@@ -4232,7 +4267,7 @@ div.gallery-image img {
 	margin: 0;
 }
 
-div#thumbnails a:hover, div.gallery-image a:hover {
+div#thumbnails a:hover, div.gallery-image a:hover, div.link_buttons a:hover {
 	border-color: #18bfef;
 }
 
