@@ -1,3 +1,7 @@
+* Icons on gallery thumbnails should be in a column on one side, and include icons and numbers for 18+, variants, likes, and comments (maybe doesn't need the big dark rectangle behind them all covering up a chunk of each thumbnail, as long as icons contrast against any background)
+  * Could be anchored to the bottom-left, and extend upward
+* Turn the existing uploader page into an editing page that can work on existing gallery images
+* Put an Edit button on gallery image pages when I'm logged in, which opens the uploader/editor
 * Disable Pico pages[] loading on gallery-image templates to reduce load times; only load previous and next pages (if it's even possible--refer to the plugin that prevents page tree processing)
 	* Maybe some way to only load pages within the current section, instead of all sections?
 * Fix double-slash in URI issue (pico.php)
@@ -31,8 +35,6 @@
 * Gallery improvements
 	* Submitting a comment and showing adult-only content are losing the URL parameters for tags
 	* Organize tags into sections (OCs, styles, years, etc.), instead of a mixed up cloud
-	* Make "Media: Pencil/Digital" tags
-	* Add number of images to the "variants" thumbnail icon
 	* Add icon with number of comments (if > 0)
 	* Need a minimum thumbnail width to accomodate all the icons
 	* Fix padding of gallery index page bar (when squished on mobile)
@@ -45,9 +47,6 @@
 * Make BG image fade in sooner?
 * Store all fonts locally
 	* Pick better header/body fonts?
-* Add other sites to Links section
-	* Make a new post, to appear after the existing Links content
-	* Provide a link banner/buttons
 * Somehow reset page top periodically, so the navbar doesn't stick in the wrong places?
 	* Or reset when scrolling back to the top?
 * Maybe instead of back-to-top button linking to an ID, have it scroll up until the navbar unsticks
