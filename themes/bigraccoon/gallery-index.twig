@@ -171,6 +171,9 @@
 		
 	{% endfor %}
 		</div>
+		<!-- If JS is enabled, the thumbnail sizes will be adjusted but only after all images have loaded.  This causes a sudden, clunky change
+			 in page layout.  So we start by making the thumbnails div hidden, and it will be unhidden after the size adjustments are made. -->
+		<script>document.getElementById('thumbnails').style.visibility = 'hidden';</script>
 	{% endif %}
 	
 		

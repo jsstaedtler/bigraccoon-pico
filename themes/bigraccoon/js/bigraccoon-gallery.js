@@ -12,13 +12,23 @@
  *
  * The operation will be done on initial page load, but also whenever the page is resized.
  */
- 
+
+// Debugging!  Change this to true to see lots of numbers get dumped to the bottom of the page
 const debug = false;
 
-const debugDiv = document.createElement('div');
-if (debug) {
-	document.getElementsByClassName('post')[0].appendChild(debugDiv);
+function debugMsg(par, type, txt = null)
+{
+	var el = document.createElement(type);
+	if (debug) {
+		if (txt) el.innerHTML = txt;
+		par.appendChild(el);
+	}
+	return el;
 }
+
+const debugDiv = debugMsg(document.getElementsByClassName('post')[0], 'div');
+
+
 
 // Lets start by saving an array of all thumbnail images, to refer back to whenever this page resizes.
 // Note that images will be wrapped in tags like <a>, <abbr>, and possibly more.  So use ".getElementsByTagName('img')[0]"
@@ -59,14 +69,14 @@ function br_adjustThumbnailSizes() {
 	// We're not going to do anything if there are no images to act on
 	if (br_imageArray.length > 0) {
 		
-		if (debug) debugDiv.innerHTML = '';
+		/**/debugMsg(debugDiv, 'p', `Number of images: ${br_imageArray.length}`);
 	
 		// This will run on every page resize, so we need to get the page width anew
 		const pageRect = document.getElementById('thumbnails').getBoundingClientRect();
-		const pageWidth = Math.floor(pageRect.width);	// Round down to an integer value
+		const pageWidth = Math.floor(pageRect.width) - 1;	// Round down to an integer value, and subtract 1 pixel to be sure we won't overflow
 		
-		if (debug) debugDiv.innerHTML += `<p>#thumbnails pageRect.width: ${pageRect.width}</p>`;
-		if (debug) debugDiv.innerHTML += `<p>#thumbnails pageWidth: ${pageWidth}</p>`;
+		/**/debugMsg(debugDiv, 'p', `#thumbnails pageRect.width: ${pageRect.width}`);
+		/**/debugMsg(debugDiv, 'p', `#thumbnails pageWidth: ${pageWidth}`);
 		
 		// We need to know the default height of the thumbnails, based on the page CSS.  It's possible that
 		// value could change as the page is resized, so we can't just save it on page load and assume it will
@@ -78,34 +88,38 @@ function br_adjustThumbnailSizes() {
 
 		const originalHeight = br_imageArray[0].getElementsByTagName('img')[0].height;
 		const maxHeight = originalHeight * br_maxRatio;
-		if (debug) debugDiv.innerHTML += `<p>img originalHeight: ${originalHeight}</p>`;
-		if (debug) debugDiv.innerHTML += `<p>maxHeight: ${maxHeight}</p>`;
+		/**/debugMsg(debugDiv, 'p', `img originalHeight: ${originalHeight}`);
+		/**/debugMsg(debugDiv, 'p', `maxHeight: ${maxHeight}`);
 
-		// Although we're dealing with the size of <img> elements, they are within <a> tags,
-		// and the <a> tags have margins and borders which will create a gap between images.
-		// Get the current style values of the side margins and side borders of the <a> tags
+
+		// Each thumbnail image is wrapped in an <a> element, which has a border around it, as well as a margin.  Those add up to a specific
+		// distance between each image and the next image in the same row.  When a row of images is grown to fill the available page width,
+		// the images will grow wider but those gaps will *not*.  So to correctly calculate how much a row should grow, we must learn what
+		// the gap width is:
 		const marginLeft = thumbnailChildStyle.getPropertyValue('margin-left').replace('px', '');		// Returns a string like "2.5px",
 		const marginRight = thumbnailChildStyle.getPropertyValue('margin-right').replace('px', '');		// so use .replace() to return just the digits
 		const borderLeft = thumbnailChildStyle.getPropertyValue('border-left-width').replace('px', '');
 		const borderRight = thumbnailChildStyle.getPropertyValue('border-right-width').replace('px', '');
 
-		if (debug) debugDiv.innerHTML += `<p>#thumbnails child marginLeft: ${marginLeft}</p>`;
-		if (debug) debugDiv.innerHTML += `<p>#thumbnails child marginRight: ${marginRight}</p>`;
-		if (debug) debugDiv.innerHTML += `<p>#thumbnails child borderLeft: ${borderLeft}</p>`;
-		if (debug) debugDiv.innerHTML += `<p>#thumbnails child borderRight: ${borderRight}</p>`;
+		/**/debugMsg(debugDiv, 'p', `#thumbnails child marginLeft: ${marginLeft}`);
+		/**/debugMsg(debugDiv, 'p', `#thumbnails child marginRight: ${marginRight}`);
+		/**/debugMsg(debugDiv, 'p', `#thumbnails child borderLeft: ${borderLeft}`);
+		/**/debugMsg(debugDiv, 'p', `#thumbnails child borderRight: ${borderRight}`);
 
-		// Add them all together to get the size of the gap between images.  parseFloat() is here because these variables are all strings.
+		// Add them all together to get the width of the gap between images.  parseFloat() is here because these variables are all strings.
 		const gapWidth = parseFloat(marginLeft) + parseFloat(marginRight) + parseFloat(borderLeft) + parseFloat(borderRight);		
-		if (debug) debugDiv.innerHTML += `<p>gapWidth: ${gapWidth}</p>`;
+		/**/debugMsg(debugDiv, 'p', `gapWidth: ${gapWidth}`);
 
 		// Initialize our rows of thumbnails
 		var rowArray = [[],];		// Each row of thumbnails on the screen (and the first row is a new array)
 		var rowWidthArray = [0,];	// The width of each row (in pixels), with the first one beginning at zero
 		var rowIndex = 0;			// We will start working at row 0
 
+		/**/var debugUL = debugMsg(debugDiv, 'ul');
+
 		// Step through each thumbnail image on this page
 		for (var i = 0; i < br_imageArray.length; i++) {
-			
+						
 			// Get the current <img> element from within the parent thumbnail elements
 			const currentImg = br_imageArray[i].getElementsByTagName('img')[0];
 			
@@ -122,20 +136,27 @@ function br_adjustThumbnailSizes() {
 				
 				// Adding that image to the row would overflow off the page, therefore our current row is complete.
 				
-				if (debug) debugDiv.innerHTML += `<p>Row ${rowIndex}: ${rowArray[rowIndex].length} images, width: ${rowWidthArray[rowIndex]}</p>`;
+				/**/debugMsg(debugUL, 'li', `Row <strong>${rowIndex}</strong>: ${rowArray[rowIndex].length} images, width: ${rowWidthArray[rowIndex]}`);
 				
 				// To make this row of images expand to fill the page width, we will increase their size based on a new common height.
 				// We will calculate that height by getting the ratio of the page width to the row width.  However, the gaps between
 				// images are going to remain static.  So before calculating, we remove all gaps from the respective widths.
-				const numGaps = rowArray[rowIndex].length;
+				const numGaps = rowArray[rowIndex].length;							// There is one less gap then there are images, but there's half
+																					// a gap at the beginning and at the end of the entire row
 				const ratio = (pageWidth - numGaps * gapWidth) / (rowWidthArray[rowIndex] - numGaps * gapWidth);
-				const newHeight = (originalHeight * ratio) - (3 / numGaps);		// For some reason, fewer gaps makes more likelihood that the total width will be a fraction of a pixel too wide, causing images to wrap to the next row.  This is a hack to prevent that from occuring.
-				
-				if (debug) debugDiv.innerHTML += `<p>rowWidth: ${rowWidthArray[rowIndex]} | numGaps: ${numGaps} | ratio: ${pageWidth - numGaps * gapWidth} / ${rowWidthArray[rowIndex] - numGaps * gapWidth} = ${ratio} | new width: ${(rowWidthArray[rowIndex] - numGaps * gapWidth) * ratio + numGaps * gapWidth} | new height: ${newHeight}</p>`;
-				if (debug && ratio > br_maxRatio) debugDiv.innerHTML += `<p> - Greater than maxHeight of ${maxHeight}!</p>`;
+//				const ratio = pageWidth / rowWidthArray[rowIndex];
+				const newHeight = Math.floor(originalHeight * ratio * 10) / 10;		// Reduce precision to 1 decimal point, since setting width of
+																					// an image to a high-precision fraction can result in the actual
+																					// element width becoming slightly different
+
+				/**/debugMsg(debugUL, 'li', `rowWidth: ${rowWidthArray[rowIndex]} | numGaps: ${numGaps} | ratio: ${pageWidth - numGaps * gapWidth} / ${rowWidthArray[rowIndex] - numGaps * gapWidth} = ${ratio} | new width: ${(rowWidthArray[rowIndex] - numGaps * gapWidth) * ratio + numGaps * gapWidth} | new height: ${newHeight}`);
+				/**/if (ratio > br_maxRatio) debugMsg(debugUL, 'li', `<p> - Greater than maxHeight of ${maxHeight}!</p>`);
 
 				// Check if the height is greater than the maximum ratio would allow.  If so, the images in this row will be given a new width
 				// based on the ratio, but height will be capped.  Then CSS styling must be used to crop the image (eg. object-fit: cover)
+				
+				/**/var debugTotalWidth = 0;
+				
 				if (ratio <= br_maxRatio) {
 					
 					// Apply the new height to each image in this row, leaving width: auto
@@ -151,6 +172,8 @@ function br_adjustThumbnailSizes() {
 							// Since this overrules the image's natural aspect ratio, it should be set to crop
 							img.classList.add("cropped");
 							
+							/**/debugMsg(debugUL, 'li', `Image ${i}: Cropped! New image height: ${newHeight} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
+							
 						} else {
 						
 							img.style.width = "auto";
@@ -159,11 +182,10 @@ function br_adjustThumbnailSizes() {
 							// If this image had the "cropped" class, it must be removed
 							img.classList.remove("cropped");
 							
-							if (debug) debugDiv.innerHTML += '<ol>';
-							if (debug) debugDiv.innerHTML += `<li>New image height: ${newHeight} - Resulting width x height: ${img.getBoundingClientRect().width}, ${img.getBoundingClientRect().height}</li>`;
-							if (debug) debugDiv.innerHTML += '</ol>';
+							/**/debugMsg(debugUL, 'li', `Image ${i}: New image height: ${newHeight} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
 						}
 
+						/**/debugTotalWidth += img.getBoundingClientRect().width
 					}
 
 				} else {
@@ -177,20 +199,23 @@ function br_adjustThumbnailSizes() {
 						img.style.width = newWidth + "px";		// Assign the new width
 						img.style.height = maxHeight + "px";	// Limit the height as per br_maxRatio
 
-						if (debug) debugDiv.innerHTML += '<ol>';
-						if (debug) debugDiv.innerHTML += `<li>New image width: ${img.width} - Resulting width x height: ${img.getBoundingClientRect().width}, ${img.getBoundingClientRect().height}</li>`;
-						if (debug) debugDiv.innerHTML += '</ol>';
+						/**/debugMsg(debugUL, 'li', `Image ${i}: Cropped! New image width: ${img.width} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
 
 						// Add a class for ease of CSS styling
 						img.classList.add("cropped");
+					
+						/**/debugTotalWidth += img.getBoundingClientRect().width
 					}
 
 				}
+				
+				/**/debugMsg(debugUL, 'li', `Resulting width of row ${rowIndex}: ${debugTotalWidth + numGaps * gapWidth}`);
 				
 				// Having finished resizing of this row, we move on to start the next row
 				rowIndex++;
 				rowArray[rowIndex] = [];
 				rowWidthArray[rowIndex] = 0;
+				
 				
 			} else if (i == br_imageArray.length - 1) {
 				// In this case, we have reached the end of the image thumbnails, but have not capped off an entire row.
@@ -224,6 +249,8 @@ function br_adjustThumbnailSizes() {
 
 		}
 		
+	// The thumbnails div may have been hidden so that these size changes wouldn't make the page layout jump around, and now that resizing is complete, it should be made visible.
+	document.getElementById('thumbnails').style.visibility = 'visible';
 	}
 }
 
