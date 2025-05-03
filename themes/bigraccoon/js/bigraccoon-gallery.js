@@ -124,6 +124,7 @@ function br_adjustThumbnailSizes() {
 			const currentImg = br_imageArray[i].getElementsByTagName('img')[0];
 			
 			// Reset to original size and undo any cropping, which could mess up our measurement of the image dimensions
+			// ***** DO I NEED TO ADJUST FOR CENSORED IMAGES THAT ARE ZOOMED IN WITH CSS *****
 			currentImg.style.width = "";
 			currentImg.style.height = "";
 			currentImg.classList.remove("cropped");
@@ -193,9 +194,9 @@ function br_adjustThumbnailSizes() {
 					for (const el of rowArray[rowIndex]) {
 						const img = el.getElementsByTagName('img')[0];
 						
-						const oldWidth = Number(img.width);	// Get original image dimensions
+						const oldWidth = Number(img.width);		// Get original image dimensions
 						const oldHeight = Number(img.height);
-						const newWidth = newHeight * (oldWidth / oldHeight);				// Determine new width based on original aspect ratio
+						const newWidth = newHeight * (oldWidth / oldHeight);		// Determine new width based on original aspect ratio
 						img.style.width = newWidth + "px";		// Assign the new width
 						img.style.height = maxHeight + "px";	// Limit the height as per br_maxRatio
 
