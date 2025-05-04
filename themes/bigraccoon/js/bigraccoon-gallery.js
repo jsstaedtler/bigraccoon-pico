@@ -37,7 +37,7 @@ var br_imageArray;
 try {
 	br_imageArray = document.getElementById('thumbnails').children;
 } catch {
-	// There probably weren't any thumbnails (eg. they're all filtered out by tag selections
+	// There probably weren't any thumbnails (eg. they're all filtered out by tag selections)
 	br_imageArray = [];
 }
 
@@ -142,21 +142,20 @@ function br_adjustThumbnailSizes() {
 				// To make this row of images expand to fill the page width, we will increase their size based on a new common height.
 				// We will calculate that height by getting the ratio of the page width to the row width.  However, the gaps between
 				// images are going to remain static.  So before calculating, we remove all gaps from the respective widths.
-				const numGaps = rowArray[rowIndex].length;							// There is one less gap then there are images, but there's half
-																					// a gap at the beginning and at the end of the entire row
+				const numGaps = rowArray[rowIndex].length;					// There is one less gap then there are images, but there's half
+																			// a gap at both the beginning and the end of the entire row
 				const ratio = (pageWidth - numGaps * gapWidth) / (rowWidthArray[rowIndex] - numGaps * gapWidth);
 //				const ratio = pageWidth / rowWidthArray[rowIndex];
-				const newHeight = Math.floor(originalHeight * ratio * 10) / 10;		// Reduce precision to 1 decimal point, since setting width of
-																					// an image to a high-precision fraction can result in the actual
-																					// element width becoming slightly different
+				const newHeight = Math.floor(originalHeight * ratio);		// Round down to an integer value
 
-				/**/debugMsg(debugUL, 'li', `rowWidth: ${rowWidthArray[rowIndex]} | numGaps: ${numGaps} | ratio: ${pageWidth - numGaps * gapWidth} / ${rowWidthArray[rowIndex] - numGaps * gapWidth} = ${ratio} | new width: ${(rowWidthArray[rowIndex] - numGaps * gapWidth) * ratio + numGaps * gapWidth} | new height: ${newHeight}`);
+				/**/debugMsg(debugUL, 'li', `rowWidth: ${rowWidthArray[rowIndex]} | numGaps: ${numGaps} = ${numGaps * gapWidth}px | ratio: ${pageWidth - numGaps * gapWidth} / ${rowWidthArray[rowIndex] - numGaps * gapWidth} = ${ratio} | new width: ${(rowWidthArray[rowIndex] - numGaps * gapWidth) * ratio + numGaps * gapWidth} | new height: ${newHeight}`);
 				/**/if (ratio > br_maxRatio) debugMsg(debugUL, 'li', `<p> - Greater than maxHeight of ${maxHeight}!</p>`);
 
 				// Check if the height is greater than the maximum ratio would allow.  If so, the images in this row will be given a new width
 				// based on the ratio, but height will be capped.  Then CSS styling must be used to crop the image (eg. object-fit: cover)
 				
 				/**/var debugTotalWidth = 0;
+				/**/var debugOL = debugMsg(debugUL, 'ol');
 				
 				if (ratio <= br_maxRatio) {
 					
@@ -173,7 +172,7 @@ function br_adjustThumbnailSizes() {
 							// Since this overrules the image's natural aspect ratio, it should be set to crop
 							img.classList.add("cropped");
 							
-							/**/debugMsg(debugUL, 'li', `Image ${i}: Cropped! New image height: ${newHeight} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
+							/**/debugMsg(debugOL, 'li', `Image: Cropped! New image height: ${newHeight} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
 							
 						} else {
 						
@@ -183,7 +182,7 @@ function br_adjustThumbnailSizes() {
 							// If this image had the "cropped" class, it must be removed
 							img.classList.remove("cropped");
 							
-							/**/debugMsg(debugUL, 'li', `Image ${i}: New image height: ${newHeight} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
+							/**/debugMsg(debugOL, 'li', `Image: New image height: ${newHeight} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
 						}
 
 						/**/debugTotalWidth += img.getBoundingClientRect().width
@@ -196,11 +195,12 @@ function br_adjustThumbnailSizes() {
 						
 						const oldWidth = Number(img.width);		// Get original image dimensions
 						const oldHeight = Number(img.height);
-						const newWidth = newHeight * (oldWidth / oldHeight);		// Determine new width based on original aspect ratio
+						const newWidth = Math.floor(newHeight * (oldWidth / oldHeight) * 10) / 10;		// Determine new width based on original
+																										// aspect ratio, to 1 decimal point
 						img.style.width = newWidth + "px";		// Assign the new width
 						img.style.height = maxHeight + "px";	// Limit the height as per br_maxRatio
 
-						/**/debugMsg(debugUL, 'li', `Image ${i}: Cropped! New image width: ${img.width} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
+						/**/debugMsg(debugOL, 'li', `Image: Cropped! New image width: ${img.width} - Resulting width x height: ${img.getBoundingClientRect().width} x ${img.getBoundingClientRect().height}`);
 
 						// Add a class for ease of CSS styling
 						img.classList.add("cropped");
